@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="149.0" prefWidth="867.0" style="-fx-background-color: #ffffff; -fx-border-width: 0px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuizLayoutController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="867.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="191.0" prefWidth="109.0">
+               <children>
+                  <VBox focusTraversable="true" maxHeight="170.0" maxWidth="-Infinity" prefHeight="170.0" prefWidth="100.0" style="-fx-border-width: 0.5px; -fx-border-color: #888; -fx-max-height: 140px; -fx-background-color: #f8f9fa;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0">
+                     <children>
+                        <HBox alignment="BOTTOM_LEFT" prefHeight="14.0" prefWidth="98.0">
+                           <children>
+                              <Label prefHeight="32.0" prefWidth="48.0" text="Question" textFill="#d82e2f">
+                                 <HBox.margin>
+                                    <Insets left="5.0" top="4.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="10" textFill="#d82e2f">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                        <Label prefHeight="36.0" prefWidth="78.0" text="Not yet answered" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                        <Label text="Marked out of 1.00" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                        <Label text="Flag question">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="FLAG_ALT" />
+                           </graphic>
+                           <VBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="210.0" prefWidth="614.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <VBox style="-fx-background-color: #e7f3f5;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="594.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="10.0" right="10.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <JFXRadioButton alignment="TOP_LEFT" prefHeight="46.0" style="-fx-pref-height: -1;" text="Option 1" wrapText="true" VBox.vgrow="ALWAYS">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="choice" />
+                           </toggleGroup>
+                           <VBox.margin>
+                              <Insets left="20.0" right="10.0" top="6.0" />
+                           </VBox.margin>
+                           <unSelectedColor>
+                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
+                           </unSelectedColor>
+                        </JFXRadioButton>
+                        <JFXRadioButton alignment="TOP_LEFT" prefHeight="46.0" style="-fx-pref-height: -1;" text="Option 2" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets left="20.0" right="10.0" top="6.0" />
+                           </VBox.margin>
+                           <unSelectedColor>
+                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
+                           </unSelectedColor>
+                        </JFXRadioButton>
+                        <JFXRadioButton alignment="TOP_LEFT" prefHeight="46.0" style="-fx-pref-height: -1;" text="Option 3" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets left="20.0" right="10.0" top="6.0" />
+                           </VBox.margin>
+                           <unSelectedColor>
+                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
+                           </unSelectedColor>
+                        </JFXRadioButton>
+                        <JFXRadioButton alignment="TOP_LEFT" prefHeight="46.0" style="-fx-pref-height: -1;" text="Option 4" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets left="20.0" right="10.0" top="6.0" />
+                           </VBox.margin>
+                           <unSelectedColor>
+                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
+                           </unSelectedColor>
+                        </JFXRadioButton>
+                     </children>
+                     <padding>
+                        <Insets bottom="40.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
