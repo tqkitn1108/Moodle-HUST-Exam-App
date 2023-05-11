@@ -5,24 +5,19 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class GUI72Controller implements Initializable {
 
@@ -66,20 +61,29 @@ public class GUI72Controller implements Initializable {
         startAttemptBtn.setOnAction(event -> {
             Stage stage = (Stage) startAttemptBtn.getScene().getWindow();
             stage.close();
-            Stage fullscreenStage = new Stage();
-//            fullscreenStage.setFullScreen(true);
+            Stage maxscreenStage = new Stage();
+            maxscreenStage.setMaximized(true);
             VBox root = new VBox();
+            /*
+            Cách load anchorPane chiếm toàn bộ kích thước VBox cha
+            * try {
+                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
+                root.getChildren().add(anchorPane);
+                root.setVgrow(anchorPane, Priority.ALWAYS);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }*/
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
             try {
-                Node node = fxmlLoader.load();
+                Node node = fxmlLoader.load(); // fxmlLoader chỉ có 1 node là AnchorPane
                 root.getChildren().add(node);
+                root.setVgrow(node, Priority.ALWAYS);  // Set kích thước node chiếm toàn bộ kích thước VBox
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println(root.getHeight() + " " + root.getWidth());
             Scene scene = new Scene(root);
-            fullscreenStage.setScene(scene);
-            fullscreenStage.show();
+            maxscreenStage.setScene(scene);
+            maxscreenStage.show();
         });
     }
 }

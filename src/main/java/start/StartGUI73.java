@@ -15,7 +15,7 @@ public class StartGUI73 extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
