@@ -68,7 +68,7 @@
             </Separator>
             <HBox minHeight="33.0" prefWidth="568.0">
                <children>
-                  <MFXButton fx:id="startAttemptBtn" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #c70d0d;" text="START ATTEMPT" textFill="WHITE">
+                  <MFXButton fx:id="startAttemptBtn" onAction="#startAttempt" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #c70d0d;" text="START ATTEMPT" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -76,7 +76,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </MFXButton>
-                  <MFXButton fx:id="cancelBtn" prefHeight="33.0" prefWidth="82.0" style="-fx-background-color: #1B98F5;" text="CANCEL" textFill="WHITE">
+                  <MFXButton onMouseClicked="#closeThisWindow" prefHeight="33.0" prefWidth="82.0" style="-fx-background-color: #1B98F5;" text="CANCEL" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

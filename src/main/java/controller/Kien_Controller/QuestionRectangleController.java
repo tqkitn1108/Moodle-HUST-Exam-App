@@ -22,6 +22,10 @@ public class QuestionRectangleController implements Initializable {
     @FXML
     private FontAwesomeIconView icon;
 
+    public VBox getRectangle() {
+        return rectangle;
+    }
+
     public void setNumber(Integer number) {
         this.number.setText(number.toString());
     }

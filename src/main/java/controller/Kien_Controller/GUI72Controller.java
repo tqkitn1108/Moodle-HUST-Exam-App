@@ -2,10 +2,12 @@ package controller.Kien_Controller;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -15,7 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
+
+import javafx.stage.StageStyle;
+import models.Quiz;
+
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 
@@ -23,9 +31,6 @@ public class GUI72Controller implements Initializable {
 
     @FXML
     private FontAwesomeIconView closeIcon;
-
-    @FXML
-    private MFXButton cancelBtn;
 
     @FXML
     private Label closeBtn;
@@ -52,38 +57,20 @@ public class GUI72Controller implements Initializable {
         closeIcon.setFill(Paint.valueOf("#888888"));
     }
 
+    @FXML
+    public void startAttempt(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Kien_FXML/MainScreen.fxml"));
+            Stage stage = (Stage) startAttemptBtn.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setMaximized(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cancelBtn.setOnAction(event -> {
-            Stage stage = (Stage) cancelBtn.getScene().getWindow();
-            stage.close();
-        });
-        startAttemptBtn.setOnAction(event -> {
-            Stage stage = (Stage) startAttemptBtn.getScene().getWindow();
-            stage.close();
-            Stage maxscreenStage = new Stage();
-            maxscreenStage.setMaximized(true);
-            VBox root = new VBox();
-            /*
-            Cách load anchorPane chiếm toàn bộ kích thước VBox cha
-            * try {
-                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
-                root.getChildren().add(anchorPane);
-                root.setVgrow(anchorPane, Priority.ALWAYS);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
-            try {
-                Node node = fxmlLoader.load(); // fxmlLoader chỉ có 1 node là AnchorPane
-                root.getChildren().add(node);
-                root.setVgrow(node, Priority.ALWAYS);  // Set kích thước node chiếm toàn bộ kích thước VBox
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Scene scene = new Scene(root);
-            maxscreenStage.setScene(scene);
-            maxscreenStage.show();
-        });
     }
 }

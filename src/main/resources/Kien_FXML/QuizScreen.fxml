@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -36,7 +37,7 @@
                   <Insets bottom="10.0" left="10.0" right="15.0" top="15.0" />
                </padding>
                <center>
-                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                      <content>
                         <VBox fx:id="quizListContainer" prefWidth="409.0" />
                      </content>
@@ -71,18 +72,21 @@
                         <Insets bottom="10.0" left="15.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" prefWidth="157.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="157.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox fx:id="progressContent" maxHeight="1.7976931348623157E308" prefWidth="172.0">
                            <children>
                               <FlowPane fx:id="progressPane" hgap="5.0" maxHeight="1.7976931348623157E308" prefWidth="200.0" vgap="5.0" />
-                              <Label text="Finish attempt ...">
+                              <Label fx:id="finishBtn" onMouseClicked="#finishAttempt" onMouseEntered="#hoverFinishBtn" onMouseExited="#unhoverFinishBtn" text="Finish attempt ...">
                                  <VBox.margin>
                                     <Insets bottom="30.0" top="10.0" />
                                  </VBox.margin>
                                  <font>
                                     <Font size="14.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Label>
                            </children>
                            <padding>

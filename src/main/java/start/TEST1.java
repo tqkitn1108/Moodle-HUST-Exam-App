@@ -1,48 +1,68 @@
 package start;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TEST1 extends Application {
+    private LocalDateTime startTime;
+    private Text durationText;
+
     @Override
-    public void start(Stage primaryStage) {
-        // Giao diện ban đầu
-        VBox root = new VBox(10);
-        root.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(root, 600, 400);
+    public void start(Stage stage) {
+        Text startTimeText = new Text();
+        durationText = new Text();
+        Button startButton = new Button("Start");
+        Button endButton = new Button("End");
 
-        // Button
-        Button button = new Button("Click me!");
-        button.setOnAction(e -> {
-            // Hiển thị cửa sổ xác nhận
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText("Are you sure?");
-            alert.setContentText("Do you want to change the interface?");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mm:ss a", Locale.ENGLISH);
 
-            // Nếu xác nhận, thay đổi giao diện
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                root.getChildren().clear();
-                Label label = new Label("Hello World!");
-                root.getChildren().add(label);
+        startButton.setOnAction(event -> {
+            startTime = LocalDateTime.now();
+            String formattedStartTime = startTime.format(formatter);
+            startTimeText.setText("Start time: " + formattedStartTime);
+            durationText.setText("");
+        });
+
+        endButton.setOnAction(event -> {
+            if (startTime != null) {
+                LocalDateTime endTime = LocalDateTime.now();
+                String formattedEndTime = endTime.format(formatter);
+                String formattedStartTime = startTime.format(formatter);
+                long seconds = Duration.between(startTime, endTime).getSeconds();
+                String duration = formatDuration(seconds);
+                String durationMessage = "Duration: " + duration;
+
+                startTimeText.setText("Start time: " + formattedStartTime);
+                durationText.setText("End time: " + formattedEndTime + "\n" + durationMessage);
+            } else {
+                durationText.setText("Please click the Start button first");
             }
         });
-        root.getChildren().add(button);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        VBox root = new VBox(startTimeText, durationText, startButton, endButton);
+        Scene scene = new Scene(root, 400, 300);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private String formatDuration(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long remainingSeconds = seconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }

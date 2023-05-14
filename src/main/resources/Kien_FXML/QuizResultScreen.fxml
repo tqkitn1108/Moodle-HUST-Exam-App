@@ -23,7 +23,7 @@
                   <Insets bottom="10.0" left="10.0" right="15.0" top="15.0" />
                </padding>
                <center>
-                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                      <content>
                         <VBox fx:id="quizListContainer" prefWidth="409.0">
                            <children>
@@ -104,7 +104,7 @@
                                     </VBox>
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Label fx:id="startOn" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="startedOn" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -115,7 +115,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Finished" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="state" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Finished" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -126,7 +126,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="completedOn" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -137,7 +137,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Label" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="time" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Label" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -148,7 +148,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="marks" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #f7f7f7;" text="Label" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -159,7 +159,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Label" VBox.vgrow="ALWAYS">
+                                          <Label fx:id="grade" prefHeight="24.0" prefWidth="1000.0" style="-fx-background-color: #fafafa;" text="Label" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets />
                                              </VBox.margin>
@@ -218,7 +218,7 @@
                         <VBox fx:id="progressContent" maxHeight="1.7976931348623157E308" prefWidth="172.0">
                            <children>
                               <FlowPane fx:id="progressPane" hgap="5.0" maxHeight="1.7976931348623157E308" prefWidth="200.0" vgap="5.0" />
-                              <Label text="Finish attempt ...">
+                              <Label fx:id="finishReviewBtn" text="Finish review ...">
                                  <VBox.margin>
                                     <Insets bottom="30.0" top="10.0" />
                                  </VBox.margin>

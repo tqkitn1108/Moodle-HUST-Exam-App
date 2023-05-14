@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import models.Quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +25,18 @@ public class QuestionLayoutController implements Initializable {
     public JFXRadioButton op4;
     public AnchorPane correctAnswer;
 
+    public void setStateQues(String state) {
+        this.stateQues.setText(state);
+    }
+
+    public void setQuestionContent(Label questionContent) {
+        this.questionContent = questionContent;
+    }
+
+    public void setQuestionNum(Integer number) {
+        this.questionNum.setText(number.toString());
+    }
+
     public void setAddAnswer() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/CorrectAns.fxml"));
         try {
@@ -32,10 +46,6 @@ public class QuestionLayoutController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void setQuestionNum(Integer number) {
-        this.questionNum.setText(number.toString());
     }
 
     @Override

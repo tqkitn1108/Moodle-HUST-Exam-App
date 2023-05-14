@@ -4,43 +4,68 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class TEST3 extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     @Override
-    public void start(Stage stage) {
-        // Giao dien chinh
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(20));
+    public void start(Stage primaryStage) {
+        // Tạo button đầu tiên
+        Button redButton = new Button("Click me");
+        redButton.setOnAction(e -> {
+            // Tạo dialog xác nhận
+            Dialog<ButtonType> confirmDialog = new Dialog<>();
+            confirmDialog.setTitle("Confirmation");
+            AnchorPane confirmPane = new AnchorPane();
+            confirmPane.setPrefSize(300, 100);
+            confirmPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 
-        Button button = new Button("Click me!");
-        button.setOnAction(e -> {
-            // Hien thi popup
-            ChoiceDialog<String> dialog = new ChoiceDialog<>("Option 1", "Option 1", "Option 2", "Option 3");
-            dialog.setTitle("Select option");
-            dialog.setHeaderText("Choose your path");
-            String choice = dialog.showAndWait().get();
+            // Thiết lập các nút cho dialog
+            Button okButton = new Button("OK");
+            okButton.setOnAction(event -> {
+                // Tạo giao diện mới với màu nền xanh lam
+                BorderPane bluePane = new BorderPane();
+                bluePane.setBackground(new Background(new BackgroundFill(Color.DODGERBLUE, null, null)));
+                Scene blueScene = new Scene(bluePane, 400, 400);
+                primaryStage.setScene(blueScene);
+                Stage dialogStage = (Stage) confirmDialog.getDialogPane().getScene().getWindow();
+                dialogStage.close();
+            });
+            Button cancelButton = new Button("Cancel");
+            cancelButton.setOnAction(event -> confirmDialog.close());
+            AnchorPane.setRightAnchor(okButton, 10.0);
+            AnchorPane.setBottomAnchor(okButton, 10.0);
+            AnchorPane.setRightAnchor(cancelButton, 80.0);
+            AnchorPane.setBottomAnchor(cancelButton, 10.0);
+            confirmPane.getChildren().addAll(okButton, cancelButton);
+            confirmDialog.getDialogPane().setContent(confirmPane);
 
-            if (choice.equals("Option 1")) {
-                // Mo giao dien Option 1
-                stage.setScene(new Scene(new VBox(20), 300, 200));
-            } else if (choice.equals("Option 2")) {
-                // Mo giao dien Option 2
-                stage.setScene(new Scene(new VBox(10, new Button("Option 2")), 500, 300));
-            } else {
-                // Mo giao dien Option 3
-                stage.setScene(new Scene(new VBox(10, new Button("Option 3")), 700, 400));
-            }
+            // Hiển thị dialog và xử lý kết quả
+            confirmDialog.showAndWait();
         });
 
-        root.getChildren().add(button);
-        stage.setScene(new Scene(root, 400, 250));
-        stage.show();
+        // Tạo giao diện đầu tiên với màu nền đỏ
+        BorderPane redPane = new BorderPane();
+        redPane.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        redPane.setCenter(new StackPane(redButton));
+        redPane.setPadding(new Insets(10));
+        Scene redScene = new Scene(redPane, 400, 400);
+
+        // Thiết lập giao diện đầu tiên và hiển thị
+        primaryStage.setScene(redScene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
