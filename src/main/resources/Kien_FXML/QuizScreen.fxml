@@ -34,13 +34,16 @@
                   <Insets />
                </HBox.margin>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="15.0" top="15.0" />
+                  <Insets bottom="10.0" left="10.0" right="20.0" top="15.0" />
                </padding>
                <center>
-                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER">
                      <content>
                         <VBox fx:id="quizListContainer" prefWidth="409.0" />
                      </content>
+                     <BorderPane.margin>
+                        <Insets right="-13.0" />
+                     </BorderPane.margin>
                   </MFXScrollPane>
                </center>
             </BorderPane>
@@ -62,9 +65,9 @@
                   </Label>
                   <HBox fx:id="userSection" prefWidth="200.0">
                      <children>
-                        <Label alignment="BOTTOM_CENTER" prefHeight="31.0" prefWidth="33.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
+                        <Label alignment="BOTTOM_CENTER" prefHeight="33.0" prefWidth="33.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
                            <graphic>
-                              <FontAwesomeIconView fill="#fefefe" glyphName="USER" size="26" />
+                              <FontAwesomeIconView fill="#fefefe" glyphName="USER" size="30" />
                            </graphic>
                         </Label>
                      </children>

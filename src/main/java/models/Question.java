@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Question {
     private Quiz quiz;
     private Integer questionId;
@@ -10,7 +12,24 @@ public class Question {
     private String option4;
     private String answer;
 
+    public static class MetaData {
+        public static final String TABLE_NAME = "questions";
+        public static final String QUESTION = "question";
+        public static final String QUESTION_ID = "id";
+        public static final String OPTION1 = "option1";
+        public static final String OPTION2 = "option2";
+        public static final String OPTION3 = "option3";
+        public static final String OPTION4 = "option4";
+        public static final String ANSWER = "answer";
+        public static final String QUIZ_ID = "quiz_id";
+    }
+
+    public Question(String question) { // Tạo để test
+        this.question = question;
+    }
+
     public Question() {
+
     }
 
     public Question(Quiz quiz, String question, String option1, String option2, String option3, String option4, String answer) {
@@ -86,4 +105,15 @@ public class Question {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    // ----------------------------------------------------------------
+
+    public static void createTable() { // Vid #19
+
+    }
+
+    public void save() { // Vid #24, #25
+
+    }
+
 }

@@ -17,9 +17,9 @@ public class StartGUI72 extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Kien_FXML/GUI72.fxml"));
         Stage stage = new Stage();
+        stage.setTitle("Hệ thống ôn thi trắc nghiệm");
         Scene scene = new Scene(root);
         stage.setScene(scene);
-//        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 }

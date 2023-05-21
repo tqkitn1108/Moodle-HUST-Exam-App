@@ -1,68 +1,93 @@
 package start;
 
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.element.Paragraph;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class TEST1 extends Application {
-    private LocalDateTime startTime;
-    private Text durationText;
-
     @Override
-    public void start(Stage stage) {
-        Text startTimeText = new Text();
-        durationText = new Text();
-        Button startButton = new Button("Start");
-        Button endButton = new Button("End");
+    public void start(Stage primaryStage) throws Exception {
+        // Tạo VBox và thêm các câu hỏi vào đó
+        VBox vBox = new VBox();
+        for (int i = 0; i < 10; i++) {
+            Text question = new Text("Question " + (i + 1));
+            vBox.getChildren().add(question);
+        }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mm:ss a", Locale.ENGLISH);
+        // Tạo scrollPane và đặt VBox làm nội dung
+        ScrollPane scrollPane = new ScrollPane(vBox);
 
-        startButton.setOnAction(event -> {
-            startTime = LocalDateTime.now();
-            String formattedStartTime = startTime.format(formatter);
-            startTimeText.setText("Start time: " + formattedStartTime);
-            durationText.setText("");
-        });
-
-        endButton.setOnAction(event -> {
-            if (startTime != null) {
-                LocalDateTime endTime = LocalDateTime.now();
-                String formattedEndTime = endTime.format(formatter);
-                String formattedStartTime = startTime.format(formatter);
-                long seconds = Duration.between(startTime, endTime).getSeconds();
-                String duration = formatDuration(seconds);
-                String durationMessage = "Duration: " + duration;
-
-                startTimeText.setText("Start time: " + formattedStartTime);
-                durationText.setText("End time: " + formattedEndTime + "\n" + durationMessage);
-            } else {
-                durationText.setText("Please click the Start button first");
+        // Tạo button và đặt sự kiện click
+        Button button = new Button("Export to PDF");
+        button.setOnAction(event -> {
+            // Tạo tài liệu PDF
+            PdfDocument pdfDoc = null;
+            try {
+                pdfDoc = new PdfDocument(new PdfWriter("output.pdf"));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
+
+            // Tạo trang PDF
+            PdfPage page = pdfDoc.addNewPage();
+
+            // Tạo Canvas để vẽ trang PDF
+            PdfCanvas canvas = new PdfCanvas(page);
+
+            // Thiết lập font cho văn bản
+            PdfFont font = null;
+            try {
+                font = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            float fontSize = 12;
+            Paragraph paragraph = new Paragraph();
+
+            // Duyệt các nút con của VBox và thêm chúng vào trang PDF
+            float y = page.getPageSize().getTop() - 50;
+            for (Node node : vBox.getChildren()) {
+                if (node instanceof Text) {
+                    Text question = (Text) node;
+                    canvas.beginText()
+                            .setFontAndSize(font, fontSize)
+                            .moveText(50, y )
+                            .showText(question.getText())
+                            .endText();
+                    fontSize += 2;
+                    y-=20;
+                }
+            }
+
+            // Đóng tài liệu PDF
+            pdfDoc.close();
         });
 
-        VBox root = new VBox(startTimeText, durationText, startButton, endButton);
-        Scene scene = new Scene(root, 400, 300);
-        stage.setScene(scene);
-        stage.show();
-    }
+        // Đặt scrollPane và button vào BorderPane
+        BorderPane root = new BorderPane();
+        root.setCenter(scrollPane);
+        root.setBottom(button);
 
-    private String formatDuration(long seconds) {
-        long hours = seconds / 3600;
-        long minutes = (seconds % 3600) / 60;
-        long remainingSeconds = seconds % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
-    }
-
-    public static void main(String[] args) {
-        launch();
+        // Tạo Scene và hiển thị Stage
+        Scene scene = new Scene(root, 400, 400);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

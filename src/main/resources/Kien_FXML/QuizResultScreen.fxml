@@ -23,7 +23,7 @@
                   <Insets bottom="10.0" left="10.0" right="15.0" top="15.0" />
                </padding>
                <center>
-                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                  <MFXScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER">
                      <content>
                         <VBox fx:id="quizListContainer" prefWidth="409.0">
                            <children>

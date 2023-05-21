@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -51,6 +52,9 @@
                            <VBox.margin>
                               <Insets left="5.0" top="5.0" />
                            </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Label>
                      </children>
                   </VBox>
@@ -61,11 +65,11 @@
             </AnchorPane>
             <VBox prefWidth="100.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox style="-fx-background-color: #e7f3f5;">
+                  <VBox fx:id="questionBox" style="-fx-background-color: #e7f3f5;">
                      <children>
                         <Label fx:id="questionContent" maxWidth="1.7976931348623157E308" prefWidth="594.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
-                              <Insets bottom="15.0" left="10.0" right="10.0" top="5.0" />
+                              <Insets bottom="15.0" left="15.0" right="10.0" top="10.0" />
                            </VBox.margin>
                            <font>
                               <Font size="13.0" />

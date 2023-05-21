@@ -1,7 +1,16 @@
 package controller.Kien_Controller;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,16 +32,18 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import listeners.NewScreenListener;
+import models.DataModel;
+import models.Question;
+import models.Quiz;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class QuizScreenController implements Initializable {
@@ -55,7 +67,9 @@ public class QuizScreenController implements Initializable {
 
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
-
+    private Quiz quiz;
+    private List<Question> questionList;
+    private Map<Integer, Integer> userAnswer;
     private NewScreenListener screenListener;
 
     public void setScreenListener(NewScreenListener screenListener) {
@@ -65,7 +79,18 @@ public class QuizScreenController implements Initializable {
     ToggleGroup[] toggleGroups;
     VBox[] progressNodes;
 
-    Border border = new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 1)));
+    private boolean autoCloseConfirmation = false;
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        this.getData();
+    }
+
+    private void getData() {
+        if (quiz != null) {
+            this.questionList = quiz.getQuestions();
+        }
+    }
 
     // Xử lý khi hover vào finish Attempt
     @FXML
@@ -98,7 +123,7 @@ public class QuizScreenController implements Initializable {
     }
 
     private void setTimer() {
-        totalSec = 300;
+        totalSec = 20;
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -110,6 +135,7 @@ public class QuizScreenController implements Initializable {
                         if (totalSec <= 0) {
                             timer.cancel();
                             time.setText("Time left 00:00:00");
+                            changeScreen();
                         }
                     }
                 });
@@ -120,18 +146,33 @@ public class QuizScreenController implements Initializable {
 
     public void addQuestionList() {
         startTime = LocalDateTime.now();
-        toggleGroups = new ToggleGroup[20];
-        for (int i = 0; i < 20; i++) {
+        // Tạo ra questionList mẫu làm ví dụ
+        questionList = new ArrayList<Question>();
+        for (int i = 0; i < 100; i++) {
+            questionList.add(new Question("Question " + i));
+        }
+
+        toggleGroups = new ToggleGroup[questionList.size()];
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
+                questionLayoutController.setQuestionContent(questionList.get(i).getQuestion());
                 toggleGroups[i] = questionLayoutController.choice;
+                int finalI = i;
                 toggleGroups[i].selectedToggleProperty().addListener(
                         (ov, oldToggle, newToggle) -> {
                             if (newToggle != null) {
                                 questionLayoutController.setStateQues("Answered");
+                                for (int j = 1; j <= 4; ++j) {
+                                    RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
+                                    if (selectedRadio.isSelected()) {
+                                        userAnswer.put(finalI, j);
+                                        break;
+                                    }
+                                }
                             }
                         }
                 );
@@ -143,8 +184,8 @@ public class QuizScreenController implements Initializable {
     }
 
     public void renderNavigation() {
-        progressNodes = new VBox[20];
-        for (int i = 0; i < 20; i++) {
+        progressNodes = new VBox[questionList.size()];
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionRectangle.fxml"));
             try {
                 Node node1 = fxmlLoader1.load();
@@ -154,6 +195,7 @@ public class QuizScreenController implements Initializable {
                         (ov, oldToggle, newToggle) -> {
                             if (newToggle != null) {
                                 questionRectangleController.setAnswered();
+
                             } else {
                                 questionRectangleController.setDefault();
                             }
@@ -190,7 +232,7 @@ public class QuizScreenController implements Initializable {
         StackPane root = new StackPane(thisScene.getRoot()); // Tạo một StackPane để chứa Stage và Overlay
         root.setPrefSize(screenBounds.getWidth(), screenBounds.getHeight()); // Đặt kích thước cho StackPane bằng với kích thước của màn hình
         Pane overlay = new Pane();
-        overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 0.5;");
+        overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
         root.getChildren().add(overlay);
         Scene newScene = new Scene(root);
         thisStage.setScene(newScene); // Đặt Scene mới cho thisStage
@@ -202,27 +244,37 @@ public class QuizScreenController implements Initializable {
         Stage confirmStage = new Stage();
         confirmStage.initStyle(StageStyle.UNDECORATED); // Bỏ thanh bar mặc định ở trên cửa sổ
         // User không tương tác được với primaryStage khi hiện cửa sổ
-        confirmStage.initModality(Modality.WINDOW_MODAL);
-        confirmStage.initOwner(thisStage);
+        confirmStage.initModality(Modality.APPLICATION_MODAL);
+//        confirmStage.initModality(Modality.WINDOW_MODAL);
+//        confirmStage.initOwner(thisStage);
+
         // set scene cho confirmStage và chờ đợi event
         confirmStage.setScene(scene);
         confirmStage.showAndWait();
 
         ConfirmSubmitController confirmSubmitController = loader.getController();
-
         if (confirmSubmitController.isCancelled) {
             root.getChildren().remove(overlay);
+            if(confirmStage.isShowing()){
+                confirmStage.close();
+            }
         }
         if (confirmSubmitController.isSubmitted) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
-            try {
-                Node node = fxmlLoader.load();
-                QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
-                setResultBar(quizResultScreenController);
-                this.screenListener.changeScreen(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            changeScreen();
+        }
+    }
+
+    private void changeScreen() {
+        DataModel.getInstance().setNumber(questionList.size());
+        DataModel.getInstance().setUserAnswer(userAnswer);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
+        try {
+            Node node = fxmlLoader.load();
+            QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
+            setResultBar(quizResultScreenController);
+            this.screenListener.changeScreen(node);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -233,28 +285,31 @@ public class QuizScreenController implements Initializable {
         quizResultScreenController.setStartedOn(startTime.format(formatter));
         quizResultScreenController.setCompletedOn(finishTime.format(formatter));
         quizResultScreenController.setTime(formatDuration(seconds));
+        quizResultScreenController.setMarks("/" + progressNodes.length + ".00");
+        quizResultScreenController.setGrade(0.00 + " out of 10.00 (" + 0 + "%)");
     }
 
     private String formatDuration(long seconds) {
         long hours = seconds / 3600;
         long minutes = (seconds % 3600) / 60;
         long remainingSeconds = seconds % 60;
-        String hr = "", min = "", sec = "";
-        if (hours == 1) hr = "1 hour ";
-        else if (hours > 1) hr = hours + " hours ";
-        if (minutes == 1) min = "1 min ";
-        else if (minutes > 1) min = minutes + " mins ";
-        if (remainingSeconds == 1) sec = "1 sec";
-        else if (remainingSeconds > 1) sec = remainingSeconds + " secs ";
-        return hr + min + sec;
+        String hrText = "", minText = "", secText = "";
+        if (hours == 1) hrText = "1 hour ";
+        else if (hours > 1) hrText = hours + " hours ";
+        if (minutes == 1) minText = "1 min ";
+        else if (minutes > 1) minText = minutes + " mins ";
+        if (remainingSeconds == 1) secText = "1 sec";
+        else if (remainingSeconds > 1) secText = remainingSeconds + " secs ";
+        return hrText + minText + secText;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i
         addQuestionList();
         renderNavigation();
         setTimer();
-        userSection.setBorder(border);
+        userSection.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 1))));
         progressContent.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 1, 1))));
     }
 }
