@@ -79,7 +79,9 @@ public class QuizScreenController implements Initializable {
     ToggleGroup[] toggleGroups;
     VBox[] progressNodes;
 
-    private boolean autoCloseConfirmation = false;
+    Pane overlay;
+    StackPane overlayStackPane;
+    Stage confirmStage;
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -123,7 +125,7 @@ public class QuizScreenController implements Initializable {
     }
 
     private void setTimer() {
-        totalSec = 20;
+        totalSec = questionList.size() * 30L;
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -135,6 +137,10 @@ public class QuizScreenController implements Initializable {
                         if (totalSec <= 0) {
                             timer.cancel();
                             time.setText("Time left 00:00:00");
+                            if(confirmStage != null) {
+                                confirmStage.close();
+                                overlayStackPane.getChildren().remove(overlay);
+                            }
                             changeScreen();
                         }
                     }
@@ -148,8 +154,8 @@ public class QuizScreenController implements Initializable {
         startTime = LocalDateTime.now();
         // Tạo ra questionList mẫu làm ví dụ
         questionList = new ArrayList<Question>();
-        for (int i = 0; i < 100; i++) {
-            questionList.add(new Question("Question " + i));
+        for (int i = 0; i < 50; i++) {
+            questionList.add(new Question("Question " + i + 1));
         }
 
         toggleGroups = new ToggleGroup[questionList.size()];
@@ -229,24 +235,24 @@ public class QuizScreenController implements Initializable {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Lấy kích thước của màn hình
         Stage thisStage = (Stage) finishBtn.getScene().getWindow(); // Lấy Stage hiện tại
         Scene thisScene = thisStage.getScene();
-        StackPane root = new StackPane(thisScene.getRoot()); // Tạo một StackPane để chứa Stage và Overlay
-        root.setPrefSize(screenBounds.getWidth(), screenBounds.getHeight()); // Đặt kích thước cho StackPane bằng với kích thước của màn hình
-        Pane overlay = new Pane();
+        overlayStackPane = new StackPane(thisScene.getRoot()); // Tạo một StackPane để chứa Stage và Overlay
+        overlayStackPane.setPrefSize(screenBounds.getWidth(), screenBounds.getHeight()); // Đặt kích thước cho StackPane bằng với kích thước của màn hình
+        overlay = new Pane();
         overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
-        root.getChildren().add(overlay);
-        Scene newScene = new Scene(root);
+        overlayStackPane.getChildren().add(overlay);
+        Scene newScene = new Scene(overlayStackPane);
         thisStage.setScene(newScene); // Đặt Scene mới cho thisStage
 
         // Cài đặt cho confirm window
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Kien_FXML/ConfirmSubmit.fxml"));
         Parent confirmPane = loader.load();
         Scene scene = new Scene(confirmPane);
-        Stage confirmStage = new Stage();
+        confirmStage = new Stage();
         confirmStage.initStyle(StageStyle.UNDECORATED); // Bỏ thanh bar mặc định ở trên cửa sổ
         // User không tương tác được với primaryStage khi hiện cửa sổ
-        confirmStage.initModality(Modality.APPLICATION_MODAL);
-//        confirmStage.initModality(Modality.WINDOW_MODAL);
-//        confirmStage.initOwner(thisStage);
+//        confirmStage.initModality(Modality.APPLICATION_MODAL);
+        confirmStage.initModality(Modality.WINDOW_MODAL);
+        confirmStage.initOwner(thisStage);
 
         // set scene cho confirmStage và chờ đợi event
         confirmStage.setScene(scene);
@@ -254,10 +260,7 @@ public class QuizScreenController implements Initializable {
 
         ConfirmSubmitController confirmSubmitController = loader.getController();
         if (confirmSubmitController.isCancelled) {
-            root.getChildren().remove(overlay);
-            if(confirmStage.isShowing()){
-                confirmStage.close();
-            }
+            overlayStackPane.getChildren().remove(overlay);
         }
         if (confirmSubmitController.isSubmitted) {
             changeScreen();

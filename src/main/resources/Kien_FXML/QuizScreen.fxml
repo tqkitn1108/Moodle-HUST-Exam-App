@@ -75,7 +75,7 @@
                         <Insets bottom="10.0" left="15.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="157.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="174.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox fx:id="progressContent" maxHeight="1.7976931348623157E308" prefWidth="172.0">
                            <children>
@@ -98,7 +98,7 @@
                         </VBox>
                      </content>
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </MFXScrollPane>
                </children>
