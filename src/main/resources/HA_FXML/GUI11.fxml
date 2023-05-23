@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI11Controller">
+   <children>
+      <VBox prefWidth="600.0" style="-fx-border-color: #ccc;">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="600.0" style="-fx-background-color: #0273a5;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="16.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tạ Quang Kiên">
+                     <HBox.margin>
+                        <Insets left="400.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Label alignment="BOTTOM_CENTER" prefHeight="38.0" prefWidth="37.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="30" />
+                     </graphic>
+                  </Label>
+                  <Label fx:id="PopUpButton" alignment="CENTER" onMouseClicked="#PopUp">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="CARET_DOWN" wrappingWidth="18.428571224212646" />
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="98.0" prefWidth="600.0" style="-fx-border-color: #e5e5e5;">
+               <children>
+                  <VBox prefHeight="79.0" prefWidth="601.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="578.0">
+                           <children>
+                              <Label text="IT" textFill="#c53624">
+                                 <font>
+                                    <Font name="System Bold" size="28.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label alignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="520.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="16.0" />
+                                 </graphic>
+                              </Label>
+                              <Label alignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#c02424" glyphName="CARET_DOWN" />
+                                 </graphic>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="27.0" prefWidth="586.0">
+                           <children>
+                              <Label alignment="CENTER" text="Home" textFill="#c53624">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" text="/  My courses  /">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="THI CUỐI KỲ" textFill="#c53624">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="2.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="3.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <MFXButton alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #0273a5;" text="TURN EDITING ON" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="430.0" />
+                           </VBox.margin>
+                        </MFXButton>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="3.0" />
+               </VBox.margin>
+            </HBox>
+            <AnchorPane fx:id="listCourse" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
