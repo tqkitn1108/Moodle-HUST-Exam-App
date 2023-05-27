@@ -1,6 +1,8 @@
 package models;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBInteract {
 
@@ -16,10 +18,10 @@ public class DBInteract {
         return conn;
     }
 
-    public void insert(Question q) {
+    public void insertQuestion(Question q) {
 
         try {
-            String sql = "INSERT INTO QUESTION(qID,qData,quizID) VALUES(?,?,?)";
+            String sql = "INSERT INTO QUESTION(questionID,questionData,quizID) VALUES(?,?,?)";
             Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQuestionID());
@@ -27,7 +29,7 @@ public class DBInteract {
             pstmt.setString(3,q.getQuiz().getQuizID());
             pstmt.executeUpdate();
 
-            sql = "INSERT INTO OPTIONS(qID, optionLabel, optionData) VALUES(?,?,?)";
+            sql = "INSERT INTO OPTIONS(questionID, optionLabel, optionData) VALUES(?,?,?)";
             pstmt = conn.prepareStatement(sql);
 
             for (String options:q.getOptions()) {
@@ -37,7 +39,7 @@ public class DBInteract {
                 pstmt.executeUpdate();
             }
 
-            sql = "INSERT INTO ANSWER(qID, optionLabel) VALUES(?,?)";
+            sql = "INSERT INTO ANSWER(questionID, optionLabel) VALUES(?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,q.getQuestionID());
             pstmt.setString(2, String.valueOf(q.getAns()));
@@ -48,17 +50,17 @@ public class DBInteract {
     }
 
     public void show() {
-        String sql = "SELECT qID, qData FROM QUESTION";
+        String sql = "SELECT questionID, questionData FROM QUESTION";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             while (rs.next()) {
-                String s = rs.getString("qID");
-                System.out.println(rs.getString("qData"));
+                String s = rs.getString("questionID");
+                System.out.println(rs.getString("questionData"));
 
-                String opt = "SELECT optionLabel, optionData FROM OPTIONS WHERE qID = '" + s +"'";
+                String opt = "SELECT optionLabel, optionData FROM OPTIONS WHERE questionID = '" + s +"'";
                 //System.out.println(opt);
                 Statement optStmt = conn.createStatement();
                 ResultSet optRs = optStmt.executeQuery(opt);
@@ -66,7 +68,7 @@ public class DBInteract {
                     System.out.println(optRs.getString(1) + ": " + optRs.getString(2));
                 }
 
-                String ans = "SELECT optionLabel FROM ANSWER WHERE qID = '" + s +"'";
+                String ans = "SELECT optionLabel FROM ANSWER WHERE questionID = '" + s +"'";
                 Statement ansStmt = conn.createStatement();
                 ResultSet ansRs = ansStmt.executeQuery(ans);
                 ansRs.next();
@@ -90,5 +92,63 @@ public class DBInteract {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Question> getQuestionsBelongToQuiz(Quiz quiz) {
+        List<Question> questions = new ArrayList<Question>();
+        try (Connection conn = this.connect()) {
+            String sql = "SELECT questionID, questionData FROM QUESTION WHERE quizID = '" + quiz.getQuizID() + "'";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Question q = new Question();
+                q.setQuiz(quiz);
+                String s = rs.getString("questionID");
+                q.setQuestionID(s);
+                //System.out.println(rs.getString("questionData"));
+                q.setQuestionData(rs.getString(2));
+
+                String opt = "SELECT optionLabel, optionData FROM OPTIONS WHERE questionID = '" + s +"'";
+                //System.out.println(opt);
+                Statement optStmt = conn.createStatement();
+                ResultSet optRs = optStmt.executeQuery(opt);
+
+                List<String> options = new ArrayList<String>();
+                while (optRs.next()) {
+                    //System.out.println(optRs.getString(1) + ": " + optRs.getString(2));
+                    options.add(optRs.getString(1) + ": " + optRs.getString(2));
+                }
+                q.setOptions(options);
+
+                String ans = "SELECT optionLabel FROM ANSWER WHERE questionID = '" + s +"'";
+                Statement ansStmt = conn.createStatement();
+                ResultSet ansRs = ansStmt.executeQuery(ans);
+                ansRs.next();
+                //System.out.println("ANSWER: " + ansRs.getString(1));
+                q.setAns(ansRs.getString(1).charAt(0));
+
+                questions.add(q);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return questions;
+    }
+
+    public List<Quiz> getAllQuizzes() {
+        List<Quiz> quizzes = new ArrayList<Quiz>();
+        try (Connection conn = this.connect()) {
+            String sql = "SELECT quizID, quizTitle FROM QUIZ";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                quizzes.add(new Quiz(rs.getString(1),rs.getString(2)));
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return quizzes;
     }
 }
