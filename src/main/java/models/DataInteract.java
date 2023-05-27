@@ -1,26 +1,30 @@
 package models;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.sqlite.core.DB;
 
-import java.io.*;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataInteract {
     public static void main(String[] args) {
-        List<String> lines = getDataFromDocFiles("src/Doc1.docx");
-        List<Question> questions = getQuestionsFromLines(lines);
+        List<Question> questions = getQuestionsFromDocFiles("src/Doc1.docx");
         Quiz quiz = new Quiz("1", "testquiz");
         DBInteract dbi = new DBInteract();
         dbi.createNewQuiz(quiz);
         for (Question q:questions) {
             q.setQuiz(quiz);
-            dbi.insert(q);
+            dbi.insertQuestion(q);
         }
-        dbi.show();
+        questions = dbi.getQuestionsBelongToQuiz(quiz);
+        for (Question q:questions) {
+            q.showQ();
+        }
     }
 
+    public static List<Question> getQuestionsFromDocFiles(String path) {
+        return getQuestionsFromLines(getDataFromDocFiles(path));
+    }
     public static List<String> getDataFromDocFiles(String path) {
         List<String> lines = new ArrayList<String>();
         try {
@@ -67,4 +71,5 @@ public class DataInteract {
         } while (i<n);
         return questions;
     }
+
 }
