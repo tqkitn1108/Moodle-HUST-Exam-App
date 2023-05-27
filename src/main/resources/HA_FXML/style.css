@@ -1,0 +1,58 @@
+.checkBox .box {
+    -fx-background-color: white;
+    -fx-border-color: #2196F3;
+}
+
+.checkBox .box:hover {
+    -fx-background-color: #E3F2FD;
+}
+
+.checkBox:selected .box {
+    -fx-background-color: #2196F3;
+}
+
+.checkBox:selected .mark {
+    -fx-background-color: white;
+}
+
+
+.tabPane *.tab-header-background {
+
+    -fx-padding: 20 20 20 20;
+    -fx-background-color: transparent;
+}
+
+.tabPane .tab.tab-content-area {
+    -fx-background-color: inherit;
+    -fx-border-color: inherit;
+}
+
+.tab {
+    -fx-pref-height: 50px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.tab .tab-label {
+    -fx-font-size: 15px;
+    -fx-alignment: center;
+    -fx-text-fill: #00ACEA;
+}
+
+.tab:selected {
+    -fx-background-color: white;
+    -fx-border-color: #C8CCE8 #C8CCE8 transparent #C8CCE8;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+.tab:selected .focus-indicator {
+    -fx-focus-color: transparent;
+}
+
+.tabPane .tab:focused {
+    -fx-focus-color: transparent;
+}

@@ -4,22 +4,34 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+
 public class GUI11Controller implements Initializable {
     @FXML
-    private Label PopUpButton;
-    @FXML
     private AnchorPane listCourse;
-
     @FXML
-    void PopUp(MouseEvent event){
+    private Button questionViewButt;
+    @FXML
+    void viewQuestion(MouseEvent ignoredEvent){
+        // Xử lý sự kiện khi click button
+        questionViewButt.setOnMouseClicked(event -> {
+            try {
+                // Load giao diện mới từ file GUI21.fxml
+                FXMLLoader newLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
+                AnchorPane newAnchorPane = newLoader.load();
+                listCourse.getChildren().setAll(newAnchorPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 
@@ -34,4 +46,5 @@ public class GUI11Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

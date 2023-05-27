@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI12Controller">
+<AnchorPane prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI12Controller">
    <children>
-      <HBox prefHeight="400.0" prefWidth="600.0">
+      <HBox prefWidth="600.0">
          <children>
             <Label alignment="CENTER" text="QUESTION BANK" textFill="#009fe5">
                <font>
@@ -20,7 +19,7 @@
                   <Insets left="30.0" top="10.0" />
                </padding>
             </Label>
-            <VBox prefHeight="400.0" prefWidth="352.0">
+            <VBox prefWidth="352.0">
                <children>
                   <Label fx:id="OpenQuestionButton" onMouseClicked="#OpenQuestion" text="Questions" textFill="#009fe5">
                      <VBox.margin>
