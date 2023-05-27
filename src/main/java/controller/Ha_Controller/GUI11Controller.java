@@ -35,7 +35,6 @@ public class GUI11Controller implements Initializable {
 
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));

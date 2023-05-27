@@ -144,7 +144,7 @@ public class QuizScreenController implements Initializable {
         startTime = LocalDateTime.now();
         // Tạo ra questionList mẫu làm ví dụ
         questionList = new ArrayList<Question>();
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 50; i++) {
             questionList.add(new Question("Question " + (i + 1)));
         }
 
