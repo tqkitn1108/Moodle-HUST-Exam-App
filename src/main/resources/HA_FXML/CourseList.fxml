@@ -4,119 +4,94 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="188.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseListController">
    <children>
-      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #e5e5e5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc; -fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="586.0">
+            <Label graphicTextGap="8.0" text="Kiểm tra cuối kỳ môn IT4859Q">
+               <graphic>
+                  <StackPane prefHeight="18.0" prefWidth="12.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                        <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
                </VBox.margin>
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER">
-                     <graphic>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kiểm tra cuối kỳ môn IT4859Q">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="21.0" prefHeight="32.0" prefWidth="586.0">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER">
-                     <graphic>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thi thử Kỹ thuật lập trình">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="53.0" prefHeight="32.0" prefWidth="586.0">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER">
-                     <graphic>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kiểm tra giữa kỳ môn IT3090">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="85.0" prefHeight="32.0" prefWidth="586.0">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER">
-                     <graphic>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kiểm tra giữa kỳ môn IT3100">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="117.0" prefHeight="32.0" prefWidth="586.0">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER">
-                     <graphic>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kiểm tra giữa kỳ môn IT3030">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
+            </Label>
+            <Label graphicTextGap="8.0" text="Thi thử Kỹ thuật lập trình">
+               <graphic>
+                  <StackPane prefHeight="18.0" prefWidth="12.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                        <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3090">
+               <graphic>
+                  <StackPane prefHeight="18.0" prefWidth="12.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                        <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3030">
+               <graphic>
+                  <StackPane prefHeight="18.0" prefWidth="12.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                        <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3100">
+               <graphic>
+                  <StackPane prefHeight="18.0" prefWidth="12.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                        <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+                     </children>
+                  </StackPane>
+               </graphic>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </children>

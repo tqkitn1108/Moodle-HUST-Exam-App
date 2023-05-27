@@ -38,13 +38,13 @@ public class GUI11Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
-        try {
-            Node node = fxmlLoader.load();
-            listCourse.getChildren().add(node);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+//        try {
+//            Node node = fxmlLoader.load();
+//            listCourse.getChildren().add(node);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
