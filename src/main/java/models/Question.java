@@ -1,119 +1,58 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Question {
+    private String questionID;
+    private String questionData;
+    private List<String> options;
+    private char ans;
     private Quiz quiz;
-    private Integer questionId;
-    private String question;
-    private String option1;
-    private String option2;
-    private String option3;
-    private String option4;
-    private String answer;
 
-    public static class MetaData {
-        public static final String TABLE_NAME = "questions";
-        public static final String QUESTION = "question";
-        public static final String QUESTION_ID = "id";
-        public static final String OPTION1 = "option1";
-        public static final String OPTION2 = "option2";
-        public static final String OPTION3 = "option3";
-        public static final String OPTION4 = "option4";
-        public static final String ANSWER = "answer";
-        public static final String QUIZ_ID = "quiz_id";
+    public String getQuestionID() {
+        return questionID;
     }
-
-    public Question(String question) { // Tạo để test
-        this.question = question;
+    public String getQuestionData() {
+        return questionData;
     }
-
-    public Question() {
-
+    public List<String> getOptions() {
+        return options;
     }
-
-    public Question(Quiz quiz, String question, String option1, String option2, String option3, String option4, String answer) {
-        this.quiz = quiz;
-        this.question = question;
-        this.option1 = option1;
-        this.option2 = option2;
-        this.option3 = option3;
-        this.option4 = option4;
-        this.answer = answer;
+    public char getAns() {
+        return ans;
     }
-
     public Quiz getQuiz() {
         return quiz;
     }
-
-    public Integer getQuestionId() {
-        return questionId;
+    public void setQuestionID(String questionID) {
+        this.questionID = questionID;
     }
-
-    public String getQuestion() {
-        return question;
+    public void setQuestionData(String questionData) {
+        this.questionData = questionData;
     }
-
-    public String getOption1() {
-        return option1;
+    public void setOptions(List<String> options) {
+        this.options = options;
     }
-
-    public String getOption2() {
-        return option2;
+    public void setAns(char ans) {
+        this.ans = ans;
     }
-
-    public String getOption3() {
-        return option3;
-    }
-
-    public String getOption4() {
-        return option4;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }
 
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
+    Question() {
+        questionData = "";
+        options = new ArrayList<String>();
+        ans = 0;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void showQ() {
+        System.out.println(questionData);
+        int n = options.size();
+        for (String option : options) {
+            System.out.println(option);
+        }
+        System.out.println("ANS: " + ans);
     }
-
-    public void setOption1(String option1) {
-        this.option1 = option1;
-    }
-
-    public void setOption2(String option2) {
-        this.option2 = option2;
-    }
-
-    public void setOption3(String option3) {
-        this.option3 = option3;
-    }
-
-    public void setOption4(String option4) {
-        this.option4 = option4;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    // ----------------------------------------------------------------
-
-    public static void createTable() { // Vid #19
-
-    }
-
-    public void save() { // Vid #24, #25
-
-    }
-
 }
