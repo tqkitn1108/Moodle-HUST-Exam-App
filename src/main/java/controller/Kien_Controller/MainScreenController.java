@@ -30,6 +30,11 @@ public class MainScreenController implements Initializable {
                 }
 
                 @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
                 public void handle(Event event) {
 
                 }

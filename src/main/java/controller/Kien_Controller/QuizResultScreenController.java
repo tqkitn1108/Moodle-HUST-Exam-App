@@ -55,10 +55,6 @@ public class QuizResultScreenController implements Initializable {
     @FXML
     private Label time;
 
-    @FXML
-    private HBox userSection;
-
-    VBox[] progressNodes;
     private Integer questionQuantity;
     private Map<Integer, Integer> userAnswer;
 
@@ -108,7 +104,6 @@ public class QuizResultScreenController implements Initializable {
     }
 
     public void renderNavigation() {
-        progressNodes = new VBox[questionQuantity];
         for (int i = 0; i < questionQuantity; i++) {
             FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionRectangle.fxml"));
             try {
@@ -116,8 +111,7 @@ public class QuizResultScreenController implements Initializable {
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
                 questionRectangleController.setAnswered();
-                progressNodes[i] = questionRectangleController.getRectangle();
-                scrollToQuestion(i);
+                scrollToQuestion(i,questionRectangleController);
                 progressPane.getChildren().add(node1);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -125,15 +119,14 @@ public class QuizResultScreenController implements Initializable {
         }
     }
 
-    public void scrollToQuestion(int questionIndex) {
+    public void scrollToQuestion(int questionIndex, QuestionRectangleController questionRectangleController) {
         final int i = questionIndex;
-        progressNodes[questionIndex].setOnMouseClicked(event -> {
+        questionRectangleController.getRectangle().setOnMouseClicked(event -> {
             double scrollToY;
             if (i <= 2) scrollToY = quizListContainer.getChildren().get(i).getLayoutY();
             else scrollToY = quizListContainer.getChildren().get(i + 1).getLayoutY();
-            double tmp = (quizListContainer.getHeight() / progressNodes.length) / quizListContainer.getHeight();
-            if (i > 0.5 * progressNodes.length) {
-                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + tmp);
+            if (i > 0.5 * questionQuantity) {
+                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + 1D / questionQuantity);
             } else
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight());
         });
@@ -145,7 +138,5 @@ public class QuizResultScreenController implements Initializable {
         userAnswer = DataModel.getInstance().getUserAnswer();
         addQuestionList();
         renderNavigation();
-        userSection.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 1))));
-        progressContent.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 1, 1))));
     }
 }

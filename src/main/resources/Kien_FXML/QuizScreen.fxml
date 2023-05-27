@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="344.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuizScreenController">
+<AnchorPane prefHeight="344.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuizScreenController">
    <children>
       <HBox fillHeight="false" prefHeight="100.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -47,12 +48,12 @@
                   </MFXScrollPane>
                </center>
             </BorderPane>
-            <VBox maxWidth="400.0" prefHeight="1075.0" prefWidth="173.0" HBox.hgrow="ALWAYS">
+            <VBox maxWidth="400.0" prefWidth="173.0" style="-fx-border-width: 1px; -fx-border-color: #ccc;" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets />
+                  <Insets bottom="10.0" />
                </HBox.margin>
                <children>
-                  <Label maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="270.0" style="-fx-border-color: #ccc; -fx-background-color: #fafafa;" text="Quiz navigation" textFill="#ca2c32" VBox.vgrow="SOMETIMES">
+                  <Label maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="270.0" style="-fx-background-color: #fafafa;" text="Quiz navigation" textFill="#ca2c32" VBox.vgrow="SOMETIMES">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -63,7 +64,8 @@
                         <Insets bottom="17.0" left="15.0" right="15.0" top="17.0" />
                      </padding>
                   </Label>
-                  <HBox fx:id="userSection" prefWidth="200.0">
+                  <Separator prefWidth="200.0" />
+                  <HBox prefWidth="200.0">
                      <children>
                         <Label alignment="BOTTOM_CENTER" prefHeight="33.0" prefWidth="33.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
                            <graphic>
@@ -75,32 +77,32 @@
                         <Insets bottom="10.0" left="15.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="174.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+                  <MFXScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="174.0" style="-fx-padding: 0;" vbarPolicy="NEVER" VBox.vgrow="NEVER">
                      <content>
-                        <VBox fx:id="progressContent" maxHeight="1.7976931348623157E308" prefWidth="172.0">
+                        <VBox fx:id="progressContent" maxHeight="1.7976931348623157E308" prefWidth="385.0">
                            <children>
-                              <FlowPane fx:id="progressPane" hgap="5.0" maxHeight="1.7976931348623157E308" prefWidth="200.0" vgap="5.0" />
-                              <Label fx:id="finishBtn" onMouseClicked="#finishAttempt" onMouseEntered="#hoverFinishBtn" onMouseExited="#unhoverFinishBtn" text="Finish attempt ...">
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" top="10.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
+                              <FlowPane fx:id="progressPane" hgap="5.0" maxHeight="1.7976931348623157E308" prefWidth="385.0" vgap="5.0" />
                            </children>
                            <padding>
-                              <Insets left="15.0" />
+                              <Insets left="10.0" />
                            </padding>
                         </VBox>
                      </content>
                      <VBox.margin>
-                        <Insets bottom="30.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </MFXScrollPane>
+                  <Label fx:id="finishBtn" onMouseClicked="#finishAttempt" onMouseEntered="#hoverFinishBtn" onMouseExited="#unhoverFinishBtn" text="Finish attempt ...">
+                     <VBox.margin>
+                        <Insets bottom="25.0" left="15.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
                </children>
             </VBox>
          </children>

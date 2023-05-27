@@ -47,17 +47,12 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class QuizScreenController implements Initializable {
-
     @FXML
     private Label finishBtn;
     @FXML
     private MFXScrollPane scrollPane;
     @FXML
-    private AnchorPane anchorPane;
-    @FXML
     private Label time;
-    @FXML
-    private HBox userSection;
     @FXML
     private VBox progressContent;
     @FXML
@@ -76,9 +71,9 @@ public class QuizScreenController implements Initializable {
         this.screenListener = screenListener;
     }
 
-    ToggleGroup[] toggleGroups;
-    VBox[] progressNodes;
+    private Timer timer = new Timer();
 
+    ToggleGroup[] toggleGroups;
     Pane overlay;
     StackPane overlayStackPane;
     Stage confirmStage;
@@ -126,7 +121,7 @@ public class QuizScreenController implements Initializable {
 
     private void setTimer() {
         totalSec = questionList.size() * 30L;
-        Timer timer = new Timer();
+        this.timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -135,12 +130,7 @@ public class QuizScreenController implements Initializable {
                     public void run() {
                         convertTime();
                         if (totalSec <= 0) {
-                            timer.cancel();
                             time.setText("Time left 00:00:00");
-                            if(confirmStage != null) {
-                                confirmStage.close();
-                                overlayStackPane.getChildren().remove(overlay);
-                            }
                             changeScreen();
                         }
                     }
@@ -154,8 +144,8 @@ public class QuizScreenController implements Initializable {
         startTime = LocalDateTime.now();
         // Tạo ra questionList mẫu làm ví dụ
         questionList = new ArrayList<Question>();
-        for (int i = 0; i < 50; i++) {
-            questionList.add(new Question("Question " + i + 1));
+        for (int i = 0; i < 200; i++) {
+            questionList.add(new Question("Question " + (i + 1)));
         }
 
         toggleGroups = new ToggleGroup[questionList.size()];
@@ -190,7 +180,6 @@ public class QuizScreenController implements Initializable {
     }
 
     public void renderNavigation() {
-        progressNodes = new VBox[questionList.size()];
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionRectangle.fxml"));
             try {
@@ -207,8 +196,7 @@ public class QuizScreenController implements Initializable {
                             }
                         }
                 );
-                progressNodes[i] = questionRectangleController.getRectangle();
-                scrollToQuestion(i);
+                scrollToQuestion(i, questionRectangleController);
                 progressPane.getChildren().add(node1);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -216,27 +204,24 @@ public class QuizScreenController implements Initializable {
         }
     }
 
-    public void scrollToQuestion(int questionIndex) {
+    public void scrollToQuestion(int questionIndex, QuestionRectangleController questionRectangleController) {
         final int i = questionIndex;
-        progressNodes[questionIndex].setOnMouseClicked(event -> {
+        questionRectangleController.getRectangle().setOnMouseClicked(event -> {
             double scrollToY = quizListContainer.getChildren().get(i).getLayoutY();
-            // tmp là tỉ lệ % chiều cao của một câu hỏi trong quizListContainer
-            double tmp = (quizListContainer.getHeight() / progressNodes.length) / quizListContainer.getHeight();
-            if (i > 0.5 * progressNodes.length) {
+            double tmp = 1D / questionList.size();// tmp là tỉ lệ % chiều cao của một câu hỏi trong quizListContainer
+            if (i > 0.5 * questionList.size()) {
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + tmp);
             } else
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight());
         });
     }
 
-    // Xử lý sự kiện khi click vào finish Attempt
     public void finishAttempt(MouseEvent event) throws IOException {
         // Cài đặt cho primaryStage khi hiện cửa sổ xác nhận
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds(); // Lấy kích thước của màn hình
         Stage thisStage = (Stage) finishBtn.getScene().getWindow(); // Lấy Stage hiện tại
         Scene thisScene = thisStage.getScene();
         overlayStackPane = new StackPane(thisScene.getRoot()); // Tạo một StackPane để chứa Stage và Overlay
-        overlayStackPane.setPrefSize(screenBounds.getWidth(), screenBounds.getHeight()); // Đặt kích thước cho StackPane bằng với kích thước của màn hình
+        overlayStackPane.setPrefSize(thisStage.getWidth() - 15, thisStage.getHeight() - 38);
         overlay = new Pane();
         overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
         overlayStackPane.getChildren().add(overlay);
@@ -249,8 +234,7 @@ public class QuizScreenController implements Initializable {
         Scene scene = new Scene(confirmPane);
         confirmStage = new Stage();
         confirmStage.initStyle(StageStyle.UNDECORATED); // Bỏ thanh bar mặc định ở trên cửa sổ
-        // User không tương tác được với primaryStage khi hiện cửa sổ
-//        confirmStage.initModality(Modality.APPLICATION_MODAL);
+        // Ngăn user tương tác được với primaryStage khi hiện cửa sổ, có thể dùng APPLICATION_MODAL thay cho WINDOW_MODAL
         confirmStage.initModality(Modality.WINDOW_MODAL);
         confirmStage.initOwner(thisStage);
 
@@ -268,6 +252,12 @@ public class QuizScreenController implements Initializable {
     }
 
     private void changeScreen() {
+        finishTime = LocalDateTime.now();
+        timer.cancel();
+        if (confirmStage != null) {
+            confirmStage.close();
+            overlayStackPane.getChildren().remove(overlay);
+        }
         DataModel.getInstance().setNumber(questionList.size());
         DataModel.getInstance().setUserAnswer(userAnswer);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
@@ -275,6 +265,7 @@ public class QuizScreenController implements Initializable {
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
             setResultBar(quizResultScreenController);
+            this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (IOException e) {
             e.printStackTrace();
@@ -282,13 +273,12 @@ public class QuizScreenController implements Initializable {
     }
 
     private void setResultBar(QuizResultScreenController quizResultScreenController) {
-        finishTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mm a", Locale.ENGLISH);
         long seconds = Duration.between(startTime, finishTime).getSeconds();
+        quizResultScreenController.setTime(formatDuration(seconds));
         quizResultScreenController.setStartedOn(startTime.format(formatter));
         quizResultScreenController.setCompletedOn(finishTime.format(formatter));
-        quizResultScreenController.setTime(formatDuration(seconds));
-        quizResultScreenController.setMarks("/" + progressNodes.length + ".00");
+        quizResultScreenController.setMarks("/" + questionList.size() + ".00");
         quizResultScreenController.setGrade(0.00 + " out of 10.00 (" + 0 + "%)");
     }
 
@@ -312,7 +302,5 @@ public class QuizScreenController implements Initializable {
         addQuestionList();
         renderNavigation();
         setTimer();
-        userSection.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 1))));
-        progressContent.setBorder(new Border(new BorderStroke(Paint.valueOf("#ccc"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 1, 1))));
     }
 }
