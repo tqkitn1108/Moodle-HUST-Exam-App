@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -230,13 +231,16 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </MFXScrollPane>
-                  <Label fx:id="finishReviewBtn" text="Finish review ...">
+                  <Label fx:id="finishReviewBtn" onMouseClicked="#finishReview" text="Finish review ...">
                      <VBox.margin>
                         <Insets bottom="25.0" left="15.0" top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Label>
                </children>
             </VBox>

@@ -13,9 +13,11 @@ public class StartApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Example.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Ha_FXML/Main2Screen.fxml"));
         Stage stage = new Stage();
+        stage.setTitle("Hệ thống ôn thi trắc nghiệm");
         Scene scene = new Scene(root);
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }

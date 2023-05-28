@@ -127,7 +127,7 @@ public class QuizScreenController implements Initializable {
         startTime = LocalDateTime.now();
         // Tạo ra questionList mẫu làm ví dụ
         questionList = new ArrayList<Question>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 200; i++) {
             questionList.add(new Question("Question " + (i + 1)));
         }
 
@@ -248,6 +248,7 @@ public class QuizScreenController implements Initializable {
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
             setResultBar(quizResultScreenController);
+            quizResultScreenController.setScreenListener(this.screenListener);
             this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (IOException e) {

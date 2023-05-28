@@ -10,7 +10,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import models.Quiz;
+import model2.Quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;

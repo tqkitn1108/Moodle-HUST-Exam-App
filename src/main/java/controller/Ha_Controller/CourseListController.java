@@ -1,5 +1,11 @@
 package controller.Ha_Controller;
 
-public class CourseListController {
+import listeners.NewScreenListener;
 
+public class CourseListController {
+    private NewScreenListener screenListener;
+
+    public void setScreenListener(NewScreenListener screenListener) {
+        this.screenListener = screenListener;
+    }
 }

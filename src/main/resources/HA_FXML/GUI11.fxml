@@ -75,9 +75,9 @@
                            </HBox.margin>
                         </Label>
                         <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
-                        <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #fff;" textFill="#009fe5">
+                        <MenuButton fx:id="menuWindow" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #fff;" textFill="#009fe5">
                            <items>
-                              <SeparatorMenuItem mnemonicParsing="false">
+                              <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false">
                                  <content>
                                     <HBox prefHeight="141.0" prefWidth="427.0" style="-fx-background-color: #fff;">
                                        <children>
@@ -94,7 +94,7 @@
                                           </Label>
                                           <VBox prefHeight="142.0" prefWidth="116.0">
                                              <children>
-                                                <Button fx:id="questionViewButt" mnemonicParsing="false" onMouseClicked="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" onMouseClicked="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -206,9 +206,9 @@
                         <Insets top="3.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER_RIGHT" minWidth="51.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXButton alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #0273a5;" text="TURN EDITING ON" textFill="WHITE">
+                        <MFXButton fx:id="editingBtn" alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #0273a5;" text="TURN EDITING ON" textFill="WHITE">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

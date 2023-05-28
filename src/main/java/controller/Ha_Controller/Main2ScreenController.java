@@ -1,6 +1,6 @@
-package controller.Kien_Controller;
+package controller.Ha_Controller;
 
-import controller.Ha_Controller.GUI11Controller;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ import listeners.NewScreenListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainScreenController implements Initializable {
+public class Main2ScreenController implements Initializable {
 
     @FXML
     private VBox header;
@@ -28,19 +28,34 @@ public class MainScreenController implements Initializable {
         try {
             Node node = fxmlLoader.load();
             GUI11Controller gui11Controller = fxmlLoader.getController();
-            gui11Controller.hideEditingBtn();
+            gui11Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
             header.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void addQuizScreen() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
+    private void addCourseList() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/CourseList.fxml"));
         try {
-            Node node = fxmlLoader.load(); // fxmlLoader chỉ có 1 node là AnchorPane
-            QuizScreenController quizScreenController = fxmlLoader.getController();
-            quizScreenController.setScreenListener(new NewScreenListener() {
+            Node node = fxmlLoader.load();
+            CourseListController courseListController = fxmlLoader.getController();
+            courseListController.setScreenListener(new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
@@ -66,9 +81,10 @@ public class MainScreenController implements Initializable {
         this.stackPane.getChildren().add(node);
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setHeader();
-        addQuizScreen();
+        addCourseList();
     }
 }

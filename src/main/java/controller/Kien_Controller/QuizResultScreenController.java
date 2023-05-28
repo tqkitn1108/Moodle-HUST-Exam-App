@@ -1,15 +1,19 @@
 package controller.Kien_Controller;
 
 import com.jfoenix.controls.JFXRadioButton;
+import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import listeners.NewScreenListener;
 import model2.DataModel;
 
 import java.net.URL;
@@ -49,6 +53,12 @@ public class QuizResultScreenController implements Initializable {
 
     @FXML
     private Label time;
+
+    private NewScreenListener screenListener;
+
+    public void setScreenListener(NewScreenListener screenListener) {
+        this.screenListener = screenListener;
+    }
 
     private Integer questionQuantity;
     private Map<Integer, Integer> userAnswer;
@@ -125,6 +135,18 @@ public class QuizResultScreenController implements Initializable {
             } else
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight());
         });
+    }
+
+    @FXML
+    public void finishReview(MouseEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/CourseList.fxml"));
+        try {
+            Node node = fxmlLoader.load();
+            this.screenListener.removeTopScreen();
+            this.screenListener.changeScreen(node);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

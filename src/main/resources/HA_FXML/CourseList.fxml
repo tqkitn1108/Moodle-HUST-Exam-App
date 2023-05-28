@@ -2,15 +2,16 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="188.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseListController">
+<AnchorPane prefHeight="188.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseListController">
    <children>
-      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc; -fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label graphicTextGap="8.0" text="Kiểm tra cuối kỳ môn IT4859Q">
                <graphic>
@@ -25,8 +26,11 @@
                   <Font size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+                  <Insets bottom="15.0" left="80.0" right="10.0" top="30.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Label>
             <Label graphicTextGap="8.0" text="Thi thử Kỹ thuật lập trình">
                <graphic>
@@ -41,8 +45,11 @@
                   <Font size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+                  <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Label>
             <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3090">
                <graphic>
@@ -57,8 +64,11 @@
                   <Font size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+                  <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Label>
             <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3030">
                <graphic>
@@ -73,8 +83,11 @@
                   <Font size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+                  <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Label>
             <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3100">
                <graphic>
@@ -89,8 +102,11 @@
                   <Font size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
+                  <Insets bottom="30.0" left="80.0" right="10.0" top="15.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Label>
          </children>
       </VBox>

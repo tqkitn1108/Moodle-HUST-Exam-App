@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.time.LocalDateTime;
 
 import javafx.stage.StageStyle;
-import models.Quiz;
+import model2.Quiz;
 
 import java.net.URL;
 import java.time.LocalTime;
