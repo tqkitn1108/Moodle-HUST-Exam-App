@@ -8,11 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import listeners.NewScreenListener;
 import model2.DataModel;
 
@@ -139,11 +142,16 @@ public class QuizResultScreenController implements Initializable {
 
     @FXML
     public void finishReview(MouseEvent event) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/CourseList.fxml"));
         try {
-            Node node = fxmlLoader.load();
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
+            Stage stage = new Stage();
+            stage.setMaximized(true);
+            Parent root = FXMLLoader.load(getClass().getResource("/Ha_FXML/GUI11.fxml"));
+            Scene scene = new Scene(root);
+            stage.setTitle("Hệ thống ôn thi trắc nghiệm");
+            stage.setScene(scene);
+            stage.show();
+            Stage currentStage = (Stage) finishReviewBtn.getScene().getWindow();
+            currentStage.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

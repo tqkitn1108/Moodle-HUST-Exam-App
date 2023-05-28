@@ -1,14 +1,11 @@
 package controller.Kien_Controller;
 
-import controller.Ha_Controller.GUI11Controller;
+import controller.Ha_Controller.HeaderController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.RadioButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import listeners.NewScreenListener;
@@ -24,10 +21,10 @@ public class MainScreenController implements Initializable {
     private StackPane stackPane;
 
     public void setHeader() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/GUI11.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/Header.fxml"));
         try {
             Node node = fxmlLoader.load();
-            GUI11Controller gui11Controller = fxmlLoader.getController();
+            HeaderController gui11Controller = fxmlLoader.getController();
             gui11Controller.hideEditingBtn();
             header.getChildren().add(node);
         } catch (Exception e) {
