@@ -71,8 +71,8 @@ public class GUI51Controller {
         setupHourBox(hourbox2);
         setupDayBox(daybox1);
         setupDayBox(daybox2);
-        setupMinBox(yearbox1);
-        setupMinBox(yearbox2);
+        setupYearBox(yearbox1);
+        setupYearBox(yearbox2);
         setupMonthBox(monthbox1);
         setupMonthBox(monthbox2);
         setupTextBox1(textbox1);
@@ -84,9 +84,9 @@ public class GUI51Controller {
         for (int i = 0; i <= 59; i++) {
             comboBox.getItems().add(i);
             // Set the default value of the ComboBox to 1.
-            comboBox.getSelectionModel().select(0);
-
         }
+        // Set the default value of the ComboBox to 1.
+        comboBox.getSelectionModel().select(0);
     }
 
     //Set up hourbox
@@ -94,10 +94,10 @@ public class GUI51Controller {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 0; i <= 12; i++) {
             comboBox.getItems().add(i);
-            // Set the default value of the ComboBox to 1.
-            comboBox.getSelectionModel().select(0);
-
         }
+        // Set the default value of the ComboBox to 1.
+        comboBox.getSelectionModel().select(0);
+
     }
 
     // Set up daybox
@@ -105,10 +105,9 @@ public class GUI51Controller {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 1; i <= 31; i++) {
             comboBox.getItems().add(i);
-            // Set the default value of the ComboBox to 1.
-            comboBox.getSelectionModel().select(0);
-
         }
+        // Set the default value of the ComboBox to 1.
+        comboBox.getSelectionModel().select(0);
     }
 
     //Set up yearbox
@@ -116,10 +115,9 @@ public class GUI51Controller {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 2000; i <= 2023; i++) {
             comboBox.getItems().add(i);
-            // Set the default value of the ComboBox to 1.
-            comboBox.getSelectionModel().select(0);
-
         }
+        // Set the default value of the ComboBox to 1.
+        comboBox.getSelectionModel().select(0);
     }
 
     //Set up monthbox

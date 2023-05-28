@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -16,7 +17,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefWidth="750.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI51Controller">
    <children>
@@ -185,7 +185,7 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="yearbox1" layoutX="363.0" layoutY="17.0" prefHeight="26.0" prefWidth="68.0">
+                              <ComboBox fx:id="yearbox1" layoutX="363.0" layoutY="17.0" prefHeight="26.0" prefWidth="80.0">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -232,7 +232,7 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </ComboBox>
-                              <ComboBox fx:id="yearbox2" layoutX="363.0" layoutY="17.0" prefHeight="26.0" prefWidth="68.0">
+                              <ComboBox fx:id="yearbox2" layoutX="363.0" layoutY="17.0" prefHeight="26.0" prefWidth="78.0">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -315,6 +315,29 @@
                                  </HBox.margin>
                               </ComboBox>
                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="730.0">
+                           <children>
+                              <MFXButton prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #009fe5;" text="Create" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="450.0" />
+                                 </HBox.margin>
+                              </MFXButton>
+                              <MFXButton prefWidth="98.0" style="-fx-background-color: #009fe5;" text="Cancel" textFill="WHITE">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </MFXButton>
+                           </children>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
                         </HBox>
                      </children>
                      <VBox.margin>
