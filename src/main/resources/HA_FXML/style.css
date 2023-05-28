@@ -1,17 +1,17 @@
-.checkBox .box {
+.check-box .box {
     -fx-background-color: white;
     -fx-border-color: #2196F3;
 }
 
-.checkBox .box:hover {
+.check-box .box:hover {
     -fx-background-color: #E3F2FD;
 }
 
-.checkBox:selected .box {
-    -fx-background-color: #2196F3;
+.check-box:selected .box {
+    -fx-background-color: #28a3f4;
 }
 
-.checkBox:selected .mark {
+.check-box:selected .mark {
     -fx-background-color: white;
 }
 

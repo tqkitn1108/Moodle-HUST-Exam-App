@@ -1,5 +1,6 @@
 package controller.Ha_Controller;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,8 @@ public class GUI11Controller implements Initializable {
     @FXML
     private Button questionViewButt;
     @FXML
+    private MFXButton addQuizButt;
+    @FXML
     void viewQuestion(MouseEvent ignoredEvent){
         // Xử lý sự kiện khi click button
         questionViewButt.setOnMouseClicked(event -> {
@@ -35,16 +38,34 @@ public class GUI11Controller implements Initializable {
 
     }
 
+    // Them giao dien gui51
+
+    @FXML
+    void addQuiz(MouseEvent ignoredEvent){
+        // Xử lý sự kiện khi click button
+        addQuizButt.setOnMouseClicked(event -> {
+            try {
+                // Load giao diện mới từ file GUI21.fxml
+                FXMLLoader newLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
+                AnchorPane newAnchorPane = newLoader.load();
+                listCourse.getChildren().setAll(newAnchorPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
-//        try {
-//            Node node = fxmlLoader.load();
-//            listCourse.getChildren().add(node);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+        try {
+            Node node = fxmlLoader.load();
+            listCourse.getChildren().add(node);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

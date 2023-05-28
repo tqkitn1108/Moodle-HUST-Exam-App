@@ -15,6 +15,7 @@ public class startGUI11 extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/HA_FXML/GUI11.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/HA_FXML/style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
