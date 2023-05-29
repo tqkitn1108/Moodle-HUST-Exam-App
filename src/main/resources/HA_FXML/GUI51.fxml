@@ -297,7 +297,7 @@
                                                 <Insets />
                                             </HBox.margin>
                                         </ComboBox>
-                                        <ComboBox fx:id="textbox1" layoutX="307.0" layoutY="17.0" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                        <ComboBox fx:id="textbox1" layoutX="307.0" layoutY="17.0" maxWidth="100.0" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: #fff; -fx-border-color: #777;" HBox.hgrow="ALWAYS">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>

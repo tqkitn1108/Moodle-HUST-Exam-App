@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="188.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseListController">
    <children>
-      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label graphicTextGap="8.0" text="Kiểm tra cuối kỳ môn IT4859Q">
                <graphic>

@@ -182,7 +182,7 @@
                                     </HBox>
                                     <HBox prefHeight="27.0">
                                        <children>
-                                          <Label alignment="CENTER" text="Home" textFill="#c53624">
+                                          <Label alignment="CENTER" onMouseClicked="#backGUI11" text="Home" textFill="#c53624">
                                              <HBox.margin>
                                                 <Insets left="10.0" />
                                              </HBox.margin>
@@ -201,7 +201,7 @@
                                                 <Font size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" text="THI CUỐI KỲ" textFill="#c53624">
+                                          <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#backGUI11" text="THI CUỐI KỲ" textFill="#c53624">
                                              <HBox.margin>
                                                 <Insets left="10.0" top="2.0" />
                                              </HBox.margin>

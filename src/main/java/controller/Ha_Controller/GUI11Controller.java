@@ -28,6 +28,10 @@ public class GUI11Controller implements Initializable {
 
     @FXML
     private MFXButton editingBtn;
+    private NewScreenListener screenListener;
+    public void setScreenListener(NewScreenListener screenListener) {
+        this.screenListener = screenListener;
+    }
 
     public void hideEditingBtn() {
         editingBtn.setVisible(false);
@@ -38,13 +42,42 @@ public class GUI11Controller implements Initializable {
     }
 
     @FXML
+    void backGUI11(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+            Node node = fxmlLoader.load();
+            menuWindow.setVisible(true);
+            showEditingBtn();
+            CourseListController courseListController = fxmlLoader.getController();
+            courseListController.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            stackPane.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void viewQuestion(MouseEvent ignoredEvent){
         try {
-            // Load giao diện mới từ file GUI21.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
             Node node = fxmlLoader.load();
             menuWindow.hide();
-            menuWindow.setVisible(false);
+//            menuWindow.setVisible(false);
 //            hideEditingBtn();
             GUI21Controller gui21Controller = fxmlLoader.getController();
             gui21Controller.setScreenListener(new NewScreenListener() {
@@ -72,7 +105,6 @@ public class GUI11Controller implements Initializable {
     @FXML
     private void openEditing(ActionEvent event) {
         try {
-            // Load giao diện mới từ file GUI21.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
             Node node = fxmlLoader.load();
             menuWindow.hide();

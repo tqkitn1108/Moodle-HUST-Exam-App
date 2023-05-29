@@ -56,3 +56,22 @@
 .tabPane .tab:focused {
     -fx-focus-color: transparent;
 }
+
+/******** CSS GUI32 *********/
+
+.combo-box .list-cell {
+    -fx-padding: 0px 10;
+}
+.combo-box .scroll-bar:vertical .thumb{
+    -fx-background-radius: 0;
+}
+.combo-box .scroll-bar:vertical {
+    -fx-background-color: #f0f0f0;
+}
+
+.combo-box .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0c0c0;
+}
+.combo-box .list-view {
+    -fx-pref-width: 110;
+}
