@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="789.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="14.0" layoutY="22.0" text="Editing quiz: Thi giữa kỳ môn Công Nghệ" textFill="#c34d53">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" layoutX="401.0" layoutY="42.0" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
+      <Button layoutX="14.0" layoutY="111.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE" />
+      <Button layoutX="104.0" layoutY="111.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SELECT MULTIPLE ITEMS" textFill="WHITE" />
+      <Text layoutX="565.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Maximum grade" />
+      <Button layoutX="658.0" layoutY="66.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #e4e4e4;" text="10.00" />
+      <Button layoutX="719.0" layoutY="67.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE" />
+      <Label layoutX="34.0" layoutY="148.0">
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0" />
+         </graphic>
+      </Label>
+      <Label layoutX="555.0" layoutY="148.0">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <Label layoutX="576.0" layoutY="183.0" />
+      <HBox layoutX="23.0" layoutY="66.0" prefHeight="27.0" prefWidth="200.0">
+         <children>
+            <Label text="Question:" />
+            <Label prefHeight="18.0" prefWidth="22.0" />
+            <Label text="| This quiz is open" />
+         </children>
+      </HBox>
+      <ScrollPane layoutY="196.0" prefHeight="295.0" prefWidth="789.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="764.0">
+               <children>
+                  <HBox layoutX="31.0" prefHeight="26.0" prefWidth="747.0" style="-fx-background-color: #e6e6e6;">
+                     <children>
+                        <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label prefHeight="18.0" prefWidth="19.0" style="-fx-background-color: #d3d3d3;">
+                           <HBox.margin>
+                              <Insets left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <FontAwesomeIconView fill="#8a8a8a" glyphName="TH_LIST" size="14.00">
+                           <HBox.margin>
+                              <Insets left="10.0" top="6.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="14.00">
+                           <HBox.margin>
+                              <Insets left="7.0" top="6.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Label prefHeight="26.0" prefWidth="530.0" text="Label">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" text="">
+                           <HBox.margin>
+                              <Insets left="5.0" top="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" size="14.0" text="">
+                           <HBox.margin>
+                              <Insets left="15.0" top="5.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <HBox prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <Label />
+                              <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0">
+                                 <HBox.margin>
+                                    <Insets left="35.0" top="5.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Label layoutX="34.0" layoutY="175.0" text="Page 1" textFill="#c9554b" />
+      <JFXComboBox focusColor="WHITE" layoutX="700.0" layoutY="171.0" promptText="Add" style="-jfx-unfocus-color: #ffffff;" unFocusColor="#ffffff14" />
+      <HBox layoutX="627.0" layoutY="111.0" prefHeight="25.0" prefWidth="121.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of mark:" />
+            <Label text="Label">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="644.0" layoutY="143.0" prefHeight="25.0" prefWidth="87.0">
+         <children>
+            <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" text="" />
+            <Label text="Shuffle">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Label>
+            <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </FontAwesomeIconView>
+         </children>
+      </HBox>
+   </children>
+</Pane>
