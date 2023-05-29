@@ -46,7 +46,7 @@
       </Label>
       <Label layoutX="576.0" layoutY="183.0">
          <graphic>
-            <JFXComboBox focusColor="WHITE" promptText="Add" style="-jfx-unfocus-color: #ffffff;" unFocusColor="#ffffff14" />
+            <JFXComboBox fx:id="add" focusColor="WHITE" promptText="Add" style="-jfx-unfocus-color: #ffffff;" unFocusColor="#ffffff14" />
          </graphic>
       </Label>
    </children>

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="14.0" prefHeight="43.0" prefWidth="248.0" text="Import questions from file" textFill="#c8403f">
+      <Label layoutX="19.0" prefHeight="43.0" prefWidth="281.0" text="Import questions from file" textFill="#c8403f">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Line endX="606.0" layoutX="105.0" layoutY="58.0" startX="-90.29998779296875" stroke="#d9cacacf" />
@@ -53,7 +55,20 @@
       <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" layoutX="291.0" layoutY="179.0" text="" wrappingWidth="10.285714149475098" />
       <Button layoutX="307.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: #0693E3;" text="CHOOSE A FILE" textFill="WHITE" />
       <Button layoutX="318.0" layoutY="351.0" mnemonicParsing="false" style="-fx-background-color: #c02424;" text="IMPORT" textFill="WHITE" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="124.0" layoutX="307.0" layoutY="209.0" stroke="#00000066" strokeType="INSIDE" width="391.0" />
-      <Label layoutX="395.0" layoutY="298.0" text="You can drag và drop files here to add them." />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="147.0" layoutX="307.0" layoutY="198.0" stroke="#00000066" strokeType="INSIDE" width="391.0" />
+      <VBox layoutX="308.0" layoutY="210.0" prefHeight="114.0" prefWidth="391.0">
+         <children>
+            <FontAwesomeIconView fx:id="upload" fill="#0693e3" glyphName="ARROW_CIRCLE_ALT_LEFT" rotate="270.0" size="100" wrappingWidth="74.42847061157227">
+               <VBox.margin>
+                  <Insets left="165.0" />
+               </VBox.margin>
+            </FontAwesomeIconView>
+            <Label text="You can drag và drop files here to add them.">
+               <VBox.margin>
+                  <Insets left="80.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </Pane>

@@ -3,17 +3,18 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="677.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox layoutX="31.0" layoutY="166.0" prefHeight="34.0" prefWidth="615.0" style="-fx-background-color: #009fe5;">
          <children>
@@ -67,13 +68,18 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <MFXLegacyComboBox invalidLineColor="#c93e34" layoutX="599.0" layoutY="31.0" lineColor="#c93e34" lineStrokeCap="SQUARE" minWidth="0.0" prefHeight="0.0" style="-fx-region-background: #c93e34;" unfocusedLineColor="#f7f7f7" />
-      <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" layoutX="617.0" layoutY="50.0" selectionFill="#009fe5" size="23" textAlignment="CENTER" />
       <MenuButton layoutX="409.0" layoutY="339.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #cfd2d5;" text="Jump to...">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
+      <Accordion />
+      <StackPane layoutX="540.0" layoutY="31.0" prefHeight="34.0" prefWidth="93.0">
+         <children>
+            <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" selectionFill="#009fe5" size="23" textAlignment="CENTER" />
+            <MFXLegacyComboBox invalidLineColor="#c93e34" lineColor="#c93e34" lineStrokeCap="SQUARE" minWidth="0.0" prefHeight="0.0" style="-fx-region-background: #c93e34;" unfocusedLineColor="#f7f7f7" />
+         </children>
+      </StackPane>
    </children>
 </Pane>
