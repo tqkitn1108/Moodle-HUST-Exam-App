@@ -148,6 +148,7 @@ public class QuizResultScreenController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/Ha_FXML/GUI11.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("Hệ thống ôn thi trắc nghiệm");
+            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
             Stage currentStage = (Stage) finishReviewBtn.getScene().getWindow();

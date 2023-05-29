@@ -17,6 +17,7 @@ public class StartApp extends Application {
         Stage stage = new Stage();
         stage.setTitle("Hệ thống ôn thi trắc nghiệm");
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
