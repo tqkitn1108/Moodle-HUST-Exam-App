@@ -1,6 +1,7 @@
 package controller.Ha_Controller;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,9 +45,39 @@ public class GUI11Controller implements Initializable {
             Node node = fxmlLoader.load();
             menuWindow.hide();
             menuWindow.setVisible(false);
-            hideEditingBtn();
+//            hideEditingBtn();
             GUI21Controller gui21Controller = fxmlLoader.getController();
             gui21Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            stackPane.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openEditing(ActionEvent event) {
+        try {
+            // Load giao diện mới từ file GUI21.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
+            Node node = fxmlLoader.load();
+            menuWindow.hide();
+            GUI51Controller gui51Controller = fxmlLoader.getController();
+            gui51Controller.setScreenListener(new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
