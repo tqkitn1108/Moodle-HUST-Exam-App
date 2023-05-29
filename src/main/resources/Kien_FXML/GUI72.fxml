@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="215.0" prefWidth="600.0" style="-fx-background-color: white; -fx-border-color: #ccc;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.GUI72Controller">
+   <children>
+      <VBox accessibleRole="BUTTON" alignment="TOP_CENTER" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="67.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="67.0" prefWidth="538.0" text="Start attempt" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="closeBtn" alignment="CENTER" cache="true" contentDisplay="CENTER" onMouseClicked="#closeThisWindow" onMouseEntered="#coloring" onMouseExited="#uncoloring" prefHeight="74.0" prefWidth="58.0">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="closeIcon" cache="true" fill="#888888" glyphName="CLOSE" size="20" textAlignment="CENTER" wrappingWidth="57.25892949104309" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="-3.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <Label prefHeight="18.0" prefWidth="643.0" style="-fx-color: #c70d0d;" text="Time limit" textFill="#c70d0d">
+               <VBox.margin>
+                  <Insets bottom="30.0" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="45.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your attempt will have a time limit of 1 hour. When you start, the timer will begin to count down and can not be paused. You must finish your attempt before it expires. Are you sure you wish to start now?" wrappingWidth="510.39996016025543">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="45.0" right="45.0" top="15.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox minHeight="33.0" prefWidth="568.0">
+               <children>
+                  <MFXButton fx:id="startAttemptBtn" onAction="#startAttempt" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #c70d0d;" text="START ATTEMPT" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+                  <MFXButton onMouseClicked="#closeThisWindow" prefHeight="33.0" prefWidth="82.0" style="-fx-background-color: #1B98F5;" text="CANCEL" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <effect>
+      <DropShadow blurType="TWO_PASS_BOX" height="26.74" radius="13.934999999999999" width="31.0">
+         <color>
+            <Color red="0.2210526317358017" green="0.21941520273685455" blue="0.21941520273685455" />
+         </color>
+      </DropShadow>
+   </effect>
+</AnchorPane>
