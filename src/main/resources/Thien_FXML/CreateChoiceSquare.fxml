@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="230.0" prefWidth="343.0" style="-fx-background-color: #f0ecec;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="61.0" layoutY="14.0" prefHeight="230.0" prefWidth="344.0" style="-fx-border-color: #bfbfbf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="70.0" prefWidth="319.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="60.0" text="Choice 1">
+                     <HBox.margin>
+                        <Insets left="20.0" top="80.0" />
+                     </HBox.margin>
+                  </Label>
+                  <VBox prefHeight="105.0" prefWidth="193.0" style="-fx-border-color: #bfbfbf;">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextArea minHeight="24.0" prefHeight="20.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="40.0" text="Grade">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="gradeComboBox1" prefHeight="27.0" prefWidth="109.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ComboBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
