@@ -1,148 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI63Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Add from the question bank at the end" textFill="#c63b39">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Line endX="483.199951171875" endY="-1.1444091796875E-5" fill="#e3e6e9" layoutX="101.0" layoutY="46.0" startX="-85.50711059570312" startY="-1.1444091796875E-5" stroke="#e3e6e9" />
-      <Label layoutX="24.0" layoutY="61.0" text="Select a category:" />
-      <MFXLegacyComboBox layoutX="124.0" layoutY="55.0" prefHeight="29.0" prefWidth="166.0" style="-fx-border-color: #abafb6;" unfocusedLineColor="WHITE" />
-      <MFXComboBox alignment="TOP_LEFT" layoutX="15.0" layoutY="126.0" prefHeight="35.0" prefWidth="143.0" style="-fx-border-color: #ffffff;" text="Search options">
-         <textFill>
-            <Color red="0.18039216101169586" green="0.7019608020782471" blue="0.9254902005195618" opacity="0.8700000047683716" />
-         </textFill>
-      </MFXComboBox>
-      <Label layoutX="31.0" layoutY="165.0" text="Also show questions from subcategories">
-         <graphic>
-            <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" text="" />
-         </graphic>
-      </Label>
-      <Label layoutX="31.0" layoutY="192.0" text="Also show old questions">
-         <graphic>
-            <FontAwesomeIconView fill="#a7a7a7" glyphName="SQUARE_ALT" size="16.0" text="" wrappingWidth="13.714285850524902" />
-         </graphic>
-      </Label>
-      <ScrollPane layoutY="236.0" prefHeight="164.0" prefWidth="600.0">
-         <content>
-            <VBox prefHeight="161.0" prefWidth="599.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <VBox prefHeight="94.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="22.0" prefWidth="599.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="600.0">
                      <children>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
-                           </graphic>
-                           <padding>
-                              <Insets left="30.0" />
-                           </padding>
-                        </Label>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#a7a7a7" glyphName="SQUARE_ALT" size="16.0" />
-                           </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="38.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
-                                 <font>
-                                    <Font size="6.0" />
-                                 </font>
-                              </FontAwesomeIconView>
-                           </graphic>
-                           <padding>
-                              <Insets left="3.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
-                           <padding>
+                        <Label prefHeight="22.0" prefWidth="337.0" text="Add from the question bank at the end" textFill="#c63b39">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
                               <Insets left="15.0" />
-                           </padding>
+                           </HBox.margin>
                         </Label>
-                        <Label layoutX="94.0" layoutY="10.0">
+                        <Label HBox.hgrow="ALWAYS">
                            <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
+                              <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="20.0" />
                            </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
+                           <HBox.margin>
+                              <Insets left="220.0" />
+                           </HBox.margin>
                         </Label>
                      </children>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="599.0" style="-fx-background-color: #e1d9d4;">
+                  <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="600.0">
                      <children>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
-                           </graphic>
-                           <padding>
-                              <Insets left="30.0" />
-                           </padding>
-                        </Label>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#a7a7a7" glyphName="SQUARE_ALT" size="16.0" />
-                           </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="38.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
-                                 <font>
-                                    <Font size="6.0" />
-                                 </font>
-                              </FontAwesomeIconView>
-                           </graphic>
-                           <padding>
-                              <Insets left="3.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
-                           <padding>
+                        <Label text="Select a category:">
+                           <HBox.margin>
                               <Insets left="15.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="94.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
-                           </graphic>
-                           <padding>
+                           </HBox.margin></Label>
+                        <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000;">
+                           <items>
+                              <MenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                           </items>
+                           <HBox.margin>
                               <Insets left="10.0" />
-                           </padding>
-                        </Label>
+                           </HBox.margin>
+                        </MenuButton>
                      </children>
                   </HBox>
                </children>
             </VBox>
-         </content>
-      </ScrollPane>
-      <Label layoutX="544.0" layoutY="16.0">
-         <graphic>
-            <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="20.0" />
-         </graphic>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-      </Label>
+         </top>
+         <left>
+            <MenuButton alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Search options" textFill="#009fe5" BorderPane.alignment="TOP_CENTER">
+               <items>
+                  <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <MFXCheckbox selected="true" text="Also show questions from subcategories" />
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <MFXCheckbox prefHeight="20.0" prefWidth="128.0" text="Also show old questions" />
+                     </graphic>
+                  </MenuItem>
+               </items>
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+            </MenuButton>
+         </left>
+         <bottom>
+            <VBox prefHeight="234.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MFXCheckbox prefHeight="20.0" prefWidth="9.0">
+                     <graphic>
+                        <MenuButton mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Question" textFill="#009fe5">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Action 1" />
+                              <MenuItem mnemonicParsing="false" text="Action 2" />
+                           </items>
+                        </MenuButton>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="40.0" />
+                     </VBox.margin>
+                  </MFXCheckbox>
+                  <MFXScrollPane>
+                     <content>
+                        <VBox prefHeight="218.0" prefWidth="599.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="563.0">
+                                 <children>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="1.0" />
+                                       </padding>
+                                    </Label>
+                                    <MFXCheckbox prefHeight="20.0" prefWidth="9.0">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </MFXCheckbox>
+                                    <Label layoutX="38.0" layoutY="10.0">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
+                                             <font>
+                                                <Font size="6.0" />
+                                             </font>
+                                          </FontAwesomeIconView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="3.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="462.0" text="Label">
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label layoutX="94.0" layoutY="10.0" prefHeight="16.0" prefWidth="0.0">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="18.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </MFXScrollPane>
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
    </children>
-</Pane>
+</AnchorPane>

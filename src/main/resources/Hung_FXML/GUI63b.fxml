@@ -1,136 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI63bController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Add from the question bank at the end" textFill="#c63b39">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Line endX="483.199951171875" endY="-1.1444091796875E-5" fill="#e3e6e9" layoutX="101.0" layoutY="46.0" startX="-85.50711059570312" startY="-1.1444091796875E-5" stroke="#e3e6e9" />
-      <ScrollPane layoutY="47.0" prefHeight="402.0" prefWidth="600.0">
-         <content>
-            <VBox prefHeight="161.0" prefWidth="599.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox prefHeight="22.0" prefWidth="599.0">
-                     <children>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
-                           </graphic>
-                           <padding>
-                              <Insets left="30.0" />
-                           </padding>
-                        </Label>
-                        <Label>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" text="" />
-                           </graphic>
-                        </Label>
-                        <Label layoutX="38.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
-                                 <font>
-                                    <Font size="6.0" />
-                                 </font>
-                              </FontAwesomeIconView>
-                           </graphic>
-                           <padding>
-                              <Insets left="3.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="94.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
-                           </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="599.0" style="-fx-background-color: #e1d9d4;">
-                     <children>
-                        <Label>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
-                           </graphic>
-                           <padding>
-                              <Insets left="30.0" />
-                           </padding>
-                        </Label>
-                        <Label>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" text="" />
-                           </graphic>
-                        </Label>
-                        <Label layoutX="38.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
-                                 <font>
-                                    <Font size="6.0" />
-                                 </font>
-                              </FontAwesomeIconView>
-                           </graphic>
-                           <padding>
-                              <Insets left="3.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="94.0" layoutY="10.0">
-                           <graphic>
-                              <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
-                           </graphic>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </HBox>
+                  <Label text="Add from the question bank at the end" textFill="#c63b39">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label>
+                     <graphic>
+                        <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="20.0" />
+                     </graphic>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="250.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <MFXScrollPane BorderPane.alignment="CENTER">
+               <content>
+                  <VBox prefHeight="161.0" prefWidth="599.0">
+                     <children>
+                        <HBox prefHeight="22.0" prefWidth="599.0">
+                           <children>
+                              <Label>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
+                                 </graphic>
+                              </Label>
+                              <MFXCheckbox selected="true">
+                                 <HBox.margin>
+                                    <Insets left="7.0" />
+                                 </HBox.margin>
+                              </MFXCheckbox>
+                              <Label layoutX="38.0" layoutY="10.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
+                                       <font>
+                                          <Font size="6.0" />
+                                       </font>
+                                    </FontAwesomeIconView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="3.0" />
+                                 </padding>
+                              </Label>
+                              <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </Label>
+                              <Label layoutX="94.0" layoutY="10.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="599.0" style="-fx-background-color: #e1d9d4;">
+                           <children>
+                              <Label>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" />
+                                 </graphic>
+                              </Label>
+                              <MFXCheckbox selected="true">
+                                 <padding>
+                                    <Insets left="7.0" />
+                                 </padding>
+                              </MFXCheckbox>
+                              <Label layoutX="38.0" layoutY="10.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
+                                       <font>
+                                          <Font size="6.0" />
+                                       </font>
+                                    </FontAwesomeIconView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="3.0" />
+                                 </padding>
+                              </Label>
+                              <Label layoutX="66.0" layoutY="10.0" prefHeight="18.0" prefWidth="477.0" text="Label">
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </Label>
+                              <Label layoutX="94.0" layoutY="10.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" />
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </MFXScrollPane>
+         </center>
+         <bottom>
+            <VBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #0073a5;" text="ADD SELECTED QUESTIONS TO THE QUIZ " textFill="WHITE">
+                     <font>
+                        <Font name="Bell MT" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="5.0" />
+               </BorderPane.margin>
             </VBox>
-         </content>
-      </ScrollPane>
-      <Label layoutX="544.0" layoutY="16.0">
-         <graphic>
-            <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="20.0" />
-         </graphic>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-      </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dddddd" height="20.0" layoutY="453.0" stroke="WHITE" strokeType="INSIDE" width="600.0" />
-      <Button layoutX="14.0" layoutY="482.0" mnemonicParsing="false" style="-fx-background-color: #0073a5;" text="ADD SELECTED QUESTIONS TO THE QUIZ " textFill="WHITE">
-         <font>
-            <Font name="Bell MT" size="12.0" />
-         </font>
-      </Button>
+         </bottom>
+      </BorderPane>
    </children>
-</Pane>
+</AnchorPane>
