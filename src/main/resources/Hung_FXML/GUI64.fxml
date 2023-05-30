@@ -1,134 +1,280 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXContextMenuItem?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="789.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI64Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="14.0" layoutY="22.0" text="Editing quiz: Thi giữa kỳ môn Công Nghệ" textFill="#c34d53">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" layoutX="401.0" layoutY="42.0" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
-      <Button layoutX="14.0" layoutY="111.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE" />
-      <Button layoutX="104.0" layoutY="111.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SELECT MULTIPLE ITEMS" textFill="WHITE" />
-      <Text layoutX="565.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Maximum grade" />
-      <Button layoutX="658.0" layoutY="66.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #e4e4e4;" text="10.00" />
-      <Button layoutX="719.0" layoutY="67.0" mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE" />
-      <Label layoutX="34.0" layoutY="148.0">
-         <graphic>
-            <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0" />
-         </graphic>
-      </Label>
-      <Label layoutX="555.0" layoutY="148.0">
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </Label>
-      <Label layoutX="576.0" layoutY="183.0" />
-      <HBox layoutX="23.0" layoutY="66.0" prefHeight="27.0" prefWidth="200.0">
-         <children>
-            <Label text="Question:" />
-            <Label prefHeight="18.0" prefWidth="22.0" />
-            <Label text="| This quiz is open" />
-         </children>
-      </HBox>
-      <ScrollPane layoutY="196.0" prefHeight="295.0" prefWidth="789.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="764.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="143.0" prefWidth="311.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox layoutX="31.0" prefHeight="26.0" prefWidth="747.0" style="-fx-background-color: #e6e6e6;">
+                  <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="296.0">
                      <children>
-                        <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00">
+                        <Label text="Question:" />
+                        <Label prefHeight="18.0" prefWidth="22.0" />
+                        <Label text="| This quiz is open" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="296.0">
+                     <children>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE" />
+                        <Button mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SELECT MULTIPLE ITEMS" textFill="WHITE">
                            <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </FontAwesomeIconView>
-                        <Label prefHeight="18.0" prefWidth="19.0" style="-fx-background-color: #d3d3d3;">
+                              <Insets left="5.0" />
+                           </HBox.margin></Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label VBox.vgrow="ALWAYS">
+                     <graphic>
+                        <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Page 1" textFill="#c9554b">
+                     <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </VBox.margin></Label>
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="112.0" prefWidth="280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="302.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="97.0" text="Maximum grade" HBox.hgrow="ALWAYS">
                            <HBox.margin>
-                              <Insets left="10.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                         </Label>
-                        <FontAwesomeIconView fill="#8a8a8a" glyphName="TH_LIST" size="14.00">
+                        <TextField prefHeight="26.0" prefWidth="42.0">
                            <HBox.margin>
-                              <Insets left="10.0" top="6.0" />
+                              <Insets />
                            </HBox.margin>
-                        </FontAwesomeIconView>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="14.00">
+                        </TextField>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE">
                            <HBox.margin>
-                              <Insets left="7.0" top="6.0" />
+                              <Insets left="5.0" />
                            </HBox.margin>
-                        </FontAwesomeIconView>
-                        <Label prefHeight="26.0" prefWidth="530.0" text="Label">
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="121.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of mark:" />
+                        <Label text="Label">
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="5.0" />
                            </HBox.margin>
                         </Label>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" text="">
+                     </children>
+                     <VBox.margin>
+                        <Insets right="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="262.0">
+                     <children>
+                        <MFXCheckbox selected="true" text="Shuffle">
                            <HBox.margin>
-                              <Insets left="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
-                        </FontAwesomeIconView>
-                        <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" size="14.0" text="">
+                        </MFXCheckbox>
+                        <Label>
+                           <graphic>
+                              <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
+                           </graphic>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets right="25.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="280.0">
+                     <children>
+                        <MenuButton alignment="BASELINE_RIGHT" mnemonicParsing="false" popupSide="TOP" style="-fx-background-color: #ffffff;" text="Add" textAlignment="CENTER" textFill="#009fe5" textOverrun="CLIP">
+                           <items>
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Label prefHeight="22.0" prefWidth="168.0" style="-fx-background-color: #009fe5;" text="a new question" textFill="WHITE">
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="WHITE" glyphName="PLUS" text="" textAlignment="JUSTIFY" />
+                                       </graphic>
+                                    </Label>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Label prefHeight="22.0" prefWidth="168.0" style="-fx-background-color: #d7d7d8;" text="from question bank">
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" text="" />
+                                       </graphic>
+                                    </Label>
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Label prefHeight="22.0" prefWidth="169.0" style="-fx-background-color: #d7d7d8;" text="a random question">
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" text="" />
+                                       </graphic>
+                                    </Label>
+                                 </graphic>
+                              </MenuItem>
+                           </items>
                            <HBox.margin>
-                              <Insets left="15.0" top="5.0" />
+                              <Insets right="15.0" />
                            </HBox.margin>
-                        </FontAwesomeIconView>
-                        <HBox prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #ffffff;">
-                           <children>
-                              <Label />
-                              <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0">
-                                 <HBox.margin>
-                                    <Insets left="35.0" top="5.0" />
-                                 </HBox.margin>
-                              </FontAwesomeIconView>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="15.0" />
-                           </HBox.margin>
-                        </HBox>
+                        </MenuButton>
                      </children>
                   </HBox>
                </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <Label layoutX="34.0" layoutY="175.0" text="Page 1" textFill="#c9554b" />
-      <JFXComboBox focusColor="WHITE" layoutX="700.0" layoutY="171.0" promptText="Add" style="-jfx-unfocus-color: #ffffff;" unFocusColor="#ffffff14" />
-      <HBox layoutX="627.0" layoutY="111.0" prefHeight="25.0" prefWidth="121.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of mark:" />
-            <Label text="Label">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
-      <HBox layoutX="644.0" layoutY="143.0" prefHeight="25.0" prefWidth="87.0">
-         <children>
-            <FontAwesomeIconView fill="#009fe5" glyphName="CHECK_SQUARE" size="16.0" text="" />
-            <Label text="Shuffle">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </Label>
-            <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </FontAwesomeIconView>
-         </children>
-      </HBox>
+            </VBox>
+         </right>
+         <bottom>
+            <ScrollPane prefHeight="244.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="245.0" prefWidth="600.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="600.0" AnchorPane.bottomAnchor="213.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #d3d3d3;">
+                                 <children>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00" />
+                                       </graphic>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="22.0" text="Label">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#8a8a8a" glyphName="TH_LIST" size="14.00" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="6.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="19.0" style="-fx-background-color: #d3d3d3;">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="14.00" />
+                                       </graphic>
+                                    </Label>
+                                    <Label prefHeight="18.0" prefWidth="319.0" text="Label">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="13.0" text="" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" size="14.0" text="" />
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <StackPane prefHeight="24.0" prefWidth="48.0">
+                                       <children>
+                                          <MFXContextMenuItem style="-fx-background-color: #ffffff;">
+                                             <StackPane.margin>
+                                                <Insets bottom="5.0" left="5.0" top="5.0" />
+                                             </StackPane.margin>
+                                          </MFXContextMenuItem>
+                                          <Label>
+                                             <graphic>
+                                                <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="13.0" wrappingWidth="1.0" />
+                                             </graphic>
+                                             <StackPane.margin>
+                                                <Insets left="30.0" />
+                                             </StackPane.margin>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Editing quiz: Thi giữa kỳ môn Công Nghệ" textFill="#c34d53">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                     <graphic>
+                        <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
+                     </graphic>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="15.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+      </BorderPane>
    </children>
-</Pane>
+</AnchorPane>
