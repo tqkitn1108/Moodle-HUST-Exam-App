@@ -100,9 +100,9 @@
                                                                   <Insets left="10.0" right="100.0" top="10.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <VBox prefHeight="142.0" prefWidth="116.0">
+                                                            <VBox fx:id="listBtn" prefHeight="142.0" prefWidth="116.0">
                                                                <children>
-                                                                  <Button mnemonicParsing="false" onMouseClicked="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
+                                                                  <Button mnemonicParsing="false" onAction="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
                                                                      <font>
                                                                         <Font size="17.0" />
                                                                      </font>
@@ -116,7 +116,7 @@
                                                                         <Cursor fx:constant="HAND" />
                                                                      </cursor>
                                                                   </Button>
-                                                                  <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Categories" textFill="#009fe5">
+                                                                  <Button mnemonicParsing="false" onAction="#openCategory" style="-fx-background-color: #ffffff;" text="Categories" textFill="#009fe5">
                                                                      <font>
                                                                         <Font size="17.0" />
                                                                      </font>
@@ -127,7 +127,7 @@
                                                                         <Cursor fx:constant="HAND" />
                                                                      </cursor>
                                                                   </Button>
-                                                                  <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Import" textFill="#009fe5">
+                                                                  <Button mnemonicParsing="false" onAction="#openImport" style="-fx-background-color: #ffffff;" text="Import" textFill="#009fe5">
                                                                      <font>
                                                                         <Font size="17.0" />
                                                                      </font>
@@ -138,7 +138,7 @@
                                                                         <Cursor fx:constant="HAND" />
                                                                      </cursor>
                                                                   </Button>
-                                                                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Export" textFill="#009fe5">
+                                                                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openExport" style="-fx-background-color: #ffffff;" text="Export" textFill="#009fe5">
                                                                      <font>
                                                                         <Font size="17.0" />
                                                                      </font>
@@ -243,111 +243,6 @@
                   </AnchorPane>
                </children></VBox>
             <StackPane fx:id="stackPane" prefHeight="1000.0" prefWidth="200.0">
-               <children>
-                  <AnchorPane prefHeight="188.0" prefWidth="600.0" style="-fx-background-color: #fff;">
-                     <children>
-                        <VBox fx:id="popUpScreen" layoutX="10.0" layoutY="10.0" prefHeight="251.0" prefWidth="606.0" style="-fx-border-color: #ccc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label graphicTextGap="8.0" text="Kiểm tra cuối kỳ môn IT4859Q">
-                                 <graphic>
-                                    <StackPane prefHeight="18.0" prefWidth="12.0">
-                                       <children>
-                                          <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-                                          <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" left="80.0" right="10.0" top="30.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
-                              <Label graphicTextGap="8.0" text="Thi thử Kỹ thuật lập trình">
-                                 <graphic>
-                                    <StackPane prefHeight="18.0" prefWidth="12.0">
-                                       <children>
-                                          <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-                                          <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
-                              <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3090">
-                                 <graphic>
-                                    <StackPane prefHeight="18.0" prefWidth="12.0">
-                                       <children>
-                                          <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-                                          <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
-                              <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3030">
-                                 <graphic>
-                                    <StackPane prefHeight="18.0" prefWidth="12.0">
-                                       <children>
-                                          <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-                                          <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
-                              <Label graphicTextGap="8.0" text="Kiểm tra giữa kỳ môn IT3100">
-                                 <graphic>
-                                    <StackPane prefHeight="18.0" prefWidth="12.0">
-                                       <children>
-                                          <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-                                          <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="30.0" left="80.0" right="10.0" top="15.0" />
-                                 </VBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin></StackPane>

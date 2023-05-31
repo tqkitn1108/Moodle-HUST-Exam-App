@@ -5,7 +5,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -15,6 +14,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -49,7 +49,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Label>
-                                    <MenuButton mnemonicParsing="false" prefHeight="29.0" prefWidth="225.0" text="Default">
+                                    <MenuButton mnemonicParsing="false" prefHeight="29.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-border-color: #777;" text="Default">
                                       <items>
                                         <MenuItem mnemonicParsing="false">
                                              <graphic>
@@ -117,13 +117,13 @@
                <content>
                   <AnchorPane>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="726.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="200.0" prefWidth="726.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <HBox prefHeight="31.0" prefWidth="609.0">
                                  <children>
                                     <FontAwesomeIconView fill="#179ee5" glyphName="PLAY" rotate="90.0" scaleY="2.0" selectionFill="#f2f2f2" size="5" text="">
                                        <HBox.margin>
-                                          <Insets left="20.0" top="15.0" />
+                                          <Insets left="20.0" top="17.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
                                     <Label text="Add category" textFill="#c22e35">
@@ -131,7 +131,7 @@
                                           <Insets left="10.0" top="10.0" />
                                        </HBox.margin>
                                        <font>
-                                          <Font name="Georgia" size="14.0" />
+                                          <Font name="Georgia" size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -145,13 +145,16 @@
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
                                     </Label>
                                     <FontAwesomeIconView fill="#099fe5" glyphName="QUESTION_CIRCLE" text="">
                                        <HBox.margin>
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <ComboBox prefHeight="28.0" prefWidth="220.0" promptText="Default" style="-fx-background-color: #ffffff; -fx-border-color: #000000;" />
+                                    <ComboBox maxWidth="250.0" prefHeight="28.0" prefWidth="220.0" promptText="Default" style="-fx-background-color: #ffffff; -fx-border-color: #777;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -163,13 +166,16 @@
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
                                     </Label>
                                     <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE">
                                        <HBox.margin>
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField prefHeight="30.0" prefWidth="280.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" />
+                                    <TextField maxWidth="350.0" prefHeight="30.0" prefWidth="280.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -181,8 +187,11 @@
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
                                     </Label>
-                                    <TextArea prefHeight="115.0" prefWidth="280.0" style="-fx-background-color: #000000; -fx-border-color: #ffffff;" />
+                                    <TextArea maxWidth="350.0" prefHeight="115.0" prefWidth="280.0" style="-fx-background-color: #000000; -fx-border-color: #ffffff;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -194,13 +203,16 @@
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
                                     </Label>
                                     <FontAwesomeIconView fill="#099fe5" glyphName="EXCLAMATION_CIRCLE" text="">
                                        <HBox.margin>
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField prefHeight="30.0" prefWidth="90.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" />
+                                    <TextField maxWidth="100.0" prefHeight="30.0" prefWidth="90.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -211,24 +223,27 @@
                                     <Insets left="15.0" />
                                  </VBox.margin>
                               </Line>
-                              <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" style="-fx-background-color: #c02424; -fx-background-radius: 0px;" text="ADD CATEGORY" textFill="WHITE">
-                                 <font>
-                                    <Font name="Georgia" size="12.0" />
-                                 </font>
+                              <MFXButton alignment="CENTER" depthLevel="LEVEL1" style="-fx-background-color: #c02424;" text="ADD CATEGORY" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="330.0" />
                                  </VBox.margin>
-                              </Button>
+                                 <padding>
+                                    <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                 </padding>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MFXButton>
                               <HBox prefHeight="26.0" prefWidth="733.0">
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="232.0" text="There are required files in this form marked">
                                        <HBox.margin>
-                                          <Insets left="270.0" />
+                                          <Insets left="270.0" top="10.0" />
                                        </HBox.margin>
                                     </Label>
                                     <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE">
                                        <HBox.margin>
-                                          <Insets top="3.0" />
+                                          <Insets top="13.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
                                     <Label text="." />
@@ -239,12 +254,152 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab text="Export">
+            <Tab text="Import">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="Import questions from file" textFill="#c23d45">
+                                 <font>
+                                    <Font name="Georgia" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="580.0" spacing="170.0">
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="109.0" text="File format" textFill="#c23d45">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" selectionFill="#009fe5" />
+                                       </graphic>
+                                       <font>
+                                          <Font name="Georgia" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Aiken format">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Line endX="1480.0" stroke="#bfbfbf" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Line>
+                              <Label prefHeight="17.0" prefWidth="109.0" text="General" textFill="#c23d45">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" rotate="270.0" selectionFill="#009fe5" />
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets left="15.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Georgia" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1480.0" stroke="#bfbfbf" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                                 </VBox.margin>
+                              </Line>
+                              <Label prefHeight="25.0" prefWidth="236.0" text="Import questions from file" textFill="#c23d45">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" selectionFill="#009fe5" />
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets left="15.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Georgia" size="13.0" />
+                                 </font>
+                              </Label>
+                              <HBox prefHeight="21.0" prefWidth="591.0">
+                                 <children>
+                                    <Label prefWidth="250.0" text="Import" HBox.hgrow="ALWAYS" />
+                                    <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" text="" wrappingWidth="10.285714149475098" />
+                                    <MFXButton style="-fx-background-color: #0693E3;" text="CHOOSE A FILE" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <padding>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                       </padding>
+                                    </MFXButton>
+                                    <Label text="Maximum size for new files: 100MB">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="15.0" top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <VBox alignment="CENTER" maxHeight="300.0" maxWidth="550.0" prefHeight="100.0" prefWidth="300.0" style="-fx-border-color: #818181; -fx-background-color: #ffffff;">
+                                 <children>
+                                    <VBox alignment="CENTER" maxHeight="300.0" maxWidth="550.0" prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: dashed;">
+                                       <children>
+                                          <ImageView fx:id="arrowImg" fitHeight="84.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                          <Label text="You can drag và drop files here to add them.">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="285.0" top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <MFXButton style="-fx-background-color: #c02424;" text="IMPORT" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="300.0" top="15.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <padding>
+                                    <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
+                                 </padding>
+                              </MFXButton>
+                              <Label contentDisplay="RIGHT" prefHeight="3.0" prefWidth="250.0" text="There are required fields in this form marked">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" selectionFill="#e10d0d" />
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="210.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
                </content>
             </Tab>
-            <Tab text="Import">
+            <Tab text="Export">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="590.0" />
                </content>

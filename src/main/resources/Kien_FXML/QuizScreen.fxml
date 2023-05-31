@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="344.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuizScreenController">
    <children>
-      <HBox fillHeight="false" prefHeight="100.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+      <HBox fillHeight="false" prefHeight="100.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <BorderPane prefWidth="445.0" style="-fx-border-color: #ccc; -fx-border-width: 1px;" HBox.hgrow="ALWAYS">
                <top>

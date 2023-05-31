@@ -1,5 +1,6 @@
 package controller.Ha_Controller;
 
+import controller.Hung_Controller.GUI61Controller;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -7,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -25,13 +28,10 @@ public class GUI11Controller implements Initializable {
     private StackPane stackPane;
     @FXML
     private MenuButton menuWindow;
-
     @FXML
     private MFXButton editingBtn;
-    private NewScreenListener screenListener;
-    public void setScreenListener(NewScreenListener screenListener) {
-        this.screenListener = screenListener;
-    }
+    @FXML
+    private VBox listBtn;
 
     public void hideEditingBtn() {
         editingBtn.setVisible(false);
@@ -42,7 +42,7 @@ public class GUI11Controller implements Initializable {
     }
 
     @FXML
-    void backGUI11(MouseEvent event) {
+    private void backGUI11(MouseEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
@@ -71,8 +71,44 @@ public class GUI11Controller implements Initializable {
         }
     }
 
+    public void loadGUI21() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
+            Node node = fxmlLoader.load();
+            GUI21Controller gui21Controller = fxmlLoader.getController();
+            gui21Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            for (int i = 0; i < listBtn.getChildren().size(); ++i) {
+                if (listBtn.getChildren().get(i) instanceof Button) {
+                    Button button = (Button) listBtn.getChildren().get(i);
+                    int finalI = i;
+                    button.setOnAction(event -> {
+                        gui21Controller.getTabPane().getSelectionModel().select(finalI);
+                        gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
+                        stackPane.getChildren().add(node);
+                    });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void viewQuestion(MouseEvent ignoredEvent){
+    private void viewQuestion(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
             Node node = fxmlLoader.load();
@@ -96,6 +132,105 @@ public class GUI11Controller implements Initializable {
 
                 }
             });
+            stackPane.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openCategory(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
+            Node node = fxmlLoader.load();
+            menuWindow.hide();
+//            menuWindow.setVisible(false);
+//            hideEditingBtn();
+            GUI21Controller gui21Controller = fxmlLoader.getController();
+            gui21Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            gui21Controller.getTabPane().getSelectionModel().select(1);
+            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
+            stackPane.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openImport(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
+            Node node = fxmlLoader.load();
+            menuWindow.hide();
+//            menuWindow.setVisible(false);
+//            hideEditingBtn();
+            GUI21Controller gui21Controller = fxmlLoader.getController();
+            gui21Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            gui21Controller.getTabPane().getSelectionModel().select(2);
+            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
+            stackPane.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openExport(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
+            Node node = fxmlLoader.load();
+            menuWindow.hide();
+//            menuWindow.setVisible(false);
+//            hideEditingBtn();
+            GUI21Controller gui21Controller = fxmlLoader.getController();
+            gui21Controller.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            gui21Controller.getTabPane().getSelectionModel().select(3);
+            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
             stackPane.getChildren().add(node);
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,7 +270,35 @@ public class GUI11Controller implements Initializable {
         this.stackPane.getChildren().add(node);
     }
 
+    private void addQuizList() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+            Node node = fxmlLoader.load();
+            CourseListController courseListController = fxmlLoader.getController();
+            courseListController.setScreenListener(new NewScreenListener() {
+                @Override
+                public void changeScreen(Node node) {
+                    addScreenToStackPane(node);
+                }
+
+                @Override
+                public void removeTopScreen() {
+                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
+                }
+
+                @Override
+                public void handle(Event event) {
+
+                }
+            });
+            stackPane.getChildren().add(node);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addQuizList();
     }
 }

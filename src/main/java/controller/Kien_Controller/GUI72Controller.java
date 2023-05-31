@@ -38,9 +38,13 @@ public class GUI72Controller implements Initializable {
     @FXML
     private MFXButton startAttemptBtn;
 
+    public boolean isCancelled = false;
+    public boolean isPreviewed = false;
+
     // Xử lý event với closeBtn
     @FXML
     public void closeThisWindow(MouseEvent event) {
+        isCancelled = true;
         Stage stage = (Stage) closeBtn.getScene().getWindow();
         stage.close();
     }
@@ -59,15 +63,7 @@ public class GUI72Controller implements Initializable {
 
     @FXML
     public void startAttempt(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/Kien_FXML/MainScreen.fxml"));
-            Stage stage = (Stage) startAttemptBtn.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setMaximized(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        isPreviewed = true;
     }
 
     @Override

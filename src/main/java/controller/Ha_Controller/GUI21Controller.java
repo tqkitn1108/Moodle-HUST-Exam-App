@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import listeners.NewScreenListener;
 
 import java.net.URL;
@@ -22,9 +24,16 @@ public class GUI21Controller implements Initializable {
     @FXML
     private MFXCheckbox checkBox;
 
+    @FXML
+    private ImageView arrowImg;
+
     private NewScreenListener screenListener;
     public void setScreenListener(NewScreenListener screenListener) {
         this.screenListener = screenListener;
+    }
+
+    public TabPane getTabPane() {
+        return tabPane;
     }
 
     @FXML
@@ -39,11 +48,16 @@ public class GUI21Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void addImg() {
+        Image image = new Image(getClass().getResourceAsStream("/img/arrow.png"));
+        arrowImg.setImage(image);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addImg();
     }
 
 
