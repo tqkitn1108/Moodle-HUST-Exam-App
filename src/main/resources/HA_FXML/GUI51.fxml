@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
@@ -123,7 +123,7 @@
                                     </padding>
                                     <children>
                                         <Pane maxWidth="1500.0" prefHeight="22.0" prefWidth="291.0" />
-                              <MFXCheckbox text="Display description on course page" />
+                              <JFXCheckBox checkedColor="#009fe5" text="Display description on course page" />
                                         <Label alignment="CENTER">
                                             <graphic>
                                                 <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" />
@@ -217,11 +217,11 @@
                                                 <Insets left="10.0" />
                                             </HBox.margin>
                                         </Label>
-                              <MFXCheckbox gap="4.0" prefHeight="0.0" prefWidth="62.0" text="Enable">
+                              <JFXCheckBox checkedColor="#009fe5" text="Enable">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </MFXCheckbox>
+                              </JFXCheckBox>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="39.0" prefWidth="680.0">
@@ -267,11 +267,11 @@
                                                 <Insets left="10.0" />
                                             </HBox.margin>
                                         </Label>
-                              <MFXCheckbox gap="4.0" prefHeight="0.0" prefWidth="62.0" text="Enable">
+                              <JFXCheckBox checkedColor="#009fe5" text="Enable">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </MFXCheckbox>
+                              </JFXCheckBox>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="84.0" prefHeight="39.0" prefWidth="680.0">
@@ -302,11 +302,11 @@
                                                 <Insets left="5.0" />
                                             </HBox.margin>
                                         </ComboBox>
-                              <MFXCheckbox fx:id="checkBox" gap="4.0" prefHeight="0.0" prefWidth="62.0" text="Enable">
+                              <JFXCheckBox fx:id="checkBox" checkedColor="#009fe5" text="Enable">
                                  <HBox.margin>
-                                    <Insets left="5.0" />
+                                    <Insets left="10.0" />
                                  </HBox.margin>
-                              </MFXCheckbox>
+                              </JFXCheckBox>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="123.0" prefHeight="39.0" prefWidth="680.0">
@@ -327,7 +327,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                                         </Label>
-                                        <ComboBox fx:id="textbox2" prefHeight="26.0" prefWidth="280.0" style="-fx-background-color: #ffffff; -fx-border-color: #777;">
+                                        <ComboBox fx:id="textbox2" prefHeight="26.0" prefWidth="280.0" promptText="Open attempts are submitted automatically" style="-fx-background-color: #ffffff; -fx-border-color: #777;">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -360,7 +360,7 @@
                                         </MFXButton>
                                     </children>
                                     <padding>
-                                        <Insets top="20.0" />
+                                        <Insets top="30.0" />
                                     </padding>
                                 </HBox>
                             </children>

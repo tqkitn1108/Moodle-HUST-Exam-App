@@ -1,5 +1,6 @@
 package controller.Ha_Controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import controller.Thien_Controller.GUI32Controller;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import listeners.NewScreenListener;
 
 import java.net.URL;
@@ -22,7 +24,10 @@ public class GUI21Controller implements Initializable {
     private TabPane tabPane;
 
     @FXML
-    private MFXCheckbox checkBox;
+    private JFXCheckBox checkBox;
+
+    @FXML
+    private AnchorPane quesListPane;
 
     @FXML
     private ImageView arrowImg;

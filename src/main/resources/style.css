@@ -1,3 +1,7 @@
+.menu-gui11 .arrow {
+    -fx-background-color: #c34d53;
+}
+
 .checkBox .box {
     -fx-background-color: white;
     -fx-border-color: #2196F3;
@@ -72,6 +76,34 @@
 .combo-box .scroll-bar:vertical .thumb {
     -fx-background-color: #c0c0c0;
 }
+/*
 .combo-box .list-view {
     -fx-pref-width: 110;
+}
+*/
+
+/******** CSS GUI62a *********/
+
+.menu-item {
+    -fx-background-color: #f1f1f1;
+}
+
+.menu-item:focused {
+    -fx-background-color: #009fe5;
+}
+
+.menu-item:focused .plus-icon {
+    -fx-fill:  #fff;
+}
+
+.menu-gui62a .arrow {
+    -fx-background-color: #009fe5;
+}
+
+.close-label:hover {
+    -fx-background-color: #c70d0d;
+}
+
+.close-label:hover .close-icon {
+    -fx-fill: #fff;
 }

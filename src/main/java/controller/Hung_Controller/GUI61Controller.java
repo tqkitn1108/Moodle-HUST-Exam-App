@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -34,6 +35,21 @@ public class GUI61Controller implements Initializable {
 
     public void setQuizName(String quizName) {
         this.quizName.setText(quizName);
+    }
+
+    @FXML
+    public void editingQuiz(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
+            Node node = fxmlLoader.load();
+            GUI62aController gui62aController = fxmlLoader.getController();
+            gui62aController.setTitle("Editing quiz: " + this.quizName.getText());
+            gui62aController.setScreenListener(this.screenListener);
+            this.screenListener.removeTopScreen();
+            this.screenListener.changeScreen(node);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

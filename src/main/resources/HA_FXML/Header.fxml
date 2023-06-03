@@ -92,9 +92,9 @@
                                                 <Insets left="10.0" right="100.0" top="10.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <VBox prefHeight="142.0" prefWidth="116.0">
+                                          <VBox fx:id="listBtn" prefHeight="142.0" prefWidth="116.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onMouseClicked="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" onAction="#viewQuestion" onMouseClicked="#viewQuestion" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -108,7 +108,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Categories" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" onAction="#openCategory" style="-fx-background-color: #ffffff;" text="Categories" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -119,7 +119,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Import" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" onAction="#openImport" style="-fx-background-color: #ffffff;" text="Import" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -130,7 +130,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Export" textFill="#009fe5">
+                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#openExport" style="-fx-background-color: #ffffff;" text="Export" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -226,7 +226,7 @@
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </VBox>
          </children>

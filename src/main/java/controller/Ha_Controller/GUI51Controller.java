@@ -1,5 +1,6 @@
 package controller.Ha_Controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +14,7 @@ import java.util.ResourceBundle;
 public class GUI51Controller implements Initializable {
 
     @FXML
-    private MFXCheckbox checkBox;
+    private JFXCheckBox checkBox;
     @FXML
     private ComboBox<Integer> daybox1;
 
@@ -68,7 +69,6 @@ public class GUI51Controller implements Initializable {
         comboBox.getSelectionModel().select(0);
     }
 
-    //Set up hourbox
     private void setupHourBox(ComboBox<Integer> comboBox) {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 0; i <= 12; i++) {
@@ -79,7 +79,6 @@ public class GUI51Controller implements Initializable {
 
     }
 
-    // Set up daybox
     private void setupDayBox(ComboBox<Integer> comboBox) {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 1; i <= 31; i++) {
@@ -89,7 +88,6 @@ public class GUI51Controller implements Initializable {
         comboBox.getSelectionModel().select(0);
     }
 
-    //Set up yearbox
     private void setupYearBox(ComboBox<Integer> comboBox) {
         // Populate the ComboBox with values from 1 to 60.
         for (int i = 2000; i <= 2023; i++) {
@@ -98,8 +96,6 @@ public class GUI51Controller implements Initializable {
         // Set the default value of the ComboBox to 1.
         comboBox.getSelectionModel().select(0);
     }
-
-    //Set up monthbox
 
     private void setupMonthBox(ComboBox<String> comboBox) {
         // Populate the ComboBox with text options.
@@ -110,8 +106,6 @@ public class GUI51Controller implements Initializable {
 
     }
 
-    // Set up textbox1
-
     private void setupTextBox1(ComboBox<String> comboBox) {
         // Populate the ComboBox with text options.
         comboBox.getItems().addAll("minutes", "hours");
@@ -121,22 +115,15 @@ public class GUI51Controller implements Initializable {
 
     }
 
-    // Set up textbox2
     private void setupTextBox2(ComboBox<String> comboBox) {
-        // Populate the ComboBox with text options.
-        comboBox.getItems().addAll("Open attempts are submitted automatically");
-
-        // Set the default value of the ComboBox to the first option.
-        comboBox.getSelectionModel().selectFirst();
-
+        comboBox.getItems().add("Open attempts are submitted automatically");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Disable the ComboBoxes by default.
         minbox3.setDisable(true);
         textbox1.setDisable(true);
-        textbox2.setDisable(true);
+//        textbox2.setDisable(true);
 
         // Set up the CheckBox to enable/disable the ComboBoxes.
         checkBox.setOnAction(event -> {

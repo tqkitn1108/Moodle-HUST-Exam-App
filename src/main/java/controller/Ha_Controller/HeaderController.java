@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import listeners.NewScreenListener;
 
 import java.io.IOException;
@@ -15,16 +16,23 @@ import java.util.ResourceBundle;
 
 
 public class HeaderController implements Initializable {
+
     @FXML
     private MenuButton menuWindow;
-
     @FXML
     private MFXButton editingBtn;
+    @FXML
+    private VBox listBtn;
 
+    private NewScreenListener headerListener;
+    public void setHeaderListener(NewScreenListener headerListener) {
+        this.headerListener = headerListener;
+    }
     private NewScreenListener screenListener;
     public void setScreenListener(NewScreenListener screenListener) {
         this.screenListener = screenListener;
     }
+
 
     public void hideEditingBtn() {
         editingBtn.setVisible(false);
@@ -43,7 +51,6 @@ public class HeaderController implements Initializable {
                 Node node = fxmlLoader.load();
                 menuWindow.hide();
                 hideEditingBtn();
-                this.screenListener.removeTopScreen();
                 this.screenListener.changeScreen(node);
             } catch (IOException e) {
                 e.printStackTrace();
