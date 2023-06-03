@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import listeners.HeaderListener;
 import listeners.NewScreenListener;
 
 import java.net.URL;
@@ -18,6 +19,11 @@ public class GUI63Controller implements Initializable {
     @FXML
     private VBox questionList;
 
+    private HeaderListener headerListener;
+
+    public void setHeaderListener(HeaderListener headerListener) {
+        this.headerListener = headerListener;
+    }
     private NewScreenListener screenListener;
 
     public void setScreenListener(NewScreenListener screenListener) {
@@ -32,12 +38,15 @@ public class GUI63Controller implements Initializable {
     @FXML
     public void addSelectedQuestion(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI64.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
             Node node = fxmlLoader.load();
-            GUI64Controller gui64Controller = fxmlLoader.getController();
-            gui64Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
+            GUI62aController gui62aController = fxmlLoader.getController();
+            gui62aController.addQuestionToScrollPane();
+            gui62aController.setHeaderListener(this.headerListener);
+            gui62aController.setScreenListener(this.screenListener);
+            this.screenListener.removeTopScreen();  // Xóa giao diện GUI63
+            this.screenListener.removeTopScreen(); // Xóa giao diện GUI62a đã có
+            this.screenListener.changeScreen(node); // Load giao diện GUI62a hiện tại
         } catch (Exception e) {
             e.printStackTrace();
         }

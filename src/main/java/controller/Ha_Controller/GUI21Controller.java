@@ -13,6 +13,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import listeners.HeaderListener;
 import listeners.NewScreenListener;
 
 import java.net.URL;
@@ -32,6 +33,11 @@ public class GUI21Controller implements Initializable {
     @FXML
     private ImageView arrowImg;
 
+
+    private HeaderListener headerListener;
+    public void setHeaderListener(HeaderListener headerListener) {
+        this.headerListener = headerListener;
+    }
     private NewScreenListener screenListener;
     public void setScreenListener(NewScreenListener screenListener) {
         this.screenListener = screenListener;
@@ -42,13 +48,16 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    void createNewQuestion(ActionEvent event) {
+    private void createNewQuestion(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/GUI32.fxml"));
             Node node = fxmlLoader.load();
             GUI32Controller gui32Controller = fxmlLoader.getController();
+            gui32Controller.setHeaderListener(this.headerListener);
             gui32Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
+            this.headerListener.addAddressToBreadcrumbs("Question bank");
+            this.headerListener.addAddressToBreadcrumbs("Questions");
+            this.headerListener.addAddressToBreadcrumbs("Editing a Multiple choice question");
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
             e.printStackTrace();

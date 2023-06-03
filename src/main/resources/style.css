@@ -1,4 +1,4 @@
-.menu-gui11 .arrow {
+.menu-header .arrow {
     -fx-background-color: #c34d53;
 }
 
@@ -19,16 +19,16 @@
     -fx-background-color: white;
 }
 
-
-.tabPane *.tab-header-background {
-
+.tab-pane *.tab-header-background {
     -fx-padding: 20 20 20 20;
     -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1 0;
 }
 
-.tabPane .tab.tab-content-area {
+.tab-pane .tab.tab-content-area {
     -fx-background-color: inherit;
-    -fx-border-color: inherit;
+    -fx-border-color: #ccc;
 }
 
 .tab {
@@ -45,7 +45,8 @@
 
 .tab:selected {
     -fx-background-color: white;
-    -fx-border-color: #C8CCE8 #C8CCE8 transparent #C8CCE8;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: #ccc #ccc #fff #ccc;
 }
 
 .tab:selected .tab-label {
@@ -54,11 +55,11 @@
 }
 
 .tab:selected .focus-indicator {
-    -fx-focus-color: transparent;
+    -fx-focus-color: #fff;
 }
 
-.tabPane .tab:focused {
-    -fx-focus-color: transparent;
+.tab-pane .tab:focused {
+    -fx-focus-color: #fff;
 }
 
 /******** CSS GUI32 *********/
@@ -106,4 +107,10 @@
 
 .close-label:hover .close-icon {
     -fx-fill: #fff;
+}
+
+/******** CSS GUI7 *********/
+
+.finish-btn:hover {
+    -fx-underline: true;
 }

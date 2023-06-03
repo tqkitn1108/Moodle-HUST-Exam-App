@@ -403,7 +403,7 @@
                             </Button>
                             <HBox prefHeight="61.0" prefWidth="721.0">
                                 <children>
-                                    <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="118.0" style="-fx-background-color: #c02424; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#closeThisWindow" prefHeight="39.0" prefWidth="118.0" style="-fx-background-color: #c02424; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES" textFill="WHITE">
                                         <font>
                                             <Font name="Times New Roman" size="12.0" />
                                         </font>
@@ -414,7 +414,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="80.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="CANCEL" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#closeThisWindow" prefHeight="39.0" prefWidth="80.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="CANCEL" textFill="WHITE">
                                         <font>
                                             <Font name="Times New Roman" size="12.0" />
                                         </font>

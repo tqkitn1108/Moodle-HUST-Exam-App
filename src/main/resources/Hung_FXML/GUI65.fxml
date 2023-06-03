@@ -8,6 +8,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -110,7 +111,7 @@
                                                       </Label>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets left="20.0" top="3.0" />
+                                                      <Insets left="20.0" right="20.0" top="5.0" />
                                                    </VBox.margin>
                                                 </HBox>
                                              </children>
@@ -132,33 +133,41 @@
             </TabPane>
          </center>
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <VBox BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Add a random question to page 1" textFill="#ca4d46">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Label onMouseClicked="#closeThisWindow" styleClass="close-label" HBox.hgrow="ALWAYS">
-                     <graphic>
-                        <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="18" styleClass="close-icon" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="600.0">
+                     <children>
+                        <Label text="Add a random question to page 1" textFill="#ca4d46">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <Label onMouseClicked="#closeThisWindow" styleClass="close-label" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <FontAwesomeIconView fill="#818181" glyphName="TIMES" size="18" styleClass="close-icon" />
+                           </graphic>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
                </children>
-            </HBox>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" />
+               </BorderPane.margin>
+            </VBox>
          </top>
       </BorderPane>
    </children>

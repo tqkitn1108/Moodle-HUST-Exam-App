@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model2.DataModel;
 
@@ -27,6 +28,11 @@ import java.util.ResourceBundle;
 public class GUI61Controller implements Initializable {
     @FXML
     private Label quizName;
+
+    private HeaderListener headerListener;
+    public void setHeaderListener(HeaderListener headerListener) {
+        this.headerListener = headerListener;
+    }
     private NewScreenListener screenListener;
 
     public void setScreenListener(NewScreenListener screenListener) {
@@ -44,8 +50,9 @@ public class GUI61Controller implements Initializable {
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
             gui62aController.setTitle("Editing quiz: " + this.quizName.getText());
+            this.headerListener.addAddressToBreadcrumbs("Edit quiz");
+            gui62aController.setHeaderListener(this.headerListener);
             gui62aController.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,8 +69,8 @@ public class GUI61Controller implements Initializable {
         Pane overlay = new Pane();
         overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
         overlayStackPane.getChildren().add(overlay);
-        Scene newScene = new Scene(overlayStackPane);
-        thisStage.setScene(newScene);
+        thisScene.setRoot(overlayStackPane);
+        thisStage.setScene(thisScene);
 
         // Cài đặt cho confirm window
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Kien_FXML/GUI72.fxml"));
@@ -91,7 +98,9 @@ public class GUI61Controller implements Initializable {
         try {
             Node node = fxmlLoader.load();
             QuizScreenController quizScreenController = fxmlLoader.getController();
+            quizScreenController.setHeaderListener(this.headerListener);
             quizScreenController.setScreenListener(this.screenListener);
+            this.headerListener.addAddressToBreadcrumbs("Preview");
             this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (IOException e) {

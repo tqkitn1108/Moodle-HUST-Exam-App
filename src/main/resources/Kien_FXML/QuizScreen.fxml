@@ -92,7 +92,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </MFXScrollPane>
-                  <Label fx:id="finishBtn" onMouseClicked="#finishAttempt" onMouseEntered="#hoverFinishBtn" onMouseExited="#unhoverFinishBtn" text="Finish attempt ...">
+                  <Label fx:id="finishBtn" onMouseClicked="#finishAttempt" styleClass="finish-btn" text="Finish attempt ..." textFill="#0073a5">
                      <VBox.margin>
                         <Insets bottom="25.0" left="15.0" top="10.0" />
                      </VBox.margin>

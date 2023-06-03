@@ -44,7 +44,7 @@
                         <Font size="15.0" />
                      </font>
                   </Text>
-                  <Label alignment="BOTTOM_CENTER" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
+                  <Label alignment="BOTTOM_CENTER" minHeight="30.0" minWidth="30.0" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #e5e5e5; -fx-background-radius: 100%;">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -75,7 +75,7 @@
                            </HBox.margin>
                         </Label>
                         <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
-                        <MenuButton fx:id="menuWindow" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #fff;" textFill="#009fe5">
+                        <MenuButton fx:id="menuBtn" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="33.0" style="-fx-background-color: #fff;" styleClass="menu-header" textFill="#009fe5">
                            <items>
                               <SeparatorMenuItem hideOnClick="true" mnemonicParsing="false">
                                  <content>
@@ -172,9 +172,9 @@
                         </MenuButton>
                      </children>
                   </HBox>
-                  <HBox prefHeight="27.0">
+                  <HBox fx:id="breadcrumbs" minHeight="22.0" prefHeight="27.0">
                      <children>
-                        <Label alignment="CENTER" text="Home" textFill="#c53624">
+                        <Label alignment="BOTTOM_CENTER" onMouseClicked="#backHomePage" text="Home" textFill="#c53624">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -185,21 +185,38 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Label>
-                        <Label alignment="CENTER" text="/  My courses  /">
+                        <Label alignment="BOTTOM_CENTER" graphicTextGap="10.0" text="My courses">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <graphic>
+                              <Text strokeType="OUTSIDE" text="/">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="THI CUỐI KỲ" textFill="#c53624">
+                        <Label alignment="BOTTOM_CENTER" graphicTextGap="10.0" onMouseClicked="#backHomePage" prefHeight="22.0" text="THI CUỐI KỲ" textFill="#c53624">
                            <HBox.margin>
-                              <Insets left="10.0" top="2.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <Text strokeType="OUTSIDE" text="/">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
                      </children>
                      <VBox.margin>
@@ -208,9 +225,9 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" minWidth="51.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXButton fx:id="editingBtn" alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #0273a5;" text="TURN EDITING ON" textFill="WHITE">
+                        <MFXButton fx:id="editingBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#openEditing" style="-fx-background-color: #0273a5;" text="TURN EDITING ON" textFill="WHITE">
                            <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
                            </HBox.margin>
                            <padding>
                               <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />

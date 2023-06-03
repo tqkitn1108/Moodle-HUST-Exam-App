@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model2.DataModel;
 import model2.Question;
@@ -48,6 +49,13 @@ public class QuizScreenController implements Initializable {
     private Quiz quiz;
     private List<Question> questionList;
     private Map<Integer, Integer> userAnswer;
+
+    private HeaderListener headerListener;
+
+    public void setHeaderListener(HeaderListener headerListener) {
+        this.headerListener = headerListener;
+    }
+
     private NewScreenListener screenListener;
 
     public void setScreenListener(NewScreenListener screenListener) {
@@ -70,17 +78,6 @@ public class QuizScreenController implements Initializable {
         if (quiz != null) {
             this.questionList = quiz.getQuestions();
         }
-    }
-
-    // Xử lý khi hover vào finish Attempt
-    @FXML
-    void hoverFinishBtn(MouseEvent event) {
-        finishBtn.setUnderline(true);
-    }
-
-    @FXML
-    void unhoverFinishBtn(MouseEvent event) {
-        finishBtn.setUnderline(false);
     }
 
     // Timer fields
@@ -208,8 +205,8 @@ public class QuizScreenController implements Initializable {
         overlay = new Pane();
         overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
         overlayStackPane.getChildren().add(overlay);
-        Scene newScene = new Scene(overlayStackPane);
-        thisStage.setScene(newScene); // Đặt Scene mới cho thisStage
+        thisScene.setRoot(overlayStackPane);
+        thisStage.setScene(thisScene);
 
         // Cài đặt cho confirm window
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Kien_FXML/ConfirmSubmit.fxml"));
@@ -243,12 +240,15 @@ public class QuizScreenController implements Initializable {
         }
         DataModel.getInstance().setNumber(questionList.size());
         DataModel.getInstance().setUserAnswer(userAnswer);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
             setResultBar(quizResultScreenController);
+            quizResultScreenController.setHeaderListener(this.headerListener);
             quizResultScreenController.setScreenListener(this.screenListener);
+            this.headerListener.removeAddress(1);
+            this.headerListener.addAddressToBreadcrumbs("Review");
             this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (IOException e) {

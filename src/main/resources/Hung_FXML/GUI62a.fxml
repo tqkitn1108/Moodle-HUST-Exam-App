@@ -82,7 +82,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </TextField>
-                                    <MFXButton style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                    <MFXButton onAction="#saveEditing" style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -118,11 +118,14 @@
                <children>
                   <HBox fillHeight="false" prefHeight="50.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
                      <children>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="16" textAlignment="CENTER" wrappingWidth="21.80001735687256">
+                        <Label fx:id="pencilLabel">
+                           <graphic>
+                              <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="16" textAlignment="CENTER" wrappingWidth="21.80001735687256" />
+                           </graphic>
                            <HBox.margin>
-                              <Insets left="15.0" top="15.0" />
+                              <Insets left="15.0" right="15.0" top="10.0" />
                            </HBox.margin>
-                        </FontAwesomeIconView>
+                        </Label>
                         <Pane HBox.hgrow="ALWAYS" />
                         <VBox alignment="CENTER_RIGHT" prefHeight="138.0" prefWidth="302.0">
                            <children>
@@ -172,7 +175,10 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <MFXScrollPane />
+                  <MFXScrollPane fitToHeight="true" fitToWidth="true">
+                     <content>
+                        <VBox fx:id="questionList" spacing="2.0" />
+                     </content></MFXScrollPane>
                </children>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />

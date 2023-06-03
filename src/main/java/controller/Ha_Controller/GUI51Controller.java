@@ -76,7 +76,6 @@ public class GUI51Controller implements Initializable {
         }
         // Set the default value of the ComboBox to 1.
         comboBox.getSelectionModel().select(0);
-
     }
 
     private void setupDayBox(ComboBox<Integer> comboBox) {
@@ -103,7 +102,6 @@ public class GUI51Controller implements Initializable {
 
         // Set the default value of the ComboBox to the first option.
         comboBox.getSelectionModel().selectFirst();
-
     }
 
     private void setupTextBox1(ComboBox<String> comboBox) {
@@ -112,7 +110,6 @@ public class GUI51Controller implements Initializable {
 
         // Set the default value of the ComboBox to the first option.
         comboBox.getSelectionModel().selectFirst();
-
     }
 
     private void setupTextBox2(ComboBox<String> comboBox) {
