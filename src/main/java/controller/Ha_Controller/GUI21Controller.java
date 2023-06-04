@@ -55,6 +55,7 @@ public class GUI21Controller implements Initializable {
             GUI32Controller gui32Controller = fxmlLoader.getController();
             gui32Controller.setHeaderListener(this.headerListener);
             gui32Controller.setScreenListener(this.screenListener);
+            this.headerListener.hideMenuButton();
             this.headerListener.addAddressToBreadcrumbs("Question bank");
             this.headerListener.addAddressToBreadcrumbs("Questions");
             this.headerListener.addAddressToBreadcrumbs("Editing a Multiple choice question");

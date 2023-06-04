@@ -33,44 +33,10 @@ public class GUI11Controller implements Initializable {
     private StackPane stackPane;
     HeaderController headerController2;
 
-    public void loadGUI21() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
-            Node node = fxmlLoader.load();
-            GUI21Controller gui21Controller = fxmlLoader.getController();
-            gui21Controller.setScreenListener(new NewScreenListener() {
-                @Override
-                public void changeScreen(Node node) {
-                    addScreenToStackPane(node);
-                }
-
-                @Override
-                public void removeTopScreen() {
-                    stackPane.getChildren().remove(stackPane.getChildren().size() - 1);
-                }
-
-                @Override
-                public void handle(Event event) {
-
-                }
-            });
-//            for (int i = 0; i < listBtn.getChildren().size(); ++i) {
-//                if (listBtn.getChildren().get(i) instanceof Button) {
-//                    Button button = (Button) listBtn.getChildren().get(i);
-//                    int finalI = i;
-//                    button.setOnAction(event -> {
-//                        gui21Controller.getTabPane().getSelectionModel().select(finalI);
-//                        gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
-//                        stackPane.getChildren().add(node);
-//                    });
-//                }
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void addScreenToStackPane(Node node) {
+        if (this.stackPane.getChildren().contains(node)) {
+            this.stackPane.getChildren().remove(node);
+        }
         this.stackPane.getChildren().add(node);
     }
 
@@ -103,8 +69,8 @@ public class GUI11Controller implements Initializable {
                 @Override
                 public void removeAddress(Integer number) {
                     HBox breadcrumbs = (HBox) headerController.getBreadcrumbs();
-                    if(breadcrumbs.getChildren().size() - number >= 3) {
-                        while (number>0) {
+                    if (breadcrumbs.getChildren().size() - number >= 3) {
+                        while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
                             number--;
                         }
@@ -185,8 +151,8 @@ public class GUI11Controller implements Initializable {
                 @Override
                 public void removeAddress(Integer number) {
                     HBox breadcrumbs = (HBox) headerController2.getBreadcrumbs();
-                    if(breadcrumbs.getChildren().size() - number >= 3) {
-                        while (number>0) {
+                    if (breadcrumbs.getChildren().size() - number >= 3) {
+                        while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
                             number--;
                         }

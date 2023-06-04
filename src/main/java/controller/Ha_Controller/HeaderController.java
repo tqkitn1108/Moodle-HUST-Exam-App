@@ -99,73 +99,27 @@ public class HeaderController implements Initializable {
         }
     }
 
-    @FXML
-    private void viewQuestion(ActionEvent event) {
+    public void openQuestionMenu() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
             Node node = fxmlLoader.load();
-            menuBtn.hide();
             GUI21Controller gui21Controller = fxmlLoader.getController();
-            gui21Controller.getTabPane().getSelectionModel().select(0);
-            gui21Controller.setHeaderListener(this.headerListener);
-            gui21Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openCategory(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
-            Node node = fxmlLoader.load();
-            menuBtn.hide();
-            GUI21Controller gui21Controller = fxmlLoader.getController();
-            gui21Controller.getTabPane().getSelectionModel().select(1);
-            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
-            gui21Controller.setHeaderListener(this.headerListener);
-            gui21Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openImport(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
-            Node node = fxmlLoader.load();
-            menuBtn.hide();
-            GUI21Controller gui21Controller = fxmlLoader.getController();
-            gui21Controller.getTabPane().getSelectionModel().select(2);
-            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
-            gui21Controller.setHeaderListener(this.headerListener);
-            gui21Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openExport(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
-            Node node = fxmlLoader.load();
-            menuBtn.hide();
-            GUI21Controller gui21Controller = fxmlLoader.getController();
-            gui21Controller.getTabPane().getSelectionModel().select(3);
-            gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
-            gui21Controller.setHeaderListener(this.headerListener);
-            gui21Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
-        } catch (IOException e) {
+            for (int i = 0; i < listBtn.getChildren().size(); ++i) {
+                if (listBtn.getChildren().get(i) instanceof Button) {
+                    Button button = (Button) listBtn.getChildren().get(i);
+                    int finalI = i;
+                    button.setOnAction(event -> {
+                        menuBtn.hide();
+                        gui21Controller.setHeaderListener(this.headerListener);
+                        gui21Controller.setScreenListener(this.screenListener);
+                        gui21Controller.getTabPane().getSelectionModel().select(finalI);
+                        gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
+                        this.screenListener.removeTopScreen();
+                        this.screenListener.changeScreen(node);
+                    });
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -186,7 +140,7 @@ public class HeaderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        openQuestionMenu();
     }
 
 }

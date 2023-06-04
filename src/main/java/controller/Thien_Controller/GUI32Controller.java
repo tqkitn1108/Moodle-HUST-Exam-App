@@ -54,6 +54,7 @@ public class GUI32Controller implements Initializable {
     @FXML
     public void closeThisWindow(ActionEvent event) {
         try {
+            this.headerListener.showMenuButton();
             this.screenListener.removeTopScreen();
             this.headerListener.removeAddress(3);
         } catch (Exception e){

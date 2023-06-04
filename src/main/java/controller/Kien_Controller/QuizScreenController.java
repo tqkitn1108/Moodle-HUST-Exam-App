@@ -1,18 +1,31 @@
 package controller.Kien_Controller;
 
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,6 +35,9 @@ import model2.DataModel;
 import model2.Question;
 import model2.Quiz;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
@@ -60,6 +76,10 @@ public class QuizScreenController implements Initializable {
 
     public void setScreenListener(NewScreenListener screenListener) {
         this.screenListener = screenListener;
+    }
+
+    public void hideTimer() {
+        this.time.setVisible(false);
     }
 
     private Timer timer = new Timer();
@@ -278,6 +298,69 @@ public class QuizScreenController implements Initializable {
         if (remainingSeconds == 1) secText = "1 sec";
         else if (remainingSeconds > 1) secText = remainingSeconds + " secs ";
         return hrText + minText + secText;
+    }
+
+    public void exportToPdf() throws Exception {
+        try {
+            Stage thisStage = (Stage) finishBtn.getScene().getWindow();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save PDF");
+            fileChooser.setInitialFileName("Baithitracnghiem.pdf");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+            File file = fileChooser.showSaveDialog(thisStage);
+
+            if (file != null) {
+                PdfWriter writer = new PdfWriter(new FileOutputStream(file.getName()));
+                PdfDocument pdfDocument = new PdfDocument(writer);
+                Document document = new Document(pdfDocument, PageSize.A4);
+                document.setMargins(50, 50, 50, 50);
+
+                double vboxHeight = quizListContainer.getHeight();
+                double partWidth = quizListContainer.getWidth();
+                double startY = 0; // Vị trí bắt đầu chụp của VBox ở mỗi lần chụp
+                while (vboxHeight > startY) {
+                    double partHeight = vboxHeight - startY; // Phần VBox còn cần phải chụp
+
+                    // Tạo một đối tượng Rectangle để chỉ định phần của VBox bạn muốn chụp
+                    Rectangle2D partRect = new Rectangle2D(0, startY, partWidth, partHeight);
+
+                    SnapshotParameters params = new SnapshotParameters();
+                    params.setViewport(partRect);
+
+                    // Chuyển phần của VBox sang hình ảnh và chụp vào tài liệu PDF
+                    WritableImage partImage = quizListContainer.snapshot(params, null);
+                    Image partPdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(partImage, null), null));
+                    document.add(partPdfImage);
+                    startY += 1700;
+                }
+                document.close();
+            }
+            // Sau khi tạo file PDF thành công
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thành công");
+            alert.setHeaderText("Tài liệu PDF đã được tạo thành công");
+            alert.setContentText("Thông báo thành công.");
+
+            alert.setOnCloseRequest(event -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+                    Node node = fxmlLoader.load();
+                    CourseListController courseListController = fxmlLoader.getController();
+                    courseListController.setHeaderListener(this.headerListener);
+                    courseListController.setScreenListener(this.screenListener);
+                    this.headerListener.showMenuButton();
+                    this.headerListener.showEditingBtn();
+                    this.headerListener.removeAddress(5);
+                    this.screenListener.removeTopScreen();
+                    this.screenListener.changeScreen(node);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            alert.showAndWait();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

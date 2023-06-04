@@ -2,6 +2,8 @@ package controller.Hung_Controller;
 
 import controller.Kien_Controller.GUI72Controller;
 import controller.Kien_Controller.QuizScreenController;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,15 +26,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GUI61Controller implements Initializable {
     @FXML
     private Label quizName;
 
     private HeaderListener headerListener;
+
     public void setHeaderListener(HeaderListener headerListener) {
         this.headerListener = headerListener;
     }
+
     private NewScreenListener screenListener;
 
     public void setScreenListener(NewScreenListener screenListener) {
@@ -60,7 +66,7 @@ public class GUI61Controller implements Initializable {
     }
 
     @FXML
-    public void previewQuiz(ActionEvent event) throws IOException {
+    public void previewQuiz(ActionEvent event) throws Exception {
         // Cài đặt cho primaryStage khi hiện cửa sổ xác nhận
         Stage thisStage = (Stage) quizName.getScene().getWindow();
         Scene thisScene = thisStage.getScene();
@@ -88,25 +94,28 @@ public class GUI61Controller implements Initializable {
         if (gui72Controller.isCancelled) {
             overlayStackPane.getChildren().remove(overlay);
         }
-        if (gui72Controller.isPreviewed) {
-            changeScreen();
+        if (gui72Controller.isExported) {
+            changeScreen(true);
+        } else if (gui72Controller.isPreviewed) {
+            changeScreen(false);
         }
     }
 
-    private void changeScreen() {
+    private void changeScreen(boolean isExported) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
-        try {
-            Node node = fxmlLoader.load();
-            QuizScreenController quizScreenController = fxmlLoader.getController();
-            quizScreenController.setHeaderListener(this.headerListener);
-            quizScreenController.setScreenListener(this.screenListener);
-            this.headerListener.addAddressToBreadcrumbs("Preview");
-            this.screenListener.removeTopScreen();
-            this.screenListener.changeScreen(node);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Node node = fxmlLoader.load();
+        QuizScreenController quizScreenController = fxmlLoader.getController();
+        quizScreenController.setHeaderListener(this.headerListener);
+        quizScreenController.setScreenListener(this.screenListener);
+        this.headerListener.addAddressToBreadcrumbs("Preview");
+        this.screenListener.removeTopScreen();
+        this.screenListener.changeScreen(node);
+        if (isExported) {
+            quizScreenController.hideTimer();
+            quizScreenController.exportToPdf();
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }

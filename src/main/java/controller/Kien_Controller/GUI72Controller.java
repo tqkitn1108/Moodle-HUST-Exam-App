@@ -40,6 +40,7 @@ public class GUI72Controller implements Initializable {
 
     public boolean isCancelled = false;
     public boolean isPreviewed = false;
+    public boolean isExported = false;
 
     // Xử lý event với closeBtn
     @FXML
@@ -66,6 +67,11 @@ public class GUI72Controller implements Initializable {
         isPreviewed = true;
     }
 
+    @FXML
+    public void exportToPdf(ActionEvent event) {
+        isPreviewed = true;
+        isExported = true;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
