@@ -57,9 +57,9 @@ public class HeaderController implements Initializable {
         this.screenListener = screenListener;
     }
 
-    public void backHomePage(MouseEvent event) {
-        Label lastLabel = (Label) breadcrumbs.getChildren().get(breadcrumbs.getChildren().size() - 1);
-        if (lastLabel.getText().equals("Preview")) {
+    public void backHomePage(ActionEvent event) {
+        MFXButton lastBtn = (MFXButton) breadcrumbs.getChildren().get(breadcrumbs.getChildren().size() - 1);
+        if (lastBtn.getText().equals("Preview")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText("You are in the test, are you sure you want to exit?");
@@ -130,8 +130,11 @@ public class HeaderController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
             Node node = fxmlLoader.load();
             GUI51Controller gui51Controller = fxmlLoader.getController();
+            gui51Controller.setHeaderListener(this.headerListener);
             gui51Controller.setScreenListener(this.screenListener);
-            this.screenListener.removeTopScreen();
+            this.headerListener.addAddressToBreadcrumbs("Adding a new Quiz");
+            this.headerListener.hideMenuButton();
+            this.headerListener.hideEditingBtn();
             this.screenListener.changeScreen(node);
         } catch (IOException e) {
             e.printStackTrace();

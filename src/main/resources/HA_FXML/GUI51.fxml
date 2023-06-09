@@ -94,7 +94,7 @@
                                                 <Insets right="10.0" />
                                             </HBox.margin>
                                         </Label>
-                                        <TextField maxWidth="600.0" prefHeight="26.0" prefWidth="420.0" HBox.hgrow="ALWAYS">
+                                        <TextField fx:id="quizName" maxWidth="600.0" prefHeight="26.0" prefWidth="420.0" HBox.hgrow="ALWAYS">
                                             <HBox.margin>
                                                 <Insets />
                                             </HBox.margin>
@@ -336,7 +336,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="730.0">
                                     <children>
-                                        <MFXButton prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #009fe5;" text="Create" textFill="WHITE">
+                                        <MFXButton onAction="#createNewQuiz" prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #009fe5;" text="Create" textFill="WHITE">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -347,7 +347,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                                         </MFXButton>
-                                        <MFXButton prefWidth="98.0" style="-fx-background-color: #c70d0d;" text="Cancel" textFill="WHITE">
+                                        <MFXButton onAction="#closeThisWindow" prefWidth="98.0" style="-fx-background-color: #c70d0d;" text="Cancel" textFill="WHITE">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>

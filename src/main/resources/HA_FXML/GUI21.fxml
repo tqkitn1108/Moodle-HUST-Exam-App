@@ -322,7 +322,7 @@
                                  <children>
                                     <Label prefWidth="250.0" text="Import" HBox.hgrow="ALWAYS" />
                                     <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" text="" wrappingWidth="10.285714149475098" />
-                                    <MFXButton style="-fx-background-color: #0693E3;" text="CHOOSE A FILE" textFill="WHITE">
+                                    <MFXButton fx:id="chooseBtn" onAction="#chooseAFile" style="-fx-background-color: #0693E3;" text="CHOOSE A FILE..." textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -330,7 +330,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                        <padding>
-                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                          <Insets bottom="6.0" left="10.0" right="10.0" top="6.0" />
                                        </padding>
                                     </MFXButton>
                                     <Label text="Maximum size for new files: 100MB">
@@ -340,12 +340,20 @@
                                     </Label>
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="15.0" top="20.0" />
+                                    <Insets bottom="5.0" left="15.0" top="20.0" />
                                  </VBox.margin>
                               </HBox>
+                              <Label fx:id="fileLabel" graphicTextGap="8.0" minHeight="0.0" prefHeight="0.0">
+                                 <VBox.margin>
+                                    <Insets left="285.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
                               <VBox alignment="CENTER" maxHeight="300.0" maxWidth="550.0" prefHeight="100.0" prefWidth="300.0" style="-fx-border-color: #818181; -fx-background-color: #ffffff;">
                                  <children>
-                                    <VBox alignment="CENTER" maxHeight="300.0" maxWidth="550.0" prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: dashed;">
+                                    <VBox fx:id="boxToDropFile" alignment="CENTER" maxHeight="300.0" maxWidth="550.0" onDragDropped="#dropFile" onDragExited="#dragExited" onDragOver="#dragFileOver" prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: dashed;">
                                        <children>
                                           <ImageView fx:id="arrowImg" fitHeight="84.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                              <VBox.margin>
@@ -364,10 +372,10 @@
                                     </VBox>
                                  </children>
                                  <VBox.margin>
-                                    <Insets left="285.0" top="10.0" />
+                                    <Insets left="285.0" top="5.0" />
                                  </VBox.margin>
                               </VBox>
-                              <MFXButton style="-fx-background-color: #c02424;" text="IMPORT" textFill="WHITE">
+                              <MFXButton onAction="#importFile" style="-fx-background-color: #c02424;" text="IMPORT" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="300.0" top="15.0" />
                                  </VBox.margin>

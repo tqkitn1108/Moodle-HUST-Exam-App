@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -103,6 +104,20 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Label>
+                  <MFXButton fx:id="exportBtn" contentDisplay="RIGHT" onAction="#exportToPdf" style="-fx-background-color: #eb6815;" text="Export" textFill="WHITE" visible="false">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" top="-45.0" />
+                     </VBox.margin>
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="FILE_PDF_ALT" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets bottom="5.0" left="8.0" right="8.0" top="5.0" />
+                     </padding>
+                  </MFXButton>
                </children>
             </VBox>
          </children>

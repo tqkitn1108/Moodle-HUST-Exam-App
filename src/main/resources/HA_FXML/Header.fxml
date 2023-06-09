@@ -172,41 +172,23 @@
                         </MenuButton>
                      </children>
                   </HBox>
-                  <HBox fx:id="breadcrumbs" minHeight="22.0" prefHeight="27.0">
+                  <HBox fx:id="breadcrumbs" prefHeight="31.0">
                      <children>
-                        <Label alignment="BOTTOM_CENTER" onMouseClicked="#backHomePage" text="Home" textFill="#c53624">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="Home" textFill="#c53624">
                            <font>
                               <Font size="15.0" />
                            </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Label>
-                        <Label alignment="BOTTOM_CENTER" graphicTextGap="10.0" text="My courses">
                            <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <graphic>
-                              <Text strokeType="OUTSIDE" text="/">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Text>
-                           </graphic>
-                        </Label>
-                        <Label alignment="BOTTOM_CENTER" graphicTextGap="10.0" onMouseClicked="#backHomePage" prefHeight="22.0" text="THI CUỐI KỲ" textFill="#c53624">
-                           <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="5.0" />
                            </HBox.margin>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </MFXButton>
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" rippleColor="WHITE" text="My courses">
                            <graphic>
                               <Text strokeType="OUTSIDE" text="/">
                                  <font>
@@ -217,10 +199,31 @@
                            <font>
                               <Font size="15.0" />
                            </font>
-                        </Label>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </MFXButton>
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="THI CUỐI KỲ" textFill="#c53624">
+                           <graphic>
+                              <Text strokeType="OUTSIDE" text="/">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </MFXButton>
                      </children>
                      <VBox.margin>
-                        <Insets top="3.0" />
+                        <Insets />
                      </VBox.margin>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" minWidth="51.0" prefHeight="100.0" prefWidth="200.0">

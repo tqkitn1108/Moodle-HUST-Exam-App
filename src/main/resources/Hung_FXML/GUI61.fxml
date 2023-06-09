@@ -4,6 +4,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +18,7 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0">
                <children>
                   <Label fx:id="quizName" maxWidth="500.0" prefHeight="30.0" prefWidth="300.0" text="Thi giữa kỳ 2 môn Công nghệ" textFill="#c93e34" HBox.hgrow="ALWAYS">
                      <font>
@@ -27,30 +28,34 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </HBox.margin>
                   </Label>
-                  <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <HBox alignment="CENTER" onMouseClicked="#editingQuiz" prefHeight="61.0" prefWidth="14.0">
-                     <children>
-                        <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" selectionFill="#009fe5" size="23" textAlignment="CENTER">
-                           <HBox.margin>
-                              <Insets right="8.0" />
-                           </HBox.margin>
-                        </FontAwesomeIconView>
-                        <FontAwesomeIconView fill="#c93e34" glyphName="CARET_DOWN" text="">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </FontAwesomeIconView>
-                     </children>
+                  <Pane prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#editingQuiz" style="-fx-background-color: #fff;">
+                     <graphic>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="14.0">
+                           <children>
+                              <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" selectionFill="#009fe5" size="23" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets right="8.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <FontAwesomeIconView fill="#c93e34" glyphName="CARET_DOWN" text="">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </HBox>
+                     </graphic>
                      <HBox.margin>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <padding>
-                        <Insets left="5.0" right="5.0" />
-                     </padding>
-                  </HBox>
+                  </Button>
                </children>
             </HBox>
             <VBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="600.0" spacing="15.0">
@@ -82,7 +87,7 @@
             </Label>
             <HBox prefHeight="40.0" prefWidth="615.0" style="-fx-background-color: #009fe5;">
                <children>
-                  <Label maxWidth="400.0" prefHeight="30.0" prefWidth="200.0" text="Attempt" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Label maxWidth="400.0" minHeight="25.0" prefHeight="30.0" prefWidth="200.0" text="Attempt" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="140.0" />
                      </HBox.margin>
@@ -110,7 +115,7 @@
                         <Insets left="140.0" />
                      </HBox.margin>
                   </Label>
-                  <Label prefHeight="34.0" prefWidth="200.0" text="Never submitted" textFill="#333333" />
+                  <Label minHeight="25.0" prefHeight="34.0" prefWidth="200.0" text="Never submitted" textFill="#333333" />
                </children>
                <VBox.margin>
                   <Insets left="15.0" right="15.0" top="-10.0" />

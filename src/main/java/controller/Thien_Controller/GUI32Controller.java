@@ -33,7 +33,6 @@ public class GUI32Controller implements Initializable {
     private ComboBox<String> gradeComboBox4;
     @FXML
     private ComboBox<String> gradeComboBox5;
-
     @FXML
     private Button addChoiceButton;
 

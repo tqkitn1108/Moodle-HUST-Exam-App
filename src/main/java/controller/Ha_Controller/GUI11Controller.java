@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
@@ -54,16 +55,18 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void addAddressToBreadcrumbs(String address) {
-                    Label label = new Label(address);
+                    MFXButton button = new MFXButton();
+                    button.setText(address);
                     Text text = new Text("/");
-                    label.setStyle("-fx-font-size: 15px; -fx-text-fill: #c53624;");
-                    label.setCursor(Cursor.HAND);
+                    button.setStyle("-fx-font-size: 15px; -fx-text-fill: #c53624;");
+                    button.setCursor(Cursor.HAND);
                     text.setStyle("-fx-font-size: 15px");
-                    label.setGraphic(text);
-                    label.setGraphicTextGap(10);
-                    label.setContentDisplay(ContentDisplay.LEFT);
-                    headerController.getBreadcrumbs().getChildren().add(label);
-                    HBox.setMargin(label, new Insets(0, 0, 0, 10));
+                    button.setGraphic(text);
+                    button.setGraphicTextGap(10);
+                    button.setContentDisplay(ContentDisplay.LEFT);
+                    button.setPadding(new Insets(5));
+                    button.setRippleColor(Paint.valueOf("#fff"));
+                    headerController.getBreadcrumbs().getChildren().add(button);
                 }
 
                 @Override
@@ -136,16 +139,18 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void addAddressToBreadcrumbs(String address) {
-                    Label label = new Label(address);
+                    MFXButton button = new MFXButton();
+                    button.setText(address);
                     Text text = new Text("/");
-                    label.setStyle("-fx-font-size: 15px; -fx-text-fill: #c53624;");
-                    label.setCursor(Cursor.HAND);
+                    button.setStyle("-fx-font-size: 15px; -fx-text-fill: #c53624;");
+                    button.setCursor(Cursor.HAND);
                     text.setStyle("-fx-font-size: 15px");
-                    label.setGraphic(text);
-                    label.setGraphicTextGap(10);
-                    label.setContentDisplay(ContentDisplay.LEFT);
-                    headerController2.getBreadcrumbs().getChildren().add(label);
-                    HBox.setMargin(label, new Insets(0, 0, 0, 10));
+                    button.setGraphic(text);
+                    button.setGraphicTextGap(10);
+                    button.setContentDisplay(ContentDisplay.LEFT);
+                    button.setPadding(new Insets(5));
+                    button.setRippleColor(Paint.valueOf("#fff"));
+                    headerController2.getBreadcrumbs().getChildren().add(button);
                 }
 
                 @Override

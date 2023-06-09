@@ -7,6 +7,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import controller.Ha_Controller.CourseListController;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -49,6 +50,8 @@ import java.util.concurrent.TimeUnit;
 public class QuizScreenController implements Initializable {
     @FXML
     private Label finishBtn;
+    @FXML
+    private MFXButton exportBtn;
     @FXML
     private MFXScrollPane scrollPane;
     @FXML
@@ -300,17 +303,20 @@ public class QuizScreenController implements Initializable {
         return hrText + minText + secText;
     }
 
+    @FXML
     public void exportToPdf() throws Exception {
         try {
-            Stage thisStage = (Stage) finishBtn.getScene().getWindow();
+            finishBtn.setVisible(false);
+            exportBtn.setVisible(true);
+            Stage thisStage = (Stage) exportBtn.getScene().getWindow();
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save PDF");
+            fileChooser.setTitle("Save PDF File");
             fileChooser.setInitialFileName("Baithitracnghiem.pdf");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
             File file = fileChooser.showSaveDialog(thisStage);
 
             if (file != null) {
-                PdfWriter writer = new PdfWriter(new FileOutputStream(file.getName()));
+                PdfWriter writer = new PdfWriter(new FileOutputStream(file.getPath()));
                 PdfDocument pdfDocument = new PdfDocument(writer);
                 Document document = new Document(pdfDocument, PageSize.A4);
                 document.setMargins(50, 50, 50, 50);
@@ -334,30 +340,31 @@ public class QuizScreenController implements Initializable {
                     startY += 1700;
                 }
                 document.close();
-            }
-            // Sau khi tạo file PDF thành công
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thành công");
-            alert.setHeaderText("Tài liệu PDF đã được tạo thành công");
-            alert.setContentText("Thông báo thành công.");
 
-            alert.setOnCloseRequest(event -> {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
-                    Node node = fxmlLoader.load();
-                    CourseListController courseListController = fxmlLoader.getController();
-                    courseListController.setHeaderListener(this.headerListener);
-                    courseListController.setScreenListener(this.screenListener);
-                    this.headerListener.showMenuButton();
-                    this.headerListener.showEditingBtn();
-                    this.headerListener.removeAddress(5);
-                    this.screenListener.removeTopScreen();
-                    this.screenListener.changeScreen(node);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            alert.showAndWait();
+                // Sau khi tạo file PDF thành công
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Thành công");
+                alert.setHeaderText("Tài liệu PDF đã được tạo thành công");
+                alert.setContentText("Thông báo thành công.");
+
+                alert.setOnCloseRequest(event -> {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+                        Node node = fxmlLoader.load();
+                        CourseListController courseListController = fxmlLoader.getController();
+                        courseListController.setHeaderListener(this.headerListener);
+                        courseListController.setScreenListener(this.screenListener);
+                        this.headerListener.showMenuButton();
+                        this.headerListener.showEditingBtn();
+                        this.headerListener.removeAddress(5);
+                        this.screenListener.removeTopScreen();
+                        this.screenListener.changeScreen(node);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                alert.showAndWait();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

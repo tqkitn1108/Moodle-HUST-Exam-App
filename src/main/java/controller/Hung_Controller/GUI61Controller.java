@@ -2,8 +2,6 @@ package controller.Hung_Controller;
 
 import controller.Kien_Controller.GUI72Controller;
 import controller.Kien_Controller.QuizScreenController;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -50,7 +47,7 @@ public class GUI61Controller implements Initializable {
     }
 
     @FXML
-    public void editingQuiz(MouseEvent event) {
+    public void editingQuiz(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
             Node node = fxmlLoader.load();
