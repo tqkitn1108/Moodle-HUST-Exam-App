@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -134,6 +136,12 @@ public class GUI51Controller implements Initializable {
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
             courseListController.createNewQuiz(quizName.getText());
+
+            // Tạo một quiz mới lưu vào database
+//            Quiz newQuiz = new Quiz();
+//            newQuiz.setQuizName(quizName.getText());
+//            DBInteract dbInteract = new DBInteract();
+//            dbInteract.createNewQuiz(newQuiz);
             courseListController.setHeaderListener(this.headerListener);
             courseListController.setScreenListener(this.screenListener);
             this.headerListener.showMenuButton();

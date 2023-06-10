@@ -59,16 +59,16 @@ public class CourseListController implements Initializable {
     }
 
     public void createNewQuiz(String name) {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseName.fxml"));
-//            Node node = fxmlLoader.load();
-//            MFXButton button = (MFXButton) node;
-//            button.setText(name);
-//            VBox.setMargin(button, new Insets(15,10,15,80));
-//            quizList.getChildren().add(button);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseName.fxml"));
+            Node node = fxmlLoader.load();
+            MFXButton button = (MFXButton) node;
+            button.setText(name);
+            VBox.setMargin(button, new Insets(15,10,15,80));
+            quizList.getChildren().add(button);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

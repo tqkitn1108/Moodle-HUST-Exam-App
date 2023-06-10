@@ -57,7 +57,7 @@ public class DataInteract {
             }
             doc.close();
 
-            if (!checkAikenFormat(lines)) return null;
+//            if (!checkAikenFormat(lines)) return null;
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;
@@ -108,7 +108,7 @@ public class DataInteract {
             while ((line = br.readLine()) != null) {
                 lines.add(line);
             }
-            if (!checkAikenFormat(lines)) return null;
+//            if (!checkAikenFormat(lines)) return null;
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;

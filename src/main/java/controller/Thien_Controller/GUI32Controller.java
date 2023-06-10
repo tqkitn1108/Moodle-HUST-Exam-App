@@ -22,10 +22,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Question;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class GUI32Controller implements Initializable {
 
@@ -33,6 +37,8 @@ public class GUI32Controller implements Initializable {
     private VBox myVBox;
     @FXML
     private VBox addChoiceVBox;
+    @FXML
+    private TextField quesName;
     @FXML
     private ComboBox<String> gradeComboBox1;
     @FXML
@@ -79,6 +85,30 @@ public class GUI32Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void saveChange(ActionEvent event) {
+        // Lưu câu hỏi mới vào category
+
+//        List<Node> textAreas = new ArrayList<Node>();
+//        Set<Node> nodes = myVBox.lookupAll(".text-area");
+//        for (Node node : nodes) {
+//            if (node instanceof TextArea) {
+//                textAreas.add(node);
+//            }
+//        }
+//        List<String> options = new ArrayList<>();
+//        Question newQuestion = new Question();
+//        newQuestion.setQuestionID(quesName.getText());
+//        newQuestion.setQuestionData(quesText.getText());
+//        for(Node node : textAreas) {
+//            TextArea textArea = (TextArea) node;
+//            if(textArea.getText()!= null) {
+//                options.add(textArea.getText());
+//            }
+//        }
+        closeThisWindow(event);
     }
 
     @FXML

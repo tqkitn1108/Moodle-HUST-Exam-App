@@ -25,12 +25,16 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DataInteract;
+import model.Question;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -114,13 +118,17 @@ public class GUI21Controller implements Initializable {
         if (dragboard.hasFiles()) {
             dragboard.getFiles().forEach(file -> {
                 this.file = file;
-//                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-//                    String line;
-//                    while ((line = reader.readLine()) != null) {
-//                        System.out.println(line);
-//                    }
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
+                String fileName = file.getName();
+                // Đọc file text và file docx
+//                List<Question> quesList = new ArrayList<>();
+//                if (fileName.endsWith(".txt")) {
+//                    quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
+//                }
+//                if (fileName.endsWith(".docx") || fileName.endsWith(".doc")) {
+//                    quesList = DataInteract.getQuestionsFromDocFile(file.getPath());
+//                }
+//                for(Question q : quesList){
+//                    q.showQ();
 //                }
                 addFileLabel(file.getName());
             });

@@ -79,7 +79,7 @@
                                             <Insets right="9.0" top="8.0" />
                                         </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField minHeight="30.0" prefHeight="30.0" prefWidth="240.0" style="-fx-background-radius: 0; -fx-border-color: #bfbfbf;" />
+                                    <TextField fx:id="quesName" minHeight="30.0" prefHeight="30.0" prefWidth="240.0" style="-fx-background-radius: 0; -fx-border-color: #bfbfbf;" />
                                 </children>
                             </HBox>
                             <HBox layoutX="10.0" layoutY="157.0">
@@ -187,7 +187,7 @@
                                                             </FontAwesomeIconView>
                                                          </children>
                                                       </HBox>
-                                                      <TextArea minHeight="40.0" prefHeight="40.0" prefWidth="269.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                      <TextArea fx:id="choiceText1" minHeight="40.0" prefHeight="40.0" prefWidth="269.0" style="-fx-background-radius: 0px;" wrapText="true" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="5.0" />
@@ -273,7 +273,7 @@
                                                             </FontAwesomeIconView>
                                                          </children>
                                                       </HBox>
-                                                      <TextArea minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                      <TextArea fx:id="choiceText2" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="5.0" />
@@ -360,7 +360,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText3" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -443,7 +443,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText4" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -526,7 +526,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText5" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -605,7 +605,7 @@
                             </Button>
                             <HBox prefHeight="61.0" prefWidth="721.0">
                                 <children>
-                                    <Button minHeight="40.0" mnemonicParsing="false" onAction="#closeThisWindow" prefHeight="40.0" prefWidth="118.0" style="-fx-background-color: #c02424; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES" textFill="WHITE">
+                                    <Button minHeight="40.0" mnemonicParsing="false" onAction="#saveChange" prefHeight="40.0" prefWidth="118.0" style="-fx-background-color: #c02424; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES" textFill="WHITE">
                                         <font>
                                             <Font name="Times New Roman" size="12.0" />
                                         </font>
