@@ -171,6 +171,8 @@ public class GUI21Controller implements Initializable {
                 alert.showAndWait();
             }
             fileLabel.setPrefHeight(0);
+            file = null;
+            file2 = null;
             fileLabel.setVisible(false);
         }
     }

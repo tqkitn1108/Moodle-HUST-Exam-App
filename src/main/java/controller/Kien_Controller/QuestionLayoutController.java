@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -56,6 +58,10 @@ public class QuestionLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        op1.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/img/arrow.png"))));
+        op2.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/img/arrow.png"))));
+        op3.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/img/arrow.png"))));
+        op4.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/img/arrow.png"))));
+        questionContent.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/img/arrow.png"))));
     }
 }

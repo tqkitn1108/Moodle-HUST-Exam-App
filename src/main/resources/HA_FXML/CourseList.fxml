@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #fff; -fx-border-color: #ccc;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseListController">
    <children>
-      <MFXScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MFXScrollPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <content>
             <VBox fx:id="quizList" prefHeight="251.0" prefWidth="606.0">
                <children>
@@ -32,7 +32,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <VBox.margin>
-                        <Insets bottom="15.0" left="80.0" right="10.0" top="30.0" />
+                        <Insets bottom="15.0" left="80.0" right="10.0" top="15.0" />
                      </VBox.margin>
                   </MFXButton>
                   <MFXButton graphicTextGap="8.0" rippleColor="WHITE" text="Thi thử Kỹ thuật lập trình">
