@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<MFXButton graphicTextGap="8.0" rippleColor="WHITE" text="Kiểm tra cuối kỳ môn IT4859Q" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <StackPane prefHeight="18.0" prefWidth="12.0">
+         <children>
+            <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+            <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+         </children>
+      </StackPane>
+   </graphic>
+   <font>
+      <Font size="16.0" />
+   </font>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</MFXButton>

@@ -2,6 +2,7 @@ package controller.Kien_Controller;
 
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
+import controller.Ha_Controller.GUI11Controller;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -16,9 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model2.DataModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -57,8 +60,11 @@ public class QuizResultScreenController implements Initializable {
     @FXML
     private Label time;
 
+    private HeaderListener headerListener;
+    public void setHeaderListener(HeaderListener headerListener) {
+        this.headerListener = headerListener;
+    }
     private NewScreenListener screenListener;
-
     public void setScreenListener(NewScreenListener screenListener) {
         this.screenListener = screenListener;
     }
@@ -143,17 +149,17 @@ public class QuizResultScreenController implements Initializable {
     @FXML
     public void finishReview(MouseEvent event) {
         try {
-            Stage stage = new Stage();
-            stage.setMaximized(true);
-            Parent root = FXMLLoader.load(getClass().getResource("/Ha_FXML/GUI11.fxml"));
-            Scene scene = new Scene(root);
-            stage.setTitle("Hệ thống ôn thi trắc nghiệm");
-            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-            Stage currentStage = (Stage) finishReviewBtn.getScene().getWindow();
-            currentStage.close();
-        } catch (Exception e) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/CourseList.fxml"));
+            Node node = fxmlLoader.load();
+            CourseListController courseListController = fxmlLoader.getController();
+            courseListController.setHeaderListener(this.headerListener);
+            courseListController.setScreenListener(this.screenListener);
+            this.headerListener.removeAddress(5);
+            this.headerListener.showMenuButton();
+            this.headerListener.showEditingBtn();
+            this.screenListener.removeTopScreen();
+            this.screenListener.changeScreen(node);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

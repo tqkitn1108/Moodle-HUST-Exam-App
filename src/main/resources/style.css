@@ -1,3 +1,7 @@
+.menu-header .arrow {
+    -fx-background-color: #c34d53;
+}
+
 .checkBox .box {
     -fx-background-color: white;
     -fx-border-color: #2196F3;
@@ -15,16 +19,16 @@
     -fx-background-color: white;
 }
 
-
-.tabPane *.tab-header-background {
-
+.tab-pane *.tab-header-background {
     -fx-padding: 20 20 20 20;
     -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+    -fx-border-width: 0 0 1 0;
 }
 
-.tabPane .tab.tab-content-area {
+.tab-pane .tab.tab-content-area {
     -fx-background-color: inherit;
-    -fx-border-color: inherit;
+    -fx-border-color: #ccc;
 }
 
 .tab {
@@ -41,7 +45,8 @@
 
 .tab:selected {
     -fx-background-color: white;
-    -fx-border-color: #C8CCE8 #C8CCE8 transparent #C8CCE8;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: #ccc #ccc #fff #ccc;
 }
 
 .tab:selected .tab-label {
@@ -50,11 +55,11 @@
 }
 
 .tab:selected .focus-indicator {
-    -fx-focus-color: transparent;
+    -fx-focus-color: #fff;
 }
 
-.tabPane .tab:focused {
-    -fx-focus-color: transparent;
+.tab-pane .tab:focused {
+    -fx-focus-color: #fff;
 }
 
 /******** CSS GUI32 *********/
@@ -72,6 +77,54 @@
 .combo-box .scroll-bar:vertical .thumb {
     -fx-background-color: #c0c0c0;
 }
+/*
 .combo-box .list-view {
     -fx-pref-width: 110;
+}
+*/
+.question-text-area {
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-background-color: transparent;
+}
+.question-text-area:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: -fx-control-inner-background;
+}
+
+.close-img-icon:hover {
+    -fx-fill: #c22e35;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.0, 0, 5);
+}
+/******** CSS GUI62a *********/
+
+.menu-item {
+    -fx-background-color: #f1f1f1;
+}
+
+.menu-item:focused {
+    -fx-background-color: #009fe5;
+}
+
+.menu-item:focused .plus-icon {
+    -fx-fill:  #fff;
+}
+
+.menu-gui62a .arrow {
+    -fx-background-color: #009fe5;
+}
+
+.close-label:hover {
+    -fx-background-color: #c70d0d;
+}
+
+.close-label:hover .close-icon {
+    -fx-fill: #fff;
+}
+
+/******** CSS GUI7 *********/
+
+.finish-btn:hover {
+    -fx-underline: true;
 }

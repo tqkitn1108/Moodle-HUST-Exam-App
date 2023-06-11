@@ -21,7 +21,7 @@ public class Itext7PdfTest {
         String imgSrc = "D:\\javaFX\\BTL_OOP_20222\\src\\main\\resources\\img\\app-gallery.png";
         ImageData data = ImageDataFactory.create(imgSrc);
         Image image1 = new Image(data);
-        String path = "examples.pdf";
+        String path = "example.pdf";
         String paraText = "Chương trình phải thực hiện được việc hiển thị giao diện Popup 1.2 trong giao diện 1.1: nhấn vào " +
                 "nút cài đặt Viết một chương trình C nhập vào 3 số nguyên. Thiết lập một con trỏ để lần lượt trỏ tới từng số " +
                 "nguyên và hiển thị kết quả giá trị tham chiếu ngược của con trỏ.\n" +

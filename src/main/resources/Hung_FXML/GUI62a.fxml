@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #ccc;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI62aController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <VBox prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="title" contentDisplay="RIGHT" text="Editing quiz: Thi giữa kỳ môn Công Nghệ" textFill="#c34d53">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
+                     </graphic>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="286.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="282.0" text="Question: 0 | This quiz is open">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="279.0" spacing="10.0">
+                                 <children>
+                                    <MFXButton style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE">
+                                       <padding>
+                                          <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </MFXButton>
+                                    <MFXButton style="-fx-background-color: #009fe5;" text="SELECT MULTIPLE ITEMS" textFill="WHITE">
+                                       <padding>
+                                          <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </MFXButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" prefHeight="288.0" prefWidth="302.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="209.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="97.0" text="Maximum grade" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField prefHeight="26.0" prefWidth="50.0" text="10.00">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </TextField>
+                                    <MFXButton onAction="#saveEditing" style="-fx-background-color: #009fe5;" text="SAVE" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets bottom="5.0" left="7.0" right="7.0" top="5.0" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </MFXButton>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of marks: 0.00" textAlignment="RIGHT" wrappingWidth="156.63244104385376">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="15.0" right="15.0" top="15.0" />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="568.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox fillHeight="false" prefHeight="50.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
+                     <children>
+                        <Label fx:id="pencilLabel">
+                           <graphic>
+                              <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="16" textAlignment="CENTER" wrappingWidth="21.80001735687256" />
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="15.0" right="15.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <VBox alignment="CENTER_RIGHT" prefHeight="138.0" prefWidth="302.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <JFXCheckBox checkedColor="#009fe5" selected="true" text="Shuffle">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXCheckBox>
+                                    <Label>
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" selectionFill="#009fe5" size="15.0" wrappingWidth="17.0" />
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets right="25.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <MenuButton fx:id="menuBtn" mnemonicParsing="false" style="-fx-background-color: #fafafa;" styleClass="menu-gui62a" text="Add" textFill="#009fe5">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="a new question">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" styleClass="plus-icon" />
+                                       </graphic>
+                                    </MenuItem>
+                                  <MenuItem mnemonicParsing="false" onAction="#openQuestionBank" text="from question bank">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" styleClass="plus-icon" />
+                                       </graphic>
+                                    </MenuItem>
+                                    <MenuItem mnemonicParsing="false" onAction="#addRandomQuestion" text="a random question">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" styleClass="plus-icon" />
+                                       </graphic>
+                                    </MenuItem>
+                                </items>
+                                 <VBox.margin>
+                                    <Insets right="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </MenuButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <MFXScrollPane fitToHeight="true" fitToWidth="true">
+                     <content>
+                        <VBox fx:id="questionList" spacing="2.0" />
+                     </content></MFXScrollPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <bottom>
+            <ComboBox maxWidth="200.0" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="40.0" />
+               </BorderPane.margin>
+            </ComboBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
