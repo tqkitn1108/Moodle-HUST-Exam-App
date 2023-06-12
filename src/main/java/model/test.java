@@ -18,7 +18,13 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 public class test {
-    public static void main(String arg[]) throws SQLException, IOException {
-        List<Question> questions = DataInteract.getQuestionsFromDocFile("src/Doc1.docx");
+    public static void main(String[] args) throws SQLException, IOException {
+        DBInteract dbi = new DBInteract();
+        List<Category> categories = dbi.getAllNonSubCategories();
+        for (Category cat:categories) {
+            dbi.treeView(cat.getCatTitle(),0);
+        }
     }
+
+
 }
