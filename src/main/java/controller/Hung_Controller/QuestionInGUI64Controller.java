@@ -6,7 +6,7 @@ import listeners.NewScreenListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GUI64Controller implements Initializable {
+public class QuestionInGUI64Controller implements Initializable {
 
     private NewScreenListener screenListener;
 

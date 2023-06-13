@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="584.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI63Controller">
+   <children>
+      <Label alignment="CENTER">
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" size="15" wrappingWidth="11.785714149475098" />
+         </graphic>
+      </Label>
+      <JFXCheckBox checkedColor="#009fe5" graphicTextGap="0.0" prefHeight="18.0" prefWidth="13.0" text="." textFill="WHITE">
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin>
+      </JFXCheckBox>
+      <Label layoutX="38.0" layoutY="10.0">
+         <graphic>
+            <FontAwesomeIconView fill="#767676" glyphName="LIST_UL" wrappingWidth="12.0">
+               <font>
+                  <Font size="6.0" />
+               </font>
+            </FontAwesomeIconView>
+         </graphic>
+         <padding>
+            <Insets left="3.0" />
+         </padding>
+         <HBox.margin>
+            <Insets left="-10.0" top="10.0" />
+         </HBox.margin>
+      </Label>
+      <Label layoutX="66.0" layoutY="10.0" maxWidth="1500.0" prefHeight="22.0" prefWidth="478.0" text="Thêm một số câu hỏi trong question bank (1 điểm)Trường hợp chọn tuỳ chọn Add “a random question” ở giao diện  sẽ thấy giao diện (6.5) như sau" HBox.hgrow="ALWAYS">
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </Label>
+      <Label layoutX="94.0" layoutY="10.0">
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="15" />
+         </graphic>
+      </Label>
+   </children>
+</HBox>

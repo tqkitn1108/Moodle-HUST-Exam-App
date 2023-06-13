@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="28.0" prefHeight="26.0" style="-fx-background-color: #e6e6e6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI64Controller">
+   <children>
+      <Label>
+         <graphic>
+            <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00" />
+         </graphic>
+      </Label>
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="25.0" style="-fx-background-color: #d3d3d3;" text="1">
+         <HBox.margin>
+            <Insets left="5.0" />
+         </HBox.margin>
+      </Label>
+      <Label>
+         <graphic>
+            <FontAwesomeIconView fill="#333333" glyphName="TH_LIST" size="13" />
+         </graphic>
+         <HBox.margin>
+            <Insets left="6.0" />
+         </HBox.margin>
+      </Label>
+      <Label alignment="CENTER" prefHeight="18.0" prefWidth="19.0">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="14.00" />
+         </graphic>
+      </Label>
+      <Label maxWidth="1500.0" prefHeight="22.0" prefWidth="319.0" text="Người dùng sẽ có thể chọn ra số lượng câu hỏi muốn thêm vào, các câu này lấy từ ngân hàng đề 67 câu của Sinh học kỳ 2 L7Chú ý nếu tích vào “Includes questions from subcategories too” sẽ thêm vào trong danh sách (bên dưới) các câu hỏi của các categories con." HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets left="5.0" />
+         </HBox.margin>
+      </Label>
+      <Label>
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="15" text="" />
+         </graphic>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </Label>
+      <Label>
+         <graphic>
+            <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" size="15" text="" />
+         </graphic>
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: #fff;" text="1.00">
+         <graphic>
+            <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="15" wrappingWidth="1.0" />
+         </graphic>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </Label>
+   </children>
+   <padding>
+      <Insets left="15.0" right="10.0" />
+   </padding>
+</HBox>

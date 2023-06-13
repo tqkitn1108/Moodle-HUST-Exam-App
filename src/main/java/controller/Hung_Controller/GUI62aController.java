@@ -1,30 +1,16 @@
 package controller.Hung_Controller;
 
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,6 +21,8 @@ public class GUI62aController implements Initializable {
     private MenuButton menuBtn;
     @FXML
     private VBox questionList;
+    @FXML
+    private Label pencilLabel;
 
     private HeaderListener headerListener;
 
@@ -53,8 +41,10 @@ public class GUI62aController implements Initializable {
     }
 
     public void addQuestionToScrollPane() {
+        pencilLabel.setText("Page 1");
+        pencilLabel.setStyle("-fx-text-fill: #c34d53");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI64.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI64.fxml"));
             Node node = fxmlLoader.load();
             questionList.getChildren().add(node);
         } catch (Exception e) {

@@ -118,7 +118,7 @@
                <children>
                   <HBox fillHeight="false" prefHeight="50.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
                      <children>
-                        <Label fx:id="pencilLabel">
+                        <Label fx:id="pencilLabel" alignment="TOP_LEFT" contentDisplay="TOP">
                            <graphic>
                               <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="16" textAlignment="CENTER" wrappingWidth="21.80001735687256" />
                            </graphic>
