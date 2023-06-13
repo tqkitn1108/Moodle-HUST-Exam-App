@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Category {
     private String categoryID;
     private String categoryTitle;
@@ -20,5 +22,8 @@ public class Category {
         this.categoryID = CategoryID;
         this.categoryTitle = CategoryTitle;
     }
-
+    public List<Question> getQuestions() {
+        DBInteract dbi = new DBInteract();
+        return dbi.getQuestionsBelongToCategory(categoryTitle);
+    }
 }

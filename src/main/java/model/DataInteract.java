@@ -1,26 +1,25 @@
 package model;
 
-import javafx.scene.image.Image;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import org.apache.poi.xwpf.usermodel.*;
-import org.sqlite.SQLiteConfig;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
+import java.util.Random;
 
 public class DataInteract {
     public static void main(String[] args) {
         try {
-//            List<Question> questions = getQuestionsFromDocFile("src/Doc1.docx");
+            List<Question> questions = getQuestionsFromTxtFile("C:/Users/ACER/Desktop/New Text Document (3).txt");
 //            //Category cat = new Category("1", "testQuiz");
             DBInteract dbi = new DBInteract();
 //            dbi.createNewCategory(null, "1","testCat");
 //            dbi.createNewCategory("testCat","2","testSubCat");
-//
+
 //            assert questions != null;
 //            for (Question q : questions) {
 //                dbi.insertQuestion(q,"testCat");
@@ -28,10 +27,6 @@ public class DataInteract {
 //
 //            questions = dbi.getQuestionsBelongToCategory("testCat");
 //
-//            Quiz quiz = new Quiz();
-//            quiz.setQuizName("testQuiz");
-//            quiz.setQuizDescription("just a normal quiz");
-//            quiz.setTimeLimit(60);
 //
 //            dbi.createNewQuiz(quiz);
 //            dbi.addQuestionToQuiz("testQuiz","C1D1");
@@ -42,9 +37,48 @@ public class DataInteract {
 //            }
 //            dbi.createNewCategory("testCat","3","anotherSubCat");
 //            dbi.createNewCategory(null,"4","anotherCat");
-            List<Category> categories = dbi.getAllNonSubCategories();
-            for (Category c: categories) {
-                System.out.println(c.getCategoryID());
+//            List<Category> categories = dbi.getAllNonSubCategories();
+//            for (Category c: categories) {
+//                for (Question q:c.getQuestions()) {
+//                    q.showQ();
+//                }
+//            }
+
+
+            Quiz quiz = new Quiz();
+            quiz.setQuizName("CNXH_GK_1");
+            quiz.setQuizDescription("Đề thi giữa kì Chủ nghĩa xã hội khoa học - Đề 1");
+            quiz.setTimeLimit(60);
+            dbi.createNewCategory(null,"1","CNXH");
+            dbi.createNewCategory("CNXH","2","CNXH_Dễ");
+            dbi.createNewCategory("CNXH","3","CNXH_Khó");
+            assert questions != null;
+            for (int i=0;i<10;i++) {
+                dbi.insertQuestion(questions.get(i),"CNXH_Dễ");
+            }
+            for (int i=10;i<15;i++) {
+                dbi.insertQuestion(questions.get(i),"CNXH_Khó");
+            }
+            dbi.createNewQuiz(quiz);
+            List<Integer> a = new ArrayList<>();
+            for (int i=1;i<16;i++) a.add(i);
+            Random random = new Random();
+            for (int i=0;i<10;i++) {
+                int x = random.nextInt(a.size());
+                dbi.addQuestionToQuiz("CNXH_GK_1",String.valueOf(a.get(x)));
+                a.remove(x);
+            }
+
+            quiz.setQuizName("CNXH_GK_2");
+            quiz.setQuizDescription("Đề thi giữa kì Chủ nghĩa xã hội khoa học - Đề 2");
+            quiz.setTimeLimit(60);
+            dbi.createNewQuiz(quiz);
+            a = new ArrayList<>();
+            for (int i=1;i<16;i++) a.add(i);
+            for (int i=0;i<10;i++) {
+                int x = random.nextInt(a.size());
+                dbi.addQuestionToQuiz("CNXH_GK_2",String.valueOf(a.get(x)));
+                a.remove(x);
             }
 
 
