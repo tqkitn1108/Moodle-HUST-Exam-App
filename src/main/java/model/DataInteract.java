@@ -15,14 +15,36 @@ import java.io.IOException;
 public class DataInteract {
     public static void main(String[] args) {
         try {
-            List<Question> questions = getQuestionsFromDocFile("src/Doc1.docx");
-            Category cat = new Category("1", "testQuiz");
+//            List<Question> questions = getQuestionsFromDocFile("src/Doc1.docx");
+//            //Category cat = new Category("1", "testQuiz");
             DBInteract dbi = new DBInteract();
-            //dbi.createNewCategory(null, "testQuiz");
-
-            for (Question q : questions) {
-                q.setCategory(cat);
-                dbi.insertQuestion(q);
+//            dbi.createNewCategory(null, "1","testCat");
+//            dbi.createNewCategory("testCat","2","testSubCat");
+//
+//            assert questions != null;
+//            for (Question q : questions) {
+//                dbi.insertQuestion(q,"testCat");
+//            }
+//
+//            questions = dbi.getQuestionsBelongToCategory("testCat");
+//
+//            Quiz quiz = new Quiz();
+//            quiz.setQuizName("testQuiz");
+//            quiz.setQuizDescription("just a normal quiz");
+//            quiz.setTimeLimit(60);
+//
+//            dbi.createNewQuiz(quiz);
+//            dbi.addQuestionToQuiz("testQuiz","C1D1");
+//            dbi.addQuestionToQuiz("testQuiz","C2D2");
+//            questions = dbi.getQuestionBelongToQuiz("testQuiz");
+//            for (Question q:questions) {
+//                q.showQ();
+//            }
+//            dbi.createNewCategory("testCat","3","anotherSubCat");
+//            dbi.createNewCategory(null,"4","anotherCat");
+            List<Category> categories = dbi.getAllNonSubCategories();
+            for (Category c: categories) {
+                System.out.println(c.getCategoryID());
             }
 
 
@@ -57,7 +79,7 @@ public class DataInteract {
             }
             doc.close();
 
-//            if (!checkAikenFormat(lines)) return null;
+            if (!checkAikenFormat(lines)) return null;
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;
@@ -68,8 +90,8 @@ public class DataInteract {
                 Question q = new Question();
 
                 int index = lines.get(i).indexOf(':');
-                q.setQuestionID(lines.get(i).substring(0, index));
-                q.setQuestionData(lines.get(i).substring(index + 2));
+                q.setQuestionName(lines.get(i).substring(0, index));
+                q.setQuestionText(lines.get(i).substring(index + 2));
 
                 if (images.get(i) != null) q.setQuestionImage(images.get(i));
 
@@ -108,7 +130,7 @@ public class DataInteract {
             while ((line = br.readLine()) != null) {
                 lines.add(line);
             }
-//            if (!checkAikenFormat(lines)) return null;
+            if (!checkAikenFormat(lines)) return null;
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;
@@ -119,8 +141,8 @@ public class DataInteract {
                 Question q = new Question();
 
                 int index = lines.get(i).indexOf(':');
-                q.setQuestionID(lines.get(i).substring(0, index));
-                q.setQuestionData(lines.get(i).substring(index + 2));
+                q.setQuestionName(lines.get(i).substring(0, index));
+                q.setQuestionText(lines.get(i).substring(index + 2));
                 q.setQuestionImage(null);
 
                 List<String> options = new ArrayList<String>();
@@ -171,10 +193,15 @@ public class DataInteract {
             while (i < n && (lines.get(i).equals("") || lines.get(i).equals("null"))) i++;
             if (i == n) break;
 
+            if (!lines.get(i).contains(": ")) {
+                System.out.println("Error at line " + i + ": Question does not have name");
+                return false;
+            }
+
             List<Character> optionLabels = new ArrayList<>();
             while (++i < n && !lines.get(i).equals("null") && !lines.get(i).equals("")) {
-                if (lines.get(i).indexOf(": ") != 1 && lines.get(i).indexOf(": ") != 6) {
-                    System.out.println("Error at line " + i + ": Answer label error");
+                if (lines.get(i).indexOf(". ") != 1 && lines.get(i).indexOf(": ") != 6) {
+                    System.out.println("Error at line " + (i+1) + ": Answer label error");
                     return false;
                 }
                 optionLabels.add(lines.get(i).charAt(0));

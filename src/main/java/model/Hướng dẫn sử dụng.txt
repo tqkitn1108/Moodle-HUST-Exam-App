@@ -1,0 +1,51 @@
+* DBInteract: class dùng để kết nối với database
+gồm:  	+ void insertQuestion(Question q, String categoryTitle): thêm Question q vào cate
+      	+ void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle): thêm 1 Category có ID, Title và parent(có thể là null)
+      	+ List<Question> getQuestionsBelongToCategory(String categoryTitle): lấy tất cả các Question của Category
+      	+ List<Category> getAllCategories(): lấy tất cả các Category từ db
+	+ List<Category> getSubCategoriesOf(String categoryTitle): lấy tất cả Category con của cat
+	+ String getCategoryID(String categoryTitle) chắc cmay k dùng đâu :))
+	+ void createNewQuiz(Quiz quiz): cho quiz vào database
+	+ void addQuestionToQuiz(String quizName, String questionName): thêm câu hỏi có sẵn trong database vào quiz
+	+ Question getQuestion(String questionName): lấy question có tên questionName
+	+ List<Question> getQuestionBelongToQuiz(String quizName): lấy question thuộc về quiz
+	+ void deleteQuestion(String questionName)
+	+ void deleteCategory(String categoryName): xóa cả cate, cate con và question thuộc về cả 2
+	+ void deleteQuiz(String quizName)
+	+ List<Quiz> getAllQuizzes()
+	+ List<Category> getAllNonSubCategories(): lấy tất cả các cate ko phải cate con
+
+- Lưu ý khi dùng DBInteract: phải khởi tạo đối tượng trước khi dùng hàm
+	+ DBInteract dbi = new DBInteract();
+	+ VD dùng hàm: dbi.createNewCategory(null,"1","testCategory")
+	
+
+      
+* DataInteract: class kết nối với các data bên ngoài
+gồm 	+ List<Question> getQuestionsFromDocFile(String path): lấy Question từ file doc với đường dẫn path
+	+ List<Question> getQuestionsFromTxtFile(String path): như trên nhưng là lấy từ file txt
+
+- Đối với DataInteract thì các hàm đều là static nên gọi trực tiếp mà không tạo đối tượng
+	+ VD: List<Question> questions = DataInteract.getQuestionFromDocFile("src/Doc1.docx")
+
+
+
+* Question: class đại diện cho 1 câu hỏi
+gồm	+ String questionName
+	+ String questionText
+	+ Image questionImage
+	+ List<String> options
+	+ List<Image> optionImages
+	+ List<Character> ans
+tương tác bằng getter và setter
+
+
+* Category:
+	+ String categoryID;
+	+ String categoryTitle;
+
+
+* Quiz:
+	+ String quizName;
+	+ String quizDescription;
+	+ int timeLimit; (đang tính theo phút)
