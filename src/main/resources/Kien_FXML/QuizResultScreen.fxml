@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="344.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuizResultScreenController">
    <children>
-      <HBox fillHeight="false" prefHeight="100.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+      <HBox fillHeight="false" prefHeight="100.0" prefWidth="640.0" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <BorderPane prefWidth="445.0" style="-fx-border-color: #ccc; -fx-border-width: 1px;" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -231,7 +231,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </MFXScrollPane>
-                  <Label fx:id="finishReviewBtn" onMouseClicked="#finishReview" text="Finish review ...">
+                  <Label fx:id="finishReviewBtn" onMouseClicked="#finishReview" styleClass="finish-btn" text="Finish review ..." textFill="#0073a5">
                      <VBox.margin>
                         <Insets bottom="25.0" left="15.0" top="10.0" />
                      </VBox.margin>
