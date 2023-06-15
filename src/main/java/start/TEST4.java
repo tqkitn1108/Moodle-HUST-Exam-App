@@ -87,20 +87,7 @@ public class TEST4 extends Application {
             Document document = new Document(pdfDocument, PageSize.A4);
             document.setMargins(50, 50, 50, 50);
 
-//            // Chụp hình ảnh của giao diện JavaFX
-//            WritableImage fxImage = vbox.snapshot(null, null);
-//
-//            // Tạo một đối tượng Image mới từ hình ảnh vừa chụp
-//            Image pdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(fxImage, null), null));
-
-            // Thêm hình ảnh và chữ ký vào tài liệu PDF
-//            document.add(new Paragraph("Đề thi trắc nghiệm môn OOP ").setBold().setFontSize(18).setMarginBottom(30));
-//            document.add(pdfImage);
-
-            // Kiểm tra chiều cao của VBox và chiều cao còn lại của trang PDF
-            // Tính toán chiều cao của VBox và vị trí bắt đầu bạn muốn chụp
             double vboxHeight = vbox.getHeight();
-            double pageHeight = document.getPdfDocument().getDefaultPageSize().getHeight();
             double startY = 0;
             // Nếu VBox có độ cao lớn hơn vị trí bắt đầu bạn muốn chụp
             while (vboxHeight > startY) {

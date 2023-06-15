@@ -46,7 +46,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                    <ComboBox fx:id="categoryBox1" minHeight="30.0" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -146,7 +146,7 @@
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <ComboBox maxWidth="250.0" prefHeight="28.0" prefWidth="220.0" promptText="Default" style="-fx-background-color: #ffffff; -fx-border-color: #777;" HBox.hgrow="ALWAYS" />
+                                    <ComboBox fx:id="categoryBox2" maxWidth="250.0" prefHeight="28.0" prefWidth="220.0" promptText="Default" style="-fx-background-color: #ffffff; -fx-border-color: #777;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -288,12 +288,41 @@
                                     <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </Line>
+                              <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="598.0">
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="250.0" text="Select a category:" textFill="#c23d45">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" rotate="270.0" selectionFill="#009fe5" />
+                                       </graphic>
+                                       <padding>
+                                          <Insets bottom="10.0" />
+                                       </padding>
+                                       <font>
+                                          <Font name="Georgia" size="13.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" text="" wrappingWidth="10.285714149475098" />
+                                    <ComboBox fx:id="categoryBox3" minHeight="30.0" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </ComboBox>
+                                 </children>
+                              </HBox>
+                              <Line endX="1480.0" stroke="#bfbfbf" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                                 </VBox.margin>
+                              </Line>
                               <Label prefHeight="17.0" prefWidth="109.0" text="General" textFill="#c23d45">
                                  <graphic>
                                     <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" rotate="270.0" selectionFill="#009fe5" />
                                  </graphic>
                                  <VBox.margin>
-                                    <Insets left="15.0" />
+                                    <Insets bottom="2.0" left="15.0" top="2.0" />
                                  </VBox.margin>
                                  <padding>
                                     <Insets bottom="10.0" />

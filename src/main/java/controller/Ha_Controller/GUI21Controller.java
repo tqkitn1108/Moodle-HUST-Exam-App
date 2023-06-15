@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import controller.Thien_Controller.GUI32Controller;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -25,6 +27,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Category;
+import model.DBInteract;
 import model.DataInteract;
 import model.Question;
 
@@ -54,7 +58,14 @@ public class GUI21Controller implements Initializable {
 
     @FXML
     private Label fileLabel;
+    @FXML
+    private ComboBox<String> categoryBox1;
+    @FXML
+    private ComboBox<String> categoryBox2;
+    @FXML
+    private ComboBox<String> categoryBox3;
 
+    DBInteract dbInteract;
     private File file, file2;
 
     private HeaderListener headerListener;
@@ -74,16 +85,17 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void chooseAFile(ActionEvent event) {
-        Stage thisStage = (Stage) chooseBtn.getScene().getWindow();
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose a file");
-        file2 = fileChooser.showOpenDialog(thisStage);
-        if (file2 != null) {
-            file = file2;
-            String fileName = file.getName();
-            addFileLabel(fileName);
+    public void dragExited(DragEvent event) {
+        boxToDropFile.setStyle("-fx-border-color:  #000; -fx-border-style: dashed;");
+    }
+
+    @FXML
+    private void dragFileOver(DragEvent event) {
+        if (event.getDragboard().hasFiles()) {
+            boxToDropFile.setStyle("-fx-border-color:  #0693E3; -fx-border-style: dashed;");
+            event.acceptTransferModes(TransferMode.COPY);
         }
+        event.consume();
     }
 
     public void addFileLabel(String fileName) {
@@ -99,17 +111,15 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void dragExited(DragEvent event) {
-        boxToDropFile.setStyle("-fx-border-color:  #000; -fx-border-style: dashed;");
-    }
-
-    @FXML
-    private void dragFileOver(DragEvent event) {
-        if (event.getDragboard().hasFiles()) {
-            boxToDropFile.setStyle("-fx-border-color:  #0693E3; -fx-border-style: dashed;");
-            event.acceptTransferModes(TransferMode.COPY);
+    public void chooseAFile(ActionEvent event) {
+        Stage thisStage = (Stage) chooseBtn.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a file");
+        file2 = fileChooser.showOpenDialog(thisStage);
+        if (file2 != null) {
+            this.file = file2;
+            addFileLabel(file.getName());
         }
-        event.consume();
     }
 
     @FXML
@@ -118,18 +128,6 @@ public class GUI21Controller implements Initializable {
         if (dragboard.hasFiles()) {
             dragboard.getFiles().forEach(file -> {
                 this.file = file;
-                String fileName = file.getName();
-                // Đọc file text và file docx
-//                List<Question> quesList = new ArrayList<>();
-//                if (fileName.endsWith(".txt")) {
-//                    quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
-//                }
-//                if (fileName.endsWith(".docx") || fileName.endsWith(".doc")) {
-//                    quesList = DataInteract.getQuestionsFromDocFile(file.getPath());
-//                }
-//                for(Question q : quesList){
-//                    q.showQ();
-//                }
                 addFileLabel(file.getName());
             });
         }
@@ -139,14 +137,19 @@ public class GUI21Controller implements Initializable {
 
     @FXML
     public void importFile(ActionEvent event) {
-        if (file == null && file2 == null) {
+        if (categoryBox3.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("No category is chosen, try again");
+            alert.showAndWait();
+        } else if (file == null && file2 == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("No file is chosen, try again");
             alert.showAndWait();
-        }
-        if (file != null) {
+        } else if (file != null) {
             try {
                 String fileName = file.getName();
                 // Kiểm tra định dạng tệp
@@ -154,21 +157,32 @@ public class GUI21Controller implements Initializable {
                     throw new WrongFormatException("Please choose a file with tail .txt, .doc or .docx");
                 }
                 // Đọc nội dung tệp và xử lý ở đây
-                Scanner scanner = new Scanner(file);
-//                String firstLine = scanner.nextLine();
+                String cateTitle = categoryBox3.getSelectionModel().getSelectedItem();
+                String itemWithOldQuantity = cateTitle;
+                if (cateTitle.charAt(cateTitle.length() - 1) == ')') {
+                    cateTitle = cateTitle.substring(0, cateTitle.lastIndexOf('(') - 1);
+                }
+                List<Question> quesList = new ArrayList<>();
+                if (fileName.endsWith(".txt")) {
+                    quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
+                }
+                if (fileName.endsWith(".docx") || fileName.endsWith(".doc")) {
+                    quesList = DataInteract.getQuestionsFromDocFile(file.getPath());
+                }
+                for (Question q : quesList) {
+                    dbInteract.insertQuestion(q, cateTitle);
+                }
+
+                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox1);
+                changeItemInComboBox(cateTitle, itemWithOldQuantity,  categoryBox2);
+                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox3);
+                categoryBox3.setValue(cateTitle + " (" + dbInteract.getQuestionsBelongToCategory(cateTitle).size() + ")");
 
                 // Xử lý khi import thành công
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText(null);
                 alert.setContentText("Import successfully!");
-                alert.showAndWait();
-            } catch (IOException e) {
-                // Xử lý khi import thất bại
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Import failed, try again");
                 alert.showAndWait();
             } catch (WrongFormatException e) {
                 // Xử lý khi định dạng tệp không đúng
@@ -215,9 +229,35 @@ public class GUI21Controller implements Initializable {
         arrowImg.setImage(image);
     }
 
+    public void changeItemInComboBox(String cateTitle, String itemWithOldQuantity, ComboBox<String> comboBox) {
+        ObservableList<String> items = comboBox.getItems();
+        int index = items.indexOf(itemWithOldQuantity);
+        int quantity = dbInteract.getQuestionsBelongToCategory(cateTitle).size();
+        if (index != -1) {
+            items.set(index, cateTitle + " (" + quantity + ")");
+        }
+    }
+    public void addCategoryBox() {
+        List<Category> categories = dbInteract.getAllCategories();
+        for (Category category : categories) {
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            if (quantity == 0) {
+                categoryBox1.getItems().add(category.getCatTitle());
+                categoryBox2.getItems().add(category.getCatTitle());
+                categoryBox3.getItems().add(category.getCatTitle());
+            } else {
+                categoryBox1.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                categoryBox2.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                categoryBox3.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+            }
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dbInteract = new DBInteract();
         addImg();
+        addCategoryBox();
     }
 
 

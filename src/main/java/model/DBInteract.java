@@ -12,7 +12,7 @@ public class DBInteract {
 
     private Connection conn;
 
-    DBInteract() {
+    public DBInteract() {
         conn = this.connect();
     }
 
