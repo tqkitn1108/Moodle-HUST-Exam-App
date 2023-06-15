@@ -1,7 +1,5 @@
 package start;
 
-import java.io.IOException;
-
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -14,6 +12,8 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
+
+import java.io.IOException;
 
 public class Itext7PdfTest {
     public static void main(String[] args) throws IOException {

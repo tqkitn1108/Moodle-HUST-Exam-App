@@ -1,8 +1,8 @@
 package model;
 
-import java.util.List;
-
 import javafx.scene.image.Image;
+
+import java.util.List;
 
 
 public class Question {

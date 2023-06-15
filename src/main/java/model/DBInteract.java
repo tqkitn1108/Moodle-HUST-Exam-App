@@ -1,9 +1,7 @@
 package model;
 
 import javafx.scene.image.Image;
-import org.apache.xmlbeans.impl.schema.StscChecker;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ public class DBInteract {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:src/main/resources/data.db";
+            String url = "jdbc:sqlite:data.db";
             conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("PRAGMA foreign_keys = ON");
@@ -282,7 +280,7 @@ public class DBInteract {
         }
     }
 
-    public void deleteQuestion(String questionName) {
+    public void deleteQuestion(String questionName) throws Exception {
         String sql = "DELETE FROM ANSWER WHERE questionName = '" + questionName + "'";
         try {
             //Connection conn = this.connect();
@@ -292,18 +290,19 @@ public class DBInteract {
             sql = "DELETE FROM OPTIONS WHERE questionName = '" + questionName + "'";
             stmt.executeUpdate(sql);
 
-            sql = "DELETE FROM QUESTION WHERE questionName = '" + questionName + "'";
+            sql = "DELETE FROM QUIZ_QUESTION WHERE questionName = '" + questionName + "'";
             stmt.executeUpdate(sql);
 
-            sql = "DELETE FROM QUIZ_QUESTION WHERE questionName = '" + questionName + "'";
+            sql = "DELETE FROM QUESTION WHERE questionName = '" + questionName + "'";
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            throw new SQLException();
         }
     }
 
-    public void deleteCategory(String categoryTitle) {
+    public void deleteCategory(String categoryTitle) throws Exception {
         String sql = "SELECT catID FROM CATEGORY WHERE catTitle = '" + categoryTitle + "'";
         try {
             //Connection conn = this.connect();
@@ -338,6 +337,7 @@ public class DBInteract {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            throw new SQLException();
         }
     }
 
