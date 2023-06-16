@@ -18,7 +18,7 @@ public class DBInteract {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:data.db";
+            String url = "jdbc:sqlite:src/main/resources/data.db";
             conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("PRAGMA foreign_keys = ON");

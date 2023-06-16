@@ -18,7 +18,7 @@ public class Category {
     public void setCategoryTitle(String categoryTitle) {
         this.categoryTitle = categoryTitle;
     }
-    Category(String CategoryID, String CategoryTitle) {
+    public Category(String CategoryID, String CategoryTitle) {
         this.categoryID = CategoryID;
         this.categoryTitle = CategoryTitle;
     }
