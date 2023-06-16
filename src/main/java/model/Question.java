@@ -2,6 +2,8 @@ package model;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -11,7 +13,7 @@ public class Question {
     private Image questionImage;
     private List<String> options;
     private List<Image> optionImages;
-    private List<Character> ans;
+    private List<Double> optionGrades;
 
     public String getQuestionName() {
         return questionName;
@@ -22,15 +24,21 @@ public class Question {
     public List<String> getOptions() {
         return options;
     }
-    public List<Character> getAns() {
-        return ans;
-    }
     public Image getQuestionImage() {
         return questionImage;
     }
     public List<Image> getOptionImages() {
         return optionImages;
     }
+
+    public List<Double> getOptionGrades() {
+        return optionGrades;
+    }
+
+    public void setOptionGrades(List<Double> optionGrades) {
+        this.optionGrades = optionGrades;
+    }
+
     public void setQuestionName(String questionName) {
         this.questionName = questionName;
     }
@@ -41,20 +49,40 @@ public class Question {
         this.options = options;
     }
     public void setAns(List<Character> ans) {
-        this.ans = ans;
+        List<Double> grades = new ArrayList<>(Collections.nCopies(options.size(),0.0));
+        int index = 0;
+        while (index < ans.size()) {
+            for (int i=0;i<options.size();i++) {
+                if (options.get(i).indexOf(ans.get(index)) == 0) {
+                    grades.set(i, 100.0 /ans.size());
+                    break;
+                }
+            }
+            index++;
+        }
+        optionGrades = grades;
     }
     public void setQuestionImage(Image img) {questionImage = img;}
     public void setOptionImages(List<Image> images) {optionImages = images;}
 
+    public Boolean isMultipleAnswer() {
+        int count = 0;
+        for (Double d:optionGrades) {
+            if (d>0) count++;
+        }
+        return (count > 1);
+    }
+
     public void showQ() {
-        System.out.println(questionText);
-        if (questionImage != null) System.out.print("/image");
+        System.out.print(questionText);
+        if (questionImage != null) System.out.println("+ /image");
+        else System.out.println();
         int n = options.size();
         for (int i=0;i<n;i++) {
-            System.out.println(options.get(i));
-            //if (optionImages.get(i) != null) System.out.print("/img");
+            System.out.print(options.get(i));
+            if (optionImages.get(i) != null) System.out.println("+ /img " + optionGrades.get(i));
+            else System.out.println(" " + optionGrades.get(i));
         }
-        System.out.print("ANS: ");
-        for (Character c:ans) System.out.print(String.valueOf(c) + ", ");
+        System.out.println();
     }
 }

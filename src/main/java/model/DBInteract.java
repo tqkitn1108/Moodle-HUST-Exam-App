@@ -33,7 +33,6 @@ public class DBInteract {
         try {
             String sql = "INSERT INTO QUESTION(questionName,questionText,catID,questionImage) VALUES(?,?," +
                     "(SELECT catID FROM CATEGORY WHERE catTitle = ?),?)";
-            Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQuestionName());
             pstmt.setString(2, q.getQuestionText());
@@ -41,7 +40,7 @@ public class DBInteract {
             pstmt.setBytes(4,DataInteract.changeImageToBytes(q.getQuestionImage()));
             pstmt.executeUpdate();
 
-            sql = "INSERT INTO OPTIONS(questionName, optionLabel, optionData, optionImage) VALUES(?,?,?,?)";
+            sql = "INSERT INTO OPTIONS(questionName, optionLabel, optionData, optionImage, optionGrade) VALUES(?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
 
             int n = q.getOptions().size();
@@ -50,19 +49,11 @@ public class DBInteract {
                 pstmt.setString(2, String.valueOf(q.getOptions().get(i).charAt(0)));
                 pstmt.setString(3, q.getOptions().get(i).substring(3));
                 pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getOptionImages().get(i)));
-                pstmt.executeUpdate();
-            }
-
-            sql = "INSERT INTO ANSWER(questionName, optionLabel) VALUES(?,?)";
-            pstmt = conn.prepareStatement(sql);
-            for (Character c : q.getAns()) {
-                pstmt.setString(1, q.getQuestionName());
-                pstmt.setString(2, String.valueOf(c));
+                pstmt.setDouble(5,q.getOptionGrades().get(i));
                 pstmt.executeUpdate();
             }
 
             pstmt.close();
-            conn.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -90,38 +81,58 @@ public class DBInteract {
         }
     }
 
+    public Question getQuestion(String questionName) {
+        String sql = "SELECT questionText,questionImage FROM QUESTION WHERE questionName = ?";
+        Question q = new Question();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,questionName);
+            ResultSet rs = pstmt.executeQuery();
+            byte[] bytes;
+            if (rs.next()) {
+                q.setQuestionName(questionName);
+                q.setQuestionText(rs.getString(1));
+                bytes = rs.getBytes(2);
+                if(bytes != null) q.setQuestionImage(DataInteract.changeBytesToImage(bytes));
+                else q.setQuestionImage(null);
+            }
+            else return null;
+
+            sql = "SELECT optionLabel, optionData, optionImage, optionGrade FROM OPTIONS WHERE questionName = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,questionName);
+            rs = pstmt.executeQuery();
+            List<String> options = new ArrayList<>();
+            List<Image> optionImages = new ArrayList<>();
+            List<Double> optionGrades = new ArrayList<>();
+            while (rs.next()) {
+                options.add(rs.getString(1) + ": " + rs.getString(2));
+                bytes = rs.getBytes(3);
+                if (bytes != null) optionImages.add(DataInteract.changeBytesToImage(bytes));
+                else optionImages.add(null);
+                optionGrades.add(rs.getDouble(4));
+            }
+            q.setOptions(options);
+            q.setOptionImages(optionImages);
+            q.setOptionGrades(optionGrades);
+
+            return q;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public List<Question> getQuestionsBelongToCategory(String categoryTitle) {
         List<Question> questions = new ArrayList<>();
-        try (Connection conn = this.connect()) {
-            String sql = "SELECT questionName, questionText FROM QUESTION,CATEGORY WHERE catTitle = '" + categoryTitle
+        try {
+            String sql = "SELECT questionName FROM QUESTION,CATEGORY WHERE catTitle = '" + categoryTitle
                     + "' AND CATEGORY.catID = QUESTION.catID";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Question q = new Question();
-                String questionName = rs.getString("questionName");
-                q.setQuestionName(questionName);
-                q.setQuestionText(rs.getString(2));
-
-                String opt = "SELECT optionLabel, optionData FROM OPTIONS WHERE questionName = '" + questionName +"'";
-                Statement optStmt = conn.createStatement();
-                ResultSet optRs = optStmt.executeQuery(opt);
-
-                List<String> options = new ArrayList<>();
-                while (optRs.next()) {
-                    options.add(optRs.getString(1) + ": " + optRs.getString(2));
-                }
-                q.setOptions(options);
-
-                String ans = "SELECT optionLabel FROM ANSWER WHERE questionName = '" + questionName + "'";
-                Statement ansStmt = conn.createStatement();
-                ResultSet ansRs = ansStmt.executeQuery(ans);
-                List<Character> answers = new ArrayList<>();
-                while (ansRs.next()) {
-                    answers.add(ansRs.getString(1).charAt(0));
-                }
-                q.setAns(answers);
-
+                Question q = getQuestion(rs.getString(1));
                 questions.add(q);
             }
         }
@@ -212,56 +223,6 @@ public class DBInteract {
         }
     }
 
-    public Question getQuestion(String questionName) {
-        String sql = "SELECT questionText,questionImage FROM QUESTION WHERE questionName = ?";
-        Question q = new Question();
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,questionName);
-            ResultSet rs = pstmt.executeQuery();
-            byte[] bytes;
-            if (rs.next()) {
-                q.setQuestionName(questionName);
-                q.setQuestionText(rs.getString(1));
-                bytes = rs.getBytes(2);
-                if(bytes != null) q.setQuestionImage(DataInteract.changeBytesToImage(bytes));
-                else q.setQuestionImage(null);
-            }
-            else return null;
-
-            sql = "SELECT optionLabel, optionData, optionImage FROM OPTIONS WHERE questionName = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,questionName);
-            rs = pstmt.executeQuery();
-            List<String> options = new ArrayList<>();
-            List< Image> optionImages = new ArrayList<>();
-            while (rs.next()) {
-                options.add(rs.getString(1) + ": " + rs.getString(2));
-                bytes = rs.getBytes(3);
-                if (bytes != null) optionImages.add(DataInteract.changeBytesToImage(bytes));
-                else optionImages.add(null);
-            }
-            q.setOptions(options);
-            q.setOptionImages(optionImages);
-
-            sql = "SELECT optionLabel FROM ANSWER WHERE questionName = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,questionName);
-            rs = pstmt.executeQuery();
-            List<Character> ans = new ArrayList<>();
-            while(rs.next()) {
-                ans.add(rs.getString(1).charAt(0));
-            }
-            q.setAns(ans);
-
-            return q;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     public List<Question> getQuestionBelongToQuiz(String quizName) {
         String sql = "SELECT questionName FROM QUIZ, QUIZ_QUESTION WHERE quizName = ? AND QUIZ.quizID = QUIZ_QUESTION.quizID";
         List<Question> questions = new ArrayList<>();
@@ -281,13 +242,10 @@ public class DBInteract {
     }
 
     public void deleteQuestion(String questionName) throws Exception {
-        String sql = "DELETE FROM ANSWER WHERE questionName = '" + questionName + "'";
+        String sql = "DELETE FROM OPTIONS WHERE questionName = '" + questionName + "'";
         try {
             //Connection conn = this.connect();
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-
-            sql = "DELETE FROM OPTIONS WHERE questionName = '" + questionName + "'";
             stmt.executeUpdate(sql);
 
             sql = "DELETE FROM QUIZ_QUESTION WHERE questionName = '" + questionName + "'";
