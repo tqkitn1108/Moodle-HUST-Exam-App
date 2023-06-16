@@ -141,9 +141,9 @@ public class DataInteract {
                 for (int j = 8; j < s.length(); j++) {
                     if (s.charAt(j) != ' ' && s.charAt(j) != ',') ans.add(s.charAt(j));
                 }
-                q.setAns(ans);
                 options.remove(options.size() - 1);
                 q.setOptions(options);
+                q.setAns(ans);
 
                 questions.add(q);
 
@@ -192,9 +192,9 @@ public class DataInteract {
                 for (int j = 8; j < s.length(); j++) {
                     if (s.charAt(j) != ' ' && s.charAt(j) != ',') ans.add(s.charAt(j));
                 }
-                q.setAns(ans);
                 options.remove(options.size() - 1);
                 q.setOptions(options);
+                q.setAns(ans);
 
                 questions.add(q);
 

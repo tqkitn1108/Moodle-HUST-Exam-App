@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Quiz {
     private String quizName;
     private String quizDescription;
@@ -27,5 +29,10 @@ public class Quiz {
 
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
+    }
+
+    public List<Question> getQuestions() {
+        DBInteract dbi = new DBInteract();
+        return dbi.getQuestionBelongToQuiz(quizName);
     }
 }
