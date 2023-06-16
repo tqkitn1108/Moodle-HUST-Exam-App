@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" minHeight="34.0" prefHeight="34.0" prefWidth="600.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="question" alignment="CENTER_LEFT" minHeight="34.0" prefHeight="34.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Thien_Controller.QuestionInGUI31Controller">
    <children>
       <FontAwesomeIconView glyphName="SQUARE_ALT" size="16">
          <HBox.margin>
@@ -19,7 +19,7 @@
             <Insets left="3.0" right="10.0" top="8.0" />
          </HBox.margin>
       </FontAwesomeIconView>
-      <Label maxWidth="1500.0" prefHeight="17.0" prefWidth="502.0" text="Ở giao diện (3.2): nhấn vào Blanks for 3 more choices sẽ hiện ra bổ sung thêm 3 Choice nữa. Trong các choice vẫn có thể chèn các bức ảnh được (1 điểm)Nhấn vào Save changes and continue editing sẽ vẫn ở màn hình hiện tại. Nhấn vào Save changes (hoặc Cancel) sẽ chuyển sang giao diện 3.1Các ô có dấu chấm than đỏ sẽ là các ô bắt buộc nhập nội dung" HBox.hgrow="ALWAYS">
+      <Label fx:id="quesContent" maxWidth="1500.0" prefHeight="17.0" prefWidth="502.0" text="Ở giao diện (3.2): nhấn vào Blanks for 3 more choices sẽ hiện ra bổ sung thêm 3 Choice nữa. Trong các choice vẫn có thể chèn các bức ảnh được (1 điểm)Nhấn vào Save changes and continue editing sẽ vẫn ở màn hình hiện tại. Nhấn vào Save changes (hoặc Cancel) sẽ chuyển sang giao diện 3.1Các ô có dấu chấm than đỏ sẽ là các ô bắt buộc nhập nội dung" HBox.hgrow="ALWAYS">
          <HBox.margin>
             <Insets />
          </HBox.margin>
@@ -27,7 +27,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" style="-fx-background-color: #f2f2f2;" text="Edit" textFill="#179ee5">
+      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="39.0" style="-fx-background-color: transparent;" text="Edit" textFill="#179ee5">
          <HBox.margin>
             <Insets />
          </HBox.margin>

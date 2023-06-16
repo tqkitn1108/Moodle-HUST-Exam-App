@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Category;
 import model.DBInteract;
+import model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,9 @@ public class TEST5 extends Application {
         List<Category> categories = dbInteract.getAllCategories();
         for(Category category : categories){
             System.out.println(category.getCatTitle());
-            dbInteract.getQuestionsBelongToCategory(category.getCatTitle());
+            for(Question question : category.getQuestions()){
+                question.showQ();
+            }
         }
     }
 

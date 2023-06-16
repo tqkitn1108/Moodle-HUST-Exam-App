@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI21Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.GUI21Controller">
    <children>
       <TabPane fx:id="tabPane" style="-fx-border-color: #ccc;" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -36,7 +37,7 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="598.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="30.0" prefHeight="30.0" prefWidth="598.0">
                                  <children>
                                     <Label text="Select a category:">
                                        <font>
@@ -46,7 +47,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox fx:id="categoryBox1" minHeight="30.0" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                    <ComboBox fx:id="categoryBox1" minHeight="30.0" onAction="#selectItemInCateBox" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -56,7 +57,7 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <Label text="The default category for questions shared in context">
+                              <Label minHeight="22.0" prefHeight="22.0" text="The default category for questions shared in context">
                                  <VBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
@@ -64,7 +65,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="588.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="33.0" prefHeight="33.0" prefWidth="588.0">
                                  <VBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
@@ -72,7 +73,7 @@
                                     <JFXCheckBox fx:id="checkBox" checkedColor="#009fe5" selected="true" text="Also show questions from subcategories" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="144.0" prefHeight="33.0" prefWidth="588.0">
+                              <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="144.0" minHeight="33.0" prefHeight="33.0" prefWidth="588.0">
                                  <children>
                                     <JFXCheckBox checkedColor="#009fe5" text="Also show old questions" />
                                  </children>
@@ -80,7 +81,7 @@
                                     <Insets left="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <MFXButton onAction="#createNewQuestion" style="-fx-background-color: #009fe5;" text="CREATE A NEW QUESTION ..." textFill="WHITE">
+                              <MFXButton minHeight="43.0" onAction="#createNewQuestion" style="-fx-background-color: #009fe5;" text="CREATE A NEW QUESTION ..." textFill="WHITE">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
@@ -94,11 +95,50 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </MFXButton>
-                              <AnchorPane fx:id="quesListPane">
+                              <VBox>
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
-                              </AnchorPane>
+                                 <children>
+                                    <HBox fx:id="columnTittle" prefHeight="42.0" visible="false">
+                                       <children>
+                                          <FontAwesomeIconView glyphName="SQUARE_ALT" size="16">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="15.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <Label style="-fx-text-fill: #16a6e6;" text="T" />
+                                          <FontAwesomeIconView fill="#179ee5" glyphName="PLAY" rotate="-90.0" scaleY="2.0" scaleZ="0.0" selectionFill="#f2f2f2" size="6">
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="10.0" top="2.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <VBox prefHeight="39.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label prefHeight="17.0" text="Question">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label prefHeight="17.0" text="Question name / ID number" textFill="#16a6e6">
+                                                   <font>
+                                                      <Font size="10.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <Label alignment="CENTER_RIGHT" minWidth="50.0" text="Actions" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets right="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="400.0">
+                                       <content>
+                                          <VBox fx:id="questionList" style="-fx-background-color: #ffffff;" />
+                                       </content></MFXScrollPane>
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>
@@ -260,7 +300,7 @@
                                     <Insets bottom="10.0" left="15.0" right="15.0" top="15.0" />
                                  </VBox.margin>
                               </Label>
-                              <HBox alignment="CENTER_LEFT" prefHeight="29.0" prefWidth="580.0" spacing="170.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="29.0" prefHeight="29.0" prefWidth="580.0" spacing="170.0">
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="109.0" text="File format" textFill="#c23d45">
                                        <graphic>
@@ -317,7 +357,7 @@
                                     <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                                  </VBox.margin>
                               </Line>
-                              <Label prefHeight="17.0" prefWidth="109.0" text="General" textFill="#c23d45">
+                              <Label minHeight="25.0" prefHeight="25.0" prefWidth="109.0" text="General" textFill="#c23d45">
                                  <graphic>
                                     <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" rotate="270.0" selectionFill="#009fe5" />
                                  </graphic>
@@ -336,7 +376,7 @@
                                     <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                                  </VBox.margin>
                               </Line>
-                              <Label prefHeight="25.0" prefWidth="236.0" text="Import questions from file" textFill="#c23d45">
+                              <Label minHeight="25.0" prefHeight="25.0" prefWidth="236.0" text="Import questions from file" textFill="#c23d45">
                                  <graphic>
                                     <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" selectionFill="#009fe5" />
                                  </graphic>
@@ -347,7 +387,7 @@
                                     <Font name="Georgia" size="13.0" />
                                  </font>
                               </Label>
-                              <HBox prefHeight="21.0" prefWidth="591.0">
+                              <HBox minHeight="30.0" prefHeight="30.0" prefWidth="591.0">
                                  <children>
                                     <Label prefWidth="250.0" text="Import" HBox.hgrow="ALWAYS" />
                                     <FontAwesomeIconView fill="#c02424" glyphName="EXCLAMATION_CIRCLE" text="" wrappingWidth="10.285714149475098" />

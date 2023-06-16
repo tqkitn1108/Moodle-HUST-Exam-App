@@ -2,8 +2,8 @@ package controller.Ha_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
 import controller.Thien_Controller.GUI32Controller;
+import controller.Thien_Controller.QuestionInGUI31Controller;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -21,7 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -32,15 +31,12 @@ import model.DBInteract;
 import model.DataInteract;
 import model.Question;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class GUI21Controller implements Initializable {
     @FXML
@@ -48,7 +44,9 @@ public class GUI21Controller implements Initializable {
     @FXML
     private JFXCheckBox checkBox;
     @FXML
-    private AnchorPane quesListPane;
+    private VBox questionList;
+    @FXML
+    private HBox columnTittle;
     @FXML
     private ImageView arrowImg;
     @FXML
@@ -157,11 +155,8 @@ public class GUI21Controller implements Initializable {
                     throw new WrongFormatException("Please choose a file with tail .txt, .doc or .docx");
                 }
                 // Đọc nội dung tệp và xử lý ở đây
-                String cateTitle = categoryBox3.getSelectionModel().getSelectedItem();
-                String itemWithOldQuantity = cateTitle;
-                if (cateTitle.charAt(cateTitle.length() - 1) == ')') {
-                    cateTitle = cateTitle.substring(0, cateTitle.lastIndexOf('(') - 1);
-                }
+                String itemWithOldQuantity = categoryBox3.getValue();
+                String cateTitle = getCateName(itemWithOldQuantity);
                 List<Question> quesList = new ArrayList<>();
                 if (fileName.endsWith(".txt")) {
                     quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
@@ -174,7 +169,7 @@ public class GUI21Controller implements Initializable {
                 }
 
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox1);
-                changeItemInComboBox(cateTitle, itemWithOldQuantity,  categoryBox2);
+                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox2);
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox3);
                 categoryBox3.setValue(cateTitle + " (" + dbInteract.getQuestionsBelongToCategory(cateTitle).size() + ")");
 
@@ -206,6 +201,22 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
+    public void selectItemInCateBox(ActionEvent event) throws IOException {
+        questionList.getChildren().clear();
+        columnTittle.setVisible(true);
+        int i = 1;
+        for (Question question : dbInteract.getQuestionsBelongToCategory(getCateName(categoryBox1.getValue()))) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
+            Node node = fxmlLoader.load();
+            QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
+            questionInGUI31Controller.setQuesContent(question.getQuestionText());
+            questionInGUI31Controller.setWhiteBackground(i);
+            questionList.getChildren().add(node);
+            i++;
+        }
+    }
+
+    @FXML
     private void createNewQuestion(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/GUI32.fxml"));
@@ -224,6 +235,13 @@ public class GUI21Controller implements Initializable {
         }
     }
 
+    public String getCateName(String nameWithQuantity) {
+        if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
+            return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
+        }
+        return nameWithQuantity;
+    }
+
     public void addImg() {
         Image image = new Image(getClass().getResourceAsStream("/img/arrow.png"));
         arrowImg.setImage(image);
@@ -237,6 +255,7 @@ public class GUI21Controller implements Initializable {
             items.set(index, cateTitle + " (" + quantity + ")");
         }
     }
+
     public void addCategoryBox() {
         List<Category> categories = dbInteract.getAllCategories();
         for (Category category : categories) {
