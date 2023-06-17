@@ -71,7 +71,8 @@ public class GUI21Controller implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
@@ -211,10 +212,12 @@ public class GUI21Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
             Node node = fxmlLoader.load();
             QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
-            questionInGUI31Controller.setQuesContent(question.getQuestionText());
-            questionInGUI31Controller.setWhiteBackground(i);
-            questionList.getChildren().add(node);
+            questionInGUI31Controller.setQuestion(question);
+            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
+            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
+            if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
             i++;
+            questionList.getChildren().add(node);
         }
     }
 
@@ -250,6 +253,7 @@ public class GUI21Controller implements Initializable {
         alert.setContentText("Add category successfully!");
         alert.showAndWait();
     }
+
     public String getCateName(String nameWithQuantity) {
         if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
             return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);

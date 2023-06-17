@@ -127,7 +127,10 @@
                                                 </Label>
                                              </children>
                                           </VBox>
-                                          <Label alignment="CENTER_RIGHT" minWidth="50.0" text="Actions" />
+                                          <Label alignment="CENTER_RIGHT" minWidth="50.0" text="Actions">
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin></Label>
                                        </children>
                                        <VBox.margin>
                                           <Insets right="5.0" />

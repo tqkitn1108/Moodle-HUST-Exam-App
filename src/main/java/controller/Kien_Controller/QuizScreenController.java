@@ -6,6 +6,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
+import com.jfoenix.controls.JFXCheckBox;
 import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -32,9 +33,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Question;
 import model2.DataModel;
-import model2.Question;
-import model2.Quiz;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,6 +47,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuizScreenController implements Initializable {
     @FXML
@@ -63,18 +65,21 @@ public class QuizScreenController implements Initializable {
     @FXML
     private VBox quizListContainer;
 
+    private DBInteract dbInteract;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
-    private Quiz quiz;
+    private String quizName;
     private List<Question> questionList;
-    private Map<Integer, Integer> userAnswer;
+    private Map<Integer, List<Integer>> userAnswer;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
+
     public void hideTimer() {
         this.time.setVisible(false);
     }
@@ -86,15 +91,12 @@ public class QuizScreenController implements Initializable {
     StackPane overlayStackPane;
     Stage confirmStage;
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-        this.getData();
-    }
-
-    private void getData() {
-        if (quiz != null) {
-            this.questionList = quiz.getQuestions();
-        }
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
+        questionList = dbInteract.getQuestionBelongToQuiz(this.quizName);
+        addQuestionList();
+        renderNavigation();
+        setTimer();
     }
 
     // Timer fields
@@ -139,12 +141,6 @@ public class QuizScreenController implements Initializable {
 
     public void addQuestionList() {
         startTime = LocalDateTime.now();
-        // Tạo ra questionList mẫu làm ví dụ
-        questionList = new ArrayList<Question>();
-        for (int i = 0; i < 50; i++) {
-            questionList.add(new Question("Question " + (i + 1)));
-        }
-
         toggleGroups = new ToggleGroup[questionList.size()];
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
@@ -152,23 +148,70 @@ public class QuizScreenController implements Initializable {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
-                questionLayoutController.setQuestionContent(questionList.get(i).getQuestion());
-                toggleGroups[i] = questionLayoutController.choice;
-                int finalI = i;
-                toggleGroups[i].selectedToggleProperty().addListener(
-                        (ov, oldToggle, newToggle) -> {
-                            if (newToggle != null) {
-                                questionLayoutController.setStateQues("Answered");
-                                for (int j = 1; j <= 4; ++j) {
-                                    RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
-                                    if (selectedRadio.isSelected()) {
-                                        userAnswer.put(finalI, j);
-                                        break;
+                questionLayoutController.setQuestion(questionList.get(i));
+                toggleGroups[i] = questionLayoutController.getChoiceGroup();
+                if (questionList.get(i).isMultipleAnswer()) {
+                    Set<JFXCheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
+                    AtomicInteger count = new AtomicInteger(); // Vai trò như biến đếm count (count đếm số lượng checkbox được select)
+                    for (JFXCheckBox checkBox : checkBoxes) {
+                        int finalI1 = i;
+                        checkBox.selectedProperty().addListener(
+                                (observable, oldValue, newValue) -> {
+                                    if (newValue) {
+                                        count.getAndIncrement();
+                                        questionLayoutController.setStateQues("Answered");
+                                        RadioButton radioButton = new RadioButton();
+                                        radioButton.setSelected(true);
+                                        radioButton.setToggleGroup(toggleGroups[finalI1]);
+                                        List<Integer> answerList = new ArrayList<Integer>();
+                                        for (int j = 1; j <= 4; ++j) {
+                                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                            if (selectedCheckBox.isSelected()) {
+                                                answerList.add(j - 1);
+                                            }
+                                        }
+                                        userAnswer.put(finalI1, answerList);
+                                    } else {
+                                        count.getAndDecrement();
+                                        if (count.get() == 0) {
+                                            questionLayoutController.setStateQues("Not yet answered");
+                                            RadioButton radioButton = new RadioButton();
+                                            radioButton.setSelected(true);
+                                            radioButton.setToggleGroup(toggleGroups[finalI1]);
+                                            radioButton.setSelected(false); //chuyển selected từ true -> false để thực hiện questionRectangleController.setDefault();
+                                        }
+                                        List<Integer> answerList = new ArrayList<Integer>();
+                                        for (int j = 1; j <= 4; ++j) {
+                                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                            if (selectedCheckBox.isSelected()) {
+                                                answerList.add(j - 1);
+                                            }
+                                        }
+                                        userAnswer.put(finalI1, answerList);
+                                    }
+                                }
+                        );
+                    }
+
+                } else {
+                    int finalI = i;
+                    toggleGroups[i].selectedToggleProperty().addListener(
+                            (ov, oldToggle, newToggle) -> {
+                                if (newToggle != null) {
+                                    questionLayoutController.setStateQues("Answered");
+                                    List<Integer> answerList = new ArrayList<Integer>();
+                                    for (int j = 1; j <= 4; ++j) {
+                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
+                                        if (selectedRadio.isSelected()) {
+                                            answerList.add(j - 1);
+                                            userAnswer.put(finalI, answerList);
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
-                );
+                    );
+                }
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -183,11 +226,11 @@ public class QuizScreenController implements Initializable {
                 Node node1 = fxmlLoader1.load();
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
+
                 toggleGroups[i].selectedToggleProperty().addListener(
                         (ov, oldToggle, newToggle) -> {
                             if (newToggle != null) {
                                 questionRectangleController.setAnswered();
-
                             } else {
                                 questionRectangleController.setDefault();
                             }
@@ -261,6 +304,7 @@ public class QuizScreenController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
+            quizResultScreenController.setQuizName(quizName);
             setResultBar(quizResultScreenController);
             quizResultScreenController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.removeAddress(1);
@@ -364,9 +408,7 @@ public class QuizScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i
-        addQuestionList();
-        renderNavigation();
-        setTimer();
     }
 }

@@ -1,5 +1,6 @@
 package controller.Kien_Controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
 import controller.Ha_Controller.GUI11Controller;
@@ -19,10 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Question;
 import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -62,13 +66,23 @@ public class QuizResultScreenController implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
-    private Integer questionQuantity;
-    private Map<Integer, Integer> userAnswer;
+    private DBInteract dbInteract;
+    private String quizName;
+    private List<Question> questionList;
+    private Map<Integer, List<Integer>> userAnswer;
+
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
+        questionList = dbInteract.getQuestionBelongToQuiz(this.quizName);
+        addQuestionList();
+        renderNavigation();
+    }
 
     public void setStartedOn(String text) {
         this.startedOn.setText(text);
@@ -91,22 +105,31 @@ public class QuizResultScreenController implements Initializable {
     }
 
     public void addQuestionList() {
-        for (int i = 0; i < questionQuantity; i++) {
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
+                questionLayoutController.setQuestion(questionList.get(i));
                 questionLayoutController.setAddAnswer();
                 if (userAnswer.get(i) != null) {
-                    RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(userAnswer.get(i));
-                    selectedRadio.setSelected(true);
+                    if (userAnswer.get(i).size() > 1) {
+                        for (Integer integer : userAnswer.get(i)) {
+                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(integer + 1);
+                            selectedCheckBox.setSelected(true);
+                            selectedCheckBox.setCheckedColor(Color.GRAY);
+                        }
+                    } else {
+                        JFXRadioButton selectedRadio = (JFXRadioButton) questionLayoutController.questionBox.getChildren().get(userAnswer.get(i).get(0) + 1);
+                        selectedRadio.setSelected(true);
+                        selectedRadio.setSelectedColor(Color.GRAY);
+                    }
                 }
-                for (int j= 1;j<=4;++j) {
-                    JFXRadioButton radioButton = (JFXRadioButton) questionLayoutController.questionBox.getChildren().get(j);
+                for (int j = 1; j <= questionList.get(i).getOptions().size(); ++j) {
+                    Node radioButton = questionLayoutController.questionBox.getChildren().get(j);
                     radioButton.setDisable(true);
                     radioButton.setStyle("-fx-opacity: 1;");
-                    radioButton.setSelectedColor(Color.GRAY);
                 }
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
@@ -116,14 +139,14 @@ public class QuizResultScreenController implements Initializable {
     }
 
     public void renderNavigation() {
-        for (int i = 0; i < questionQuantity; i++) {
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionRectangle.fxml"));
             try {
                 Node node1 = fxmlLoader1.load();
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
                 questionRectangleController.setAnswered();
-                scrollToQuestion(i,questionRectangleController);
+                scrollToQuestion(i, questionRectangleController);
                 progressPane.getChildren().add(node1);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,8 +160,8 @@ public class QuizResultScreenController implements Initializable {
             double scrollToY;
             if (i <= 2) scrollToY = quizListContainer.getChildren().get(i).getLayoutY();
             else scrollToY = quizListContainer.getChildren().get(i + 1).getLayoutY();
-            if (i > 0.5 * questionQuantity) {
-                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + 1D / questionQuantity);
+            if (i > 0.5 * questionList.size()) {
+                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + 1D / questionList.size());
             } else
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight());
         });
@@ -163,9 +186,7 @@ public class QuizResultScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        questionQuantity = DataModel.getInstance().getNumber();
+        dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = DataModel.getInstance().getUserAnswer();
-        addQuestionList();
-        renderNavigation();
     }
 }
