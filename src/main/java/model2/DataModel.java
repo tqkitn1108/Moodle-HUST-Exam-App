@@ -1,14 +1,17 @@
 package model2;
 
+import model.DBInteract;
+
 import java.util.Map;
 
 public class DataModel {
-
     private static DataModel instance;
 
     private Integer number;
 
     private Map<Integer, Integer> userAnswer;
+
+    private DBInteract dbInteract;
 
     private DataModel() {
 
@@ -35,5 +38,13 @@ public class DataModel {
 
     public Map<Integer, Integer> getUserAnswer() {
         return userAnswer;
+    }
+
+    public void setDbInteract(DBInteract dbInteract) {
+        this.dbInteract = dbInteract;
+    }
+
+    public DBInteract getDbInteract() {
+        return dbInteract;
     }
 }

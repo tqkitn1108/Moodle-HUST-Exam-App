@@ -14,65 +14,49 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Quiz;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CourseListController implements Initializable {
     @FXML
     private VBox quizList;
     private HeaderListener headerListener;
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
+        loadQuizList();
     }
 
-    public void openQuiz() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI61.fxml"));
-            Node node = fxmlLoader.load();
-            GUI61Controller gui61Controller = fxmlLoader.getController();
-            for (Node node1 : quizList.getChildren()) {
-                if (node1 instanceof MFXButton) {
-                    MFXButton button = (MFXButton) node1;
-                    button.setOnAction(event -> {
-                        gui61Controller.setQuizName(button.getText());
-                        this.headerListener.addAddressToBreadcrumbs("General");
-                        this.headerListener.addAddressToBreadcrumbs(button.getText());
-                        this.headerListener.hideMenuButton();
-                        this.headerListener.hideEditingBtn();
-                        gui61Controller.setScreenListener(this.screenListener);
-                        gui61Controller.setHeaderListener(this.headerListener);
-                        this.screenListener.removeTopScreen();
-                        this.screenListener.changeScreen(node);
-                    });
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createNewQuiz(String name) {
+    public void addNewQuiz(String name, int timeLimit) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseName.fxml"));
             Node node = fxmlLoader.load();
-            MFXButton button = (MFXButton) node;
-            button.setText(name);
-            VBox.setMargin(button, new Insets(15,10,15,80));
-            quizList.getChildren().add(button);
+            CourseNameController courseNameController = fxmlLoader.getController();
+            courseNameController.setQuizItem(name);
+            courseNameController.setTimeLimit(timeLimit);
+            courseNameController.setMainScreen(this.headerListener, this.screenListener);
+            VBox.setMargin(node, new Insets(15,10,15,80));
+            quizList.getChildren().add(node);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void loadQuizList() {
+        DBInteract dbInteract = new DBInteract();
+        List<Quiz> quizzes = dbInteract.getAllQuizzes();
+        for (Quiz quiz : quizzes) {
+            addNewQuiz(quiz.getQuizName(), quiz.getTimeLimit());
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        openQuiz();
     }
 }

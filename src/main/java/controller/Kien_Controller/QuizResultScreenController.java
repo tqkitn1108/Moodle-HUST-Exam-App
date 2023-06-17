@@ -61,11 +61,9 @@ public class QuizResultScreenController implements Initializable {
     private Label time;
 
     private HeaderListener headerListener;
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
     private NewScreenListener screenListener;
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -152,8 +150,7 @@ public class QuizResultScreenController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Ha_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
-            courseListController.setHeaderListener(this.headerListener);
-            courseListController.setScreenListener(this.screenListener);
+            courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.removeAddress(5);
             this.headerListener.showMenuButton();
             this.headerListener.showEditingBtn();

@@ -14,6 +14,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
+import model2.DataModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,14 +65,10 @@ public class GUI51Controller implements Initializable {
     private ComboBox<Integer> yearbox2;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
 
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -132,18 +129,21 @@ public class GUI51Controller implements Initializable {
     @FXML
     private void createNewQuiz(ActionEvent event) {
         try {
+            String unit = textbox1.getValue();
+            int quizTime = minbox3.getValue();
+            if (unit.equals("hours")) {
+                quizTime *= 60;
+            }
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
-            courseListController.createNewQuiz(quizName.getText());
 
-            // Tạo một quiz mới lưu vào database
-//            Quiz newQuiz = new Quiz();
-//            newQuiz.setQuizName(quizName.getText());
-//            DBInteract dbInteract = new DBInteract();
-//            dbInteract.createNewQuiz(newQuiz);
-            courseListController.setHeaderListener(this.headerListener);
-            courseListController.setScreenListener(this.screenListener);
+            DBInteract dbInteract = DataModel.getInstance().getDbInteract();
+            Quiz newQuiz = new Quiz();
+            newQuiz.setQuizName(quizName.getText());
+            newQuiz.setTimeLimit(quizTime);
+            dbInteract.createNewQuiz(newQuiz);
+            courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.showMenuButton();
             this.headerListener.showEditingBtn();
             this.headerListener.removeAddress(5);

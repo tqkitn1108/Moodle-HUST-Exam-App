@@ -22,6 +22,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model2.DataModel;
+import org.sqlite.core.DB;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +36,8 @@ public class GUI11Controller implements Initializable {
     @FXML
     private StackPane stackPane;
     HeaderController headerController2;
+
+    private DBInteract dbInteract;
 
     private void addScreenToStackPane(Node node) {
         if (this.stackPane.getChildren().contains(node)) {
@@ -47,7 +52,7 @@ public class GUI11Controller implements Initializable {
             Node node = fxmlLoader.load();
             HeaderController headerController = fxmlLoader.getController();
             headerController2 = headerController;
-            headerController.setHeaderListener(new HeaderListener() {
+            headerController.setMainScreen(new HeaderListener() {
                 @Override
                 public void handle(Event event) {
 
@@ -71,7 +76,7 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void removeAddress(Integer number) {
-                    HBox breadcrumbs = (HBox) headerController.getBreadcrumbs();
+                    HBox breadcrumbs = headerController.getBreadcrumbs();
                     if (breadcrumbs.getChildren().size() - number >= 3) {
                         while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
@@ -103,8 +108,7 @@ public class GUI11Controller implements Initializable {
                 public void hideMenuButton() {
                     headerController.getMenuBtn().setVisible(false);
                 }
-            });
-            headerController.setScreenListener(new NewScreenListener() {
+            }, new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
@@ -131,7 +135,7 @@ public class GUI11Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
-            courseListController.setHeaderListener(new HeaderListener() {
+            courseListController.setMainScreen(new HeaderListener() {
                 @Override
                 public void handle(Event event) {
 
@@ -155,7 +159,7 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void removeAddress(Integer number) {
-                    HBox breadcrumbs = (HBox) headerController2.getBreadcrumbs();
+                    HBox breadcrumbs = headerController2.getBreadcrumbs();
                     if (breadcrumbs.getChildren().size() - number >= 3) {
                         while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
@@ -187,8 +191,7 @@ public class GUI11Controller implements Initializable {
                 public void hideMenuButton() {
                     headerController2.getMenuBtn().setVisible(false);
                 }
-            });
-            courseListController.setScreenListener(new NewScreenListener() {
+            }, new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
@@ -212,6 +215,8 @@ public class GUI11Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dbInteract = new DBInteract();
+        DataModel.getInstance().setDbInteract(dbInteract);
         setHeader();
         addQuizList();
     }

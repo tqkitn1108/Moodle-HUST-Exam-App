@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Category;
 import model.DBInteract;
 import model.Question;
+import model.Quiz;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,20 @@ public class TEST5 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         DBInteract dbInteract = new DBInteract();
-        List<Category> categories = dbInteract.getAllCategories();
-        for(Category category : categories){
-            System.out.println(category.getCatTitle());
-            for(Question question : category.getQuestions()){
+        List<Quiz> quizzes = dbInteract.getAllQuizzes();
+        for(Quiz quiz : quizzes){
+            for(Question question: quiz.getQuestions()){
                 question.showQ();
             }
+            System.out.println(quiz.getTimeLimit());
         }
+//        List<Category> categories = dbInteract.getAllCategories();
+//        for(Category category : categories){
+//            System.out.println(category.getCatTitle());
+//            for(Question question : category.getQuestions()){
+//                question.showQ();
+//            }
+//        }
     }
 
     public static void main(String[] args) {

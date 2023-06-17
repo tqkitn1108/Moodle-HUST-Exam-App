@@ -20,16 +20,11 @@ public class GUI63Controller implements Initializable {
     private VBox questionList;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
-
     @FXML
     public void closeThisWindow(MouseEvent event) {
         this.screenListener.removeTopScreen();
@@ -42,8 +37,7 @@ public class GUI63Controller implements Initializable {
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
             gui62aController.addQuestionToScrollPane();
-            gui62aController.setHeaderListener(this.headerListener);
-            gui62aController.setScreenListener(this.screenListener);
+            gui62aController.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.removeTopScreen();  // Xóa giao diện GUI63
             this.screenListener.removeTopScreen(); // Xóa giao diện GUI62a đã có
             this.screenListener.changeScreen(node); // Load giao diện GUI62a hiện tại

@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -30,6 +27,7 @@ import model.Category;
 import model.DBInteract;
 import model.DataInteract;
 import model.Question;
+import model2.DataModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +51,12 @@ public class GUI21Controller implements Initializable {
     private MFXButton chooseBtn;
     @FXML
     private VBox boxToDropFile;
-
+    @FXML
+    private TextField cateID;
+    @FXML
+    private TextArea cateInfo;
+    @FXML
+    private TextField cateName;
     @FXML
     private Label fileLabel;
     @FXML
@@ -63,18 +66,13 @@ public class GUI21Controller implements Initializable {
     @FXML
     private ComboBox<String> categoryBox3;
 
-    DBInteract dbInteract;
+    private DBInteract dbInteract;
     private File file, file2;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -171,6 +169,10 @@ public class GUI21Controller implements Initializable {
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox1);
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox2);
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox3);
+//                categoryBox1.getItems().clear();
+//                categoryBox2.getItems().clear();
+//                categoryBox3.getItems().clear();
+//                addCategoryBox();
                 categoryBox3.setValue(cateTitle + " (" + dbInteract.getQuestionsBelongToCategory(cateTitle).size() + ")");
 
                 // Xử lý khi import thành công
@@ -222,8 +224,8 @@ public class GUI21Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/GUI32.fxml"));
             Node node = fxmlLoader.load();
             GUI32Controller gui32Controller = fxmlLoader.getController();
-            gui32Controller.setHeaderListener(this.headerListener);
-            gui32Controller.setScreenListener(this.screenListener);
+            gui32Controller.setCateBox(categoryBox1.getValue());
+            gui32Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.hideMenuButton();
             this.headerListener.hideEditingBtn();
             this.headerListener.addAddressToBreadcrumbs("Question bank");
@@ -235,6 +237,19 @@ public class GUI21Controller implements Initializable {
         }
     }
 
+    @FXML
+    public void addCategory(ActionEvent event) {
+        dbInteract.createNewCategory(categoryBox2.getValue(), cateID.getText(), cateName.getText());
+        categoryBox1.getItems().clear();
+        categoryBox2.getItems().clear();
+        categoryBox3.getItems().clear();
+        addCategoryBox();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText("Add category successfully!");
+        alert.showAndWait();
+    }
     public String getCateName(String nameWithQuantity) {
         if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
             return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
@@ -274,7 +289,7 @@ public class GUI21Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dbInteract = new DBInteract();
+        dbInteract = DataModel.getInstance().getDbInteract();
         addImg();
         addCategoryBox();
     }

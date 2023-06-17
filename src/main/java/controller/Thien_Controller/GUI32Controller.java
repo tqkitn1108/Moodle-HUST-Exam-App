@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Category;
+import model.DBInteract;
 import model.Question;
+import model2.DataModel;
 
 import java.io.File;
 import java.net.URL;
@@ -40,6 +44,12 @@ public class GUI32Controller implements Initializable {
     @FXML
     private TextField quesName;
     @FXML
+    private TextArea quesText;
+    @FXML
+    private ImageView quesImg;
+    @FXML
+    private ComboBox<String> cateBox;
+    @FXML
     private ComboBox<String> gradeComboBox1;
     @FXML
     private ComboBox<String> gradeComboBox2;
@@ -54,27 +64,32 @@ public class GUI32Controller implements Initializable {
     @FXML
     Pane pane = new Pane();
     @FXML
-    private TextArea quesText;
-    @FXML
-    private ImageView quesImg;
-    @FXML
     private FontAwesomeIconView closeIcon;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
     private String[] grade = {"None", "100%", "90%", "83,33333%", "80%", "75%", "70%", "66.66667%", "60%", "50%", "40%", "33.33333%",
             "30%", "25%", "20%", "16.66667%", "14.28571%", "12.5%", "11.11111%", "10%", "5%", "-5%", "-10%", "-11.11111%", "-12.5%",
             "-14.28571%", "-16.66667%", "-20%", "-25%", "-30%", "-33.33333%", "-40%", "-50%", "-60%", "-66.66667%", "-70%", "-75%", "-80%", "-83,33333%"};
+
+    private DBInteract dbInteract;
+    public void setCateBox(String cateName) {
+        List<Category> categories = dbInteract.getAllCategories();
+        for (Category category : categories) {
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            if (quantity == 0) {
+                cateBox.getItems().add(category.getCatTitle());
+            } else {
+                cateBox.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+            }
+        }
+        cateBox.setValue(cateName);
+    }
 
     @FXML
     public void closeThisWindow(ActionEvent event) {
@@ -89,25 +104,40 @@ public class GUI32Controller implements Initializable {
 
     @FXML
     public void saveChange(ActionEvent event) {
-        // Lưu câu hỏi mới vào category
-
-//        List<Node> textAreas = new ArrayList<Node>();
-//        Set<Node> nodes = myVBox.lookupAll(".text-area");
-//        for (Node node : nodes) {
-//            if (node instanceof TextArea) {
-//                textAreas.add(node);
-//            }
-//        }
-//        List<String> options = new ArrayList<>();
-//        Question newQuestion = new Question();
-//        newQuestion.setQuestionID(quesName.getText());
-//        newQuestion.setQuestionData(quesText.getText());
-//        for(Node node : textAreas) {
-//            TextArea textArea = (TextArea) node;
-//            if(textArea.getText()!= null) {
-//                options.add(textArea.getText());
-//            }
-//        }
+        Set<Node> nodes = myVBox.lookupAll(".choice-text");
+        List<Image> images = new ArrayList<>();
+        List<String> options = new ArrayList<>();
+        List<Double> grades = new ArrayList<>();
+        for (Node node : nodes) {
+            TextArea textArea = (TextArea) node;
+            if (textArea.getText().length() != 0) {
+                options.add(textArea.getText());
+                ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
+                images.add(imageView.getImage());
+                Node node1 = node.getParent();
+                while (node1 != null) {
+                    if(node1.getParent().lookup(".grade-box") == null) {
+                        node1 = node1.getParent();
+                    } else {
+                        ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
+                        String tmp;
+                        if(gradeBox.getValue() != null && !gradeBox.getValue().equals("None")) {
+                            tmp = gradeBox.getValue().replace("%", "");
+                        } else tmp = "0";
+                        grades.add(Double.parseDouble(tmp));
+                        break;
+                    }
+                }
+            }
+        }
+        Question newQuestion = new Question();
+        newQuestion.setQuestionName(quesName.getText());
+        newQuestion.setQuestionText(quesText.getText());
+        newQuestion.setQuestionImage(quesImg.getImage());
+        newQuestion.setOptions(options);
+        newQuestion.setOptionGrades(grades);
+        newQuestion.setOptionImages(images);
+        dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
         closeThisWindow(event);
     }
 
@@ -165,8 +195,17 @@ public class GUI32Controller implements Initializable {
         imageView.setFitWidth(250);
         closeIcon.setVisible(false);
     }
+
+    public String getCateName(String nameWithQuantity) {
+        if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
+            return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
+        }
+        return nameWithQuantity;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dbInteract = DataModel.getInstance().getDbInteract();
         gradeComboBox1.getItems().addAll(grade);
         gradeComboBox2.getItems().addAll(grade);
         gradeComboBox3.getItems().addAll(grade);

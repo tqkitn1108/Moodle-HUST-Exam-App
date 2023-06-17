@@ -46,14 +46,9 @@ public class HeaderController implements Initializable {
     }
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -70,8 +65,7 @@ public class HeaderController implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
                     Node node = fxmlLoader.load();
                     CourseListController courseListController = fxmlLoader.getController();
-                    courseListController.setHeaderListener(this.headerListener);
-                    courseListController.setScreenListener(this.screenListener);
+                    courseListController.setMainScreen(this.headerListener, this.screenListener);
                     this.headerListener.showMenuButton();
                     this.headerListener.showEditingBtn();
                     this.headerListener.removeAddress(5);
@@ -86,8 +80,7 @@ public class HeaderController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
                 Node node = fxmlLoader.load();
                 CourseListController courseListController = fxmlLoader.getController();
-                courseListController.setHeaderListener(this.headerListener);
-                courseListController.setScreenListener(this.screenListener);
+                courseListController.setMainScreen(this.headerListener, this.screenListener);
                 this.headerListener.showMenuButton();
                 this.headerListener.showEditingBtn();
                 this.headerListener.removeAddress(5);
@@ -110,8 +103,7 @@ public class HeaderController implements Initializable {
                     int finalI = i;
                     button.setOnAction(event -> {
                         menuBtn.hide();
-                        gui21Controller.setHeaderListener(this.headerListener);
-                        gui21Controller.setScreenListener(this.screenListener);
+                        gui21Controller.setMainScreen(this.headerListener, this.screenListener);
                         gui21Controller.getTabPane().getSelectionModel().select(finalI);
                         gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
                         this.screenListener.removeTopScreen();
@@ -130,8 +122,7 @@ public class HeaderController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
             Node node = fxmlLoader.load();
             GUI51Controller gui51Controller = fxmlLoader.getController();
-            gui51Controller.setHeaderListener(this.headerListener);
-            gui51Controller.setScreenListener(this.screenListener);
+            gui51Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("Adding a new Quiz");
             this.headerListener.hideMenuButton();
             this.headerListener.hideEditingBtn();

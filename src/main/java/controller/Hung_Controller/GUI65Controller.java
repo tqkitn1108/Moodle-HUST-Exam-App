@@ -12,16 +12,11 @@ import java.util.ResourceBundle;
 public class GUI65Controller implements Initializable {
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
-
     @FXML
     public void closeThisWindow(MouseEvent event) {
         this.screenListener.removeTopScreen();

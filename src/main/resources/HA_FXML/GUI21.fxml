@@ -207,7 +207,7 @@
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField maxWidth="350.0" prefHeight="30.0" prefWidth="280.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="cateName" maxWidth="350.0" prefHeight="30.0" prefWidth="280.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -223,7 +223,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextArea maxWidth="350.0" prefHeight="115.0" prefWidth="280.0" style="-fx-background-color: #000000; -fx-border-color: #ffffff;" HBox.hgrow="ALWAYS" />
+                                    <TextArea fx:id="cateInfo" maxWidth="350.0" prefHeight="115.0" prefWidth="280.0" style="-fx-background-color: #000000; -fx-border-color: #ffffff;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -244,7 +244,7 @@
                                           <Insets right="10.0" top="8.0" />
                                        </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField maxWidth="100.0" prefHeight="30.0" prefWidth="90.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="cateID" maxWidth="100.0" prefHeight="30.0" prefWidth="90.0" style="-fx-background-radius: 0px; -fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -255,7 +255,7 @@
                                     <Insets left="15.0" />
                                  </VBox.margin>
                               </Line>
-                              <MFXButton alignment="CENTER" depthLevel="LEVEL1" style="-fx-background-color: #c02424;" text="ADD CATEGORY" textFill="WHITE">
+                              <MFXButton alignment="CENTER" depthLevel="LEVEL1" onAction="#addCategory" style="-fx-background-color: #c02424;" text="ADD CATEGORY" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="330.0" />
                                  </VBox.margin>

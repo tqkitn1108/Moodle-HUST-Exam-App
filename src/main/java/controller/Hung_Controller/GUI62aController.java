@@ -25,14 +25,9 @@ public class GUI62aController implements Initializable {
     private Label pencilLabel;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -58,8 +53,7 @@ public class GUI62aController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI63.fxml"));
             Node node = fxmlLoader.load();
             GUI63Controller gui63Controller = fxmlLoader.getController();
-            gui63Controller.setHeaderListener(this.headerListener);
-            gui63Controller.setScreenListener(this.screenListener);
+            gui63Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,8 +66,7 @@ public class GUI62aController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI65.fxml"));
             Node node = fxmlLoader.load();
             GUI65Controller gui65Controller = fxmlLoader.getController();
-            gui65Controller.setHeaderListener(this.headerListener);
-            gui65Controller.setScreenListener(this.screenListener);
+            gui65Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
             e.printStackTrace();

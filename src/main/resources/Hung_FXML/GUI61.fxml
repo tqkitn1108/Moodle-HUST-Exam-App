@@ -60,7 +60,7 @@
             </HBox>
             <VBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="600.0" spacing="15.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time limit: 1 hour">
+                  <Text fx:id="timeLimit" strokeType="OUTSIDE" strokeWidth="0.0" text="Time limit: 1 hour">
                      <VBox.margin>
                         <Insets right="35.0" />
                      </VBox.margin>

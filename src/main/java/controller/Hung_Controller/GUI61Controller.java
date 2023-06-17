@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -29,21 +30,29 @@ import java.util.TimerTask;
 public class GUI61Controller implements Initializable {
     @FXML
     private Label quizName;
-
+    @FXML
+    private Text timeLimit;
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
 
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
     public void setQuizName(String quizName) {
         this.quizName.setText(quizName);
+    }
+
+    public void setTimeLimit(Integer timeLimit) {
+        int hrs = timeLimit / 60;
+        int mins = timeLimit % 60;
+        String hrText = "", minText = "";
+        if (hrs == 1) hrText = "1 hour ";
+        else if (hrs > 1) hrText = hrs + " hours ";
+        if (mins == 1) minText = "1 min ";
+        else if (mins > 1) minText = mins + " mins ";
+        this.timeLimit.setText("Time limit: " + hrText + minText);
     }
 
     @FXML
@@ -53,9 +62,8 @@ public class GUI61Controller implements Initializable {
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
             gui62aController.setTitle("Editing quiz: " + this.quizName.getText());
+            gui62aController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("Edit quiz");
-            gui62aController.setHeaderListener(this.headerListener);
-            gui62aController.setScreenListener(this.screenListener);
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,8 +110,7 @@ public class GUI61Controller implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
         Node node = fxmlLoader.load();
         QuizScreenController quizScreenController = fxmlLoader.getController();
-        quizScreenController.setHeaderListener(this.headerListener);
-        quizScreenController.setScreenListener(this.screenListener);
+        quizScreenController.setMainScreen(this.headerListener, this.screenListener);
         this.headerListener.addAddressToBreadcrumbs("Preview");
         this.screenListener.removeTopScreen();
         this.screenListener.changeScreen(node);

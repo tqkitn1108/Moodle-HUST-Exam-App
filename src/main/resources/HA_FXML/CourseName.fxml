@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<MFXButton graphicTextGap="8.0" rippleColor="WHITE" text="Kiểm tra cuối kỳ môn IT4859Q" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<MFXButton fx:id="quizItem" graphicTextGap="8.0" onAction="#openQuiz" rippleColor="WHITE" text="Kiểm tra cuối kỳ môn IT4859Q" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseNameController">
    <graphic>
       <StackPane prefHeight="18.0" prefWidth="12.0">
          <children>
