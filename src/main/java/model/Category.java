@@ -9,7 +9,7 @@ public class Category {
     public String getCategoryID() {
         return categoryID;
     }
-    public String getCatTitle() {
+    public String getCategoryTitle() {
         return categoryTitle;
     }
     public void setCategoryID(String categoryID) {

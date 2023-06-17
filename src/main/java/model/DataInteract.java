@@ -2,7 +2,10 @@ package model;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFPicture;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -19,18 +22,22 @@ public class DataInteract {
             DBInteract dbi = new DBInteract();
 //            dbi.createNewCategory(null, "1","testCat");
 //            dbi.createNewCategory("testCat","2","testSubCat");
-
+//
 //            assert questions != null;
 //            for (Question q : questions) {
 //                dbi.insertQuestion(q,"testCat");
 //            }
 //
 //            questions = dbi.getQuestionsBelongToCategory("testCat");
-//
-//
+////
+////
+//            Quiz quiz = new Quiz();
+//            quiz.setQuizName("CNXH_GK_1");
+//            quiz.setQuizDescription("Đề thi giữa kì Chủ nghĩa xã hội khoa học - Đề 1");
+//            quiz.setTimeLimit(60);
 //            dbi.createNewQuiz(quiz);
-//            dbi.addQuestionToQuiz("testQuiz","C1D1");
-//            dbi.addQuestionToQuiz("testQuiz","C2D2");
+//            dbi.addQuestionToQuiz("testQuiz","1");
+//            dbi.addQuestionToQuiz("testQuiz","2");
 //            questions = dbi.getQuestionBelongToQuiz("testQuiz");
 //            for (Question q:questions) {
 //                q.showQ();
@@ -52,7 +59,7 @@ public class DataInteract {
             dbi.createNewCategory(null,"1","CNXH");
             dbi.createNewCategory("CNXH","2","CNXH_Dễ");
             dbi.createNewCategory("CNXH","3","CNXH_Khó");
-            assert questions != null;
+
             for (int i=0;i<10;i++) {
                 dbi.insertQuestion(questions.get(i),"CNXH_Dễ");
             }
@@ -89,7 +96,7 @@ public class DataInteract {
 
     }
 
-    public static List<Question> getQuestionsFromDocFile(String path) {
+    public static List<Question> getQuestionsFromDocFile(String path) throws Exception{
         try (FileInputStream fis = new FileInputStream(path);
              XWPFDocument doc = new XWPFDocument(fis);) {
 
@@ -113,7 +120,7 @@ public class DataInteract {
             }
             doc.close();
 
-            if (!checkAikenFormat(lines)) return null;
+            checkAikenFormat(lines);
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;
@@ -150,13 +157,9 @@ public class DataInteract {
             } while (i < n);
             return questions;
         }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
     }
 
-    public static List<Question> getQuestionsFromTxtFile(String path) {
+    public static List<Question> getQuestionsFromTxtFile(String path) throws Exception{
         List<String> lines = new ArrayList<>();
         try (FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);) {
@@ -164,7 +167,7 @@ public class DataInteract {
             while ((line = br.readLine()) != null) {
                 lines.add(line);
             }
-            if (!checkAikenFormat(lines)) return null;
+            checkAikenFormat(lines);
             List<Question> questions = new ArrayList<>();
             int n = lines.size();
             int i = 0;
@@ -201,10 +204,6 @@ public class DataInteract {
             } while (i < n);
             return questions;
         }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
     }
 
     public static byte[] changeImageToBytes(Image img) throws IOException {
@@ -219,7 +218,7 @@ public class DataInteract {
         return new Image(new ByteArrayInputStream(bytes));
     }
 
-    public static Boolean checkAikenFormat(List<String> lines) {
+    public static void checkAikenFormat(List<String> lines) throws ReadFileException{
         int n = lines.size();
         int i = 0;
 
@@ -227,35 +226,34 @@ public class DataInteract {
             while (i < n && (lines.get(i).equals("") || lines.get(i).equals("null"))) i++;
             if (i == n) break;
 
-            if (!lines.get(i).contains(": ")) {
-                System.out.println("Error at line " + i + ": Question does not have name");
-                return false;
+            if (!lines.get(i).contains(": ") || lines.get(i).indexOf(": ") == 0) {
+                throw new ReadFileException("Error at line " + (i+1) + ": Question does not have name");
+                //return false;
             }
 
             List<Character> optionLabels = new ArrayList<>();
             while (++i < n && !lines.get(i).equals("null") && !lines.get(i).equals("")) {
                 if (lines.get(i).indexOf(". ") != 1 && lines.get(i).indexOf(": ") != 6) {
-                    System.out.println("Error at line " + (i+1) + ": Answer label error");
-                    return false;
+                    throw new ReadFileException("Error at line " + (i+1) + ": Answer label error");
+                    //return false;
                 }
                 optionLabels.add(lines.get(i).charAt(0));
             }
             if (optionLabels.size() <= 2) {
-                System.out.println("Error at line " + (i-1) + ": Not enough option");
+                throw new ReadFileException("Error at line " + i + ": Not enough option");
             }
             optionLabels.remove(optionLabels.size()-1);
             String s = lines.get(i-1);
             if (s.indexOf("ANSWER: ") != 0) {
-                System.out.println("Error at line " + i + ": Question does not have answer");
+                throw new ReadFileException("Error at line " + i + ": Question does not have answer");
             }
             for (int j = 8; j < s.length(); j++) {
                 if (s.charAt(j) != ' ' && s.charAt(j) != ',') {
                     if (!optionLabels.contains(s.charAt(j))) {
-                        System.out.println("Error at line " + i + ": Answer not in options");
+                        throw new ReadFileException("Error at line " + i + ": Answer not in options");
                     }
                 }
             }
         } while (i < n);
-        return true;
     }
 }
