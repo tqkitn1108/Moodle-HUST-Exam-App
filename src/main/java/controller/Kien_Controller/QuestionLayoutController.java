@@ -2,9 +2,6 @@ package controller.Kien_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -15,12 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import model.DBInteract;
 import model.Question;
-import model2.DataModel;
 
-import javax.swing.event.ChangeEvent;
 import java.net.URL;
 import java.util.*;
 
@@ -30,9 +23,8 @@ public class QuestionLayoutController implements Initializable {
     public Label flag;
     public VBox questionBox;
     public Label questionContent;
-    public AnchorPane correctAnswer;
-    private List<Integer> answers;
-    private Question question;
+    public AnchorPane correctAnswerPane;
+    private List<Integer> correctAnswerList;
     private ToggleGroup choiceGroup;
     private Set<JFXCheckBox> checkBoxGroup;
 
@@ -44,8 +36,11 @@ public class QuestionLayoutController implements Initializable {
         return checkBoxGroup;
     }
 
+    public List<Integer> getCorrectAnswerList() {
+        return correctAnswerList;
+    }
+
     public void setQuestion(Question question) {
-        this.question = question;
         setQuestionContent(question.getQuestionName() + ": " + question.getQuestionText(), question.getQuestionImage());
         setChoices(question);
     }
@@ -60,12 +55,13 @@ public class QuestionLayoutController implements Initializable {
 
     public void setQuestionContent(String questionContent, Image image) {
         this.questionContent.setText(questionContent);
+        this.questionContent.setWrapText(true);
         this.questionContent.setGraphic(new ImageView(image));
     }
 
     public void setChoices(Question question) {
         choiceGroup = new ToggleGroup();
-        answers = new ArrayList<>();
+        correctAnswerList = new ArrayList<>();
         List<String> options = question.getOptions();
         List<Image> images = question.getOptionImages();
         List<Double> grades = question.getOptionGrades();
@@ -75,8 +71,9 @@ public class QuestionLayoutController implements Initializable {
                 choice.setText(options.get(i));
                 choice.setGraphic(new ImageView(images.get(i)));
                 choice.setToggleGroup(choiceGroup);
-                if (grades.get(i) > 0) answers.add(i);
-                VBox.setMargin(choice, new Insets(6, 10, 0, 20));
+                choice.setWrapText(true);
+                if (grades.get(i) > 0) correctAnswerList.add(i);
+                VBox.setMargin(choice, new Insets(6, 20, 0, 20));
                 questionBox.getChildren().add(choice);
             }
         } else {
@@ -86,21 +83,24 @@ public class QuestionLayoutController implements Initializable {
                 choice.setText(options.get(i));
                 choice.setGraphic(new ImageView(images.get(i)));
                 checkBoxGroup.add(choice);
-                if (grades.get(i) > 0) answers.add(i);
-                VBox.setMargin(choice, new Insets(6, 10, 0, 20));
+                choice.setWrapText(true);
+                if (grades.get(i) > 0) correctAnswerList.add(i);
+                VBox.setMargin(choice, new Insets(6, 20, 0, 20));
                 questionBox.getChildren().add(choice);
             }
         }
     }
 
-    public void setAddAnswer() {
+    public void setAddAnswer(Question question) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/CorrectAns.fxml"));
         try {
             Node node = fxmlLoader.load();
             AnchorPane.setTopAnchor(node, 15.0);
             AnchorPane.setLeftAnchor(node, 0.0);
             AnchorPane.setRightAnchor(node, 0.0);
-            correctAnswer.getChildren().add(node);
+            CorrectAnsController correctAnsController = fxmlLoader.getController();
+            correctAnsController.setAnswerList(question.getOptions(), correctAnswerList);
+            correctAnswerPane.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();
         }

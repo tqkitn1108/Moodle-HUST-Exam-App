@@ -85,11 +85,11 @@ public class GUI32Controller implements Initializable {
     public void setCateBox(String cateName) {
         List<Category> categories = dbInteract.getAllCategories();
         for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
             if (quantity == 0) {
-                cateBox.getItems().add(category.getCatTitle());
+                cateBox.getItems().add(category.getCategoryTitle());
             } else {
-                cateBox.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                cateBox.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
             }
         }
         cateBox.setValue(cateName);

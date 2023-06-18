@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
@@ -25,6 +26,8 @@ public class GUI51Controller implements Initializable {
     private JFXCheckBox checkBox;
     @FXML
     private TextField quizName;
+    @FXML
+    private TextArea description;
     @FXML
     private ComboBox<Integer> daybox1;
 
@@ -142,6 +145,7 @@ public class GUI51Controller implements Initializable {
             Quiz newQuiz = new Quiz();
             newQuiz.setQuizName(quizName.getText());
             newQuiz.setTimeLimit(quizTime);
+            newQuiz.setQuizDescription(description.getText());
             dbInteract.createNewQuiz(newQuiz);
             courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.showMenuButton();

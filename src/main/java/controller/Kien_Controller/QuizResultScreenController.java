@@ -17,6 +17,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
@@ -26,9 +27,7 @@ import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class QuizResultScreenController implements Initializable {
 
@@ -43,6 +42,9 @@ public class QuizResultScreenController implements Initializable {
 
     @FXML
     private Label grade;
+
+    @FXML
+    private Text gradeText;
 
     @FXML
     private Label marks;
@@ -73,13 +75,12 @@ public class QuizResultScreenController implements Initializable {
     }
 
     private DBInteract dbInteract;
-    private String quizName;
     private List<Question> questionList;
     private Map<Integer, List<Integer>> userAnswer;
+    private Map<Integer, List<Integer>> correctAnswers;
 
     public void setQuizName(String quizName) {
-        this.quizName = quizName;
-        questionList = dbInteract.getQuestionBelongToQuiz(this.quizName);
+        questionList = dbInteract.getQuestionBelongToQuiz(quizName);
         addQuestionList();
         renderNavigation();
     }
@@ -100,7 +101,8 @@ public class QuizResultScreenController implements Initializable {
         this.marks.setText(marks);
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(String gradeText, String grade) {
+        this.gradeText.setText(gradeText);
         this.grade.setText(grade);
     }
 
@@ -112,24 +114,28 @@ public class QuizResultScreenController implements Initializable {
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
                 questionLayoutController.setQuestion(questionList.get(i));
-                questionLayoutController.setAddAnswer();
+                questionLayoutController.setAddAnswer(questionList.get(i));
+                correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
                 if (userAnswer.get(i) != null) {
-                    if (userAnswer.get(i).size() > 1) {
-                        for (Integer integer : userAnswer.get(i)) {
-                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(integer + 1);
+                    for (Integer integer : userAnswer.get(i)) {
+                        Node answerNode = questionLayoutController.questionBox.getChildren().get(integer + 1);
+                        if (answerNode instanceof JFXCheckBox selectedCheckBox) {
                             selectedCheckBox.setSelected(true);
                             selectedCheckBox.setCheckedColor(Color.GRAY);
+                        } else {
+                            JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
+                            selectedRadio.setSelected(true);
+                            selectedRadio.setSelectedColor(Color.GRAY);
                         }
-                    } else {
-                        JFXRadioButton selectedRadio = (JFXRadioButton) questionLayoutController.questionBox.getChildren().get(userAnswer.get(i).get(0) + 1);
-                        selectedRadio.setSelected(true);
-                        selectedRadio.setSelectedColor(Color.GRAY);
                     }
-                }
+                } else userAnswer.put(i, List.of(-5));
+                if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                    questionLayoutController.setStateQues("Correct Answer");
+                } else questionLayoutController.setStateQues("Wrong Answer");
                 for (int j = 1; j <= questionList.get(i).getOptions().size(); ++j) {
-                    Node radioButton = questionLayoutController.questionBox.getChildren().get(j);
-                    radioButton.setDisable(true);
-                    radioButton.setStyle("-fx-opacity: 1;");
+                    Node option = questionLayoutController.questionBox.getChildren().get(j);
+                    option.setDisable(true);
+                    option.setStyle("-fx-opacity: 1;");
                 }
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
@@ -145,7 +151,9 @@ public class QuizResultScreenController implements Initializable {
                 Node node1 = fxmlLoader1.load();
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
-                questionRectangleController.setAnswered();
+                if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                    questionRectangleController.setRightAnswered();
+                } else questionRectangleController.setWrongAnswered();
                 scrollToQuestion(i, questionRectangleController);
                 progressPane.getChildren().add(node1);
             } catch (Exception e) {
@@ -188,5 +196,6 @@ public class QuizResultScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = DataModel.getInstance().getUserAnswer();
+        correctAnswers = new HashMap<>();
     }
 }

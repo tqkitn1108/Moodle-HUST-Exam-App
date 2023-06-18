@@ -361,7 +361,7 @@ public class DBInteract {
         System.out.println(categoryTitle);
         List<Category> subCategories = getSubCategoriesOf(categoryTitle);
         for (Category cat:subCategories) {
-            treeView(cat.getCatTitle(),level+1);
+            treeView(cat.getCategoryTitle(),level+1);
         }
     }
 }

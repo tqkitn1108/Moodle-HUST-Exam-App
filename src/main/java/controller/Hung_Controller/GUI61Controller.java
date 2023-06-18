@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Quiz;
 import model2.DataModel;
 
 import java.io.IOException;
@@ -40,8 +41,11 @@ public class GUI61Controller implements Initializable {
         this.screenListener = screenListener;
     }
 
-    public void setQuizName(String quizName) {
-        this.quizName.setText(quizName);
+    private Quiz quiz;
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        this.quizName.setText(quiz.getQuizName());
+        setTimeLimit(quiz.getTimeLimit());
     }
 
     public void setTimeLimit(Integer timeLimit) {
@@ -110,7 +114,7 @@ public class GUI61Controller implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizScreen.fxml"));
         Node node = fxmlLoader.load();
         QuizScreenController quizScreenController = fxmlLoader.getController();
-        quizScreenController.setQuizName(quizName.getText());
+        quizScreenController.setQuiz(quiz);
         quizScreenController.setMainScreen(this.headerListener, this.screenListener);
         this.headerListener.addAddressToBreadcrumbs("Preview");
         this.screenListener.removeTopScreen();

@@ -33,13 +33,12 @@ public class CourseListController implements Initializable {
         loadQuizList();
     }
 
-    public void addNewQuiz(String name, int timeLimit) {
+    public void addNewQuiz(Quiz quiz) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseName.fxml"));
             Node node = fxmlLoader.load();
             CourseNameController courseNameController = fxmlLoader.getController();
-            courseNameController.setQuizItem(name);
-            courseNameController.setTimeLimit(timeLimit);
+            courseNameController.setQuiz(quiz);
             courseNameController.setMainScreen(this.headerListener, this.screenListener);
             VBox.setMargin(node, new Insets(15,10,15,80));
             quizList.getChildren().add(node);
@@ -52,7 +51,7 @@ public class CourseListController implements Initializable {
         DBInteract dbInteract = new DBInteract();
         List<Quiz> quizzes = dbInteract.getAllQuizzes();
         for (Quiz quiz : quizzes) {
-            addNewQuiz(quiz.getQuizName(), quiz.getTimeLimit());
+            addNewQuiz(quiz);
         }
     }
 

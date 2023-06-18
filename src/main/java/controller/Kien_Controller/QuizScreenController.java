@@ -35,6 +35,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Question;
+import model.Quiz;
 import model2.DataModel;
 
 import java.io.File;
@@ -59,8 +60,6 @@ public class QuizScreenController implements Initializable {
     @FXML
     private Label time;
     @FXML
-    private VBox progressContent;
-    @FXML
     private FlowPane progressPane;
     @FXML
     private VBox quizListContainer;
@@ -68,10 +67,11 @@ public class QuizScreenController implements Initializable {
     private DBInteract dbInteract;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
-    private String quizName;
+    private Quiz quiz;
     private List<Question> questionList;
     private Map<Integer, List<Integer>> userAnswer;
-
+    private Map<Integer, List<Integer>> correctAnswers;
+    private Integer numberOfRightAnswers;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
 
@@ -84,16 +84,16 @@ public class QuizScreenController implements Initializable {
         this.time.setVisible(false);
     }
 
-    private Timer timer = new Timer();
+    private Timer timer;
 
     ToggleGroup[] toggleGroups;
     Pane overlay;
     StackPane overlayStackPane;
     Stage confirmStage;
 
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
-        questionList = dbInteract.getQuestionBelongToQuiz(this.quizName);
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        questionList = quiz.getQuestions();
         addQuestionList();
         renderNavigation();
         setTimer();
@@ -119,7 +119,7 @@ public class QuizScreenController implements Initializable {
     }
 
     private void setTimer() {
-        totalSec = questionList.size() * 30L;
+        totalSec = quiz.getTimeLimit() * 60L;
         this.timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
@@ -149,7 +149,9 @@ public class QuizScreenController implements Initializable {
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
                 questionLayoutController.setQuestion(questionList.get(i));
+                correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
                 toggleGroups[i] = questionLayoutController.getChoiceGroup();
+                int size = questionList.get(i).getOptions().size();
                 if (questionList.get(i).isMultipleAnswer()) {
                     Set<JFXCheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
                     AtomicInteger count = new AtomicInteger(); // Vai trò như biến đếm count (count đếm số lượng checkbox được select)
@@ -164,7 +166,7 @@ public class QuizScreenController implements Initializable {
                                         radioButton.setSelected(true);
                                         radioButton.setToggleGroup(toggleGroups[finalI1]);
                                         List<Integer> answerList = new ArrayList<Integer>();
-                                        for (int j = 1; j <= 4; ++j) {
+                                        for (int j = 1; j <= size; ++j) {
                                             JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
                                             if (selectedCheckBox.isSelected()) {
                                                 answerList.add(j - 1);
@@ -179,15 +181,19 @@ public class QuizScreenController implements Initializable {
                                             radioButton.setSelected(true);
                                             radioButton.setToggleGroup(toggleGroups[finalI1]);
                                             radioButton.setSelected(false); //chuyển selected từ true -> false để thực hiện questionRectangleController.setDefault();
-                                        }
-                                        List<Integer> answerList = new ArrayList<Integer>();
-                                        for (int j = 1; j <= 4; ++j) {
-                                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
-                                            if (selectedCheckBox.isSelected()) {
-                                                answerList.add(j - 1);
+                                        } else {
+                                            List<Integer> answerList = new ArrayList<Integer>();
+                                            for (int j = 1; j <= size; ++j) {
+                                                JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                                if (selectedCheckBox.isSelected()) {
+                                                    answerList.add(j - 1);
+                                                }
                                             }
+                                            userAnswer.put(finalI1, answerList);
                                         }
-                                        userAnswer.put(finalI1, answerList);
+                                        if (userAnswer.get(finalI1).equals(correctAnswers.get(finalI1))) {
+                                            numberOfRightAnswers++;
+                                        }
                                     }
                                 }
                         );
@@ -200,11 +206,14 @@ public class QuizScreenController implements Initializable {
                                 if (newToggle != null) {
                                     questionLayoutController.setStateQues("Answered");
                                     List<Integer> answerList = new ArrayList<Integer>();
-                                    for (int j = 1; j <= 4; ++j) {
+                                    for (int j = 1; j <= size; ++j) {
                                         RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
                                         if (selectedRadio.isSelected()) {
                                             answerList.add(j - 1);
                                             userAnswer.put(finalI, answerList);
+                                            if (userAnswer.get(finalI).equals(correctAnswers.get(finalI))) {
+                                                numberOfRightAnswers++;
+                                            }
                                             break;
                                         }
                                     }
@@ -304,7 +313,7 @@ public class QuizScreenController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
-            quizResultScreenController.setQuizName(quizName);
+            quizResultScreenController.setQuizName(quiz.getQuizName());
             setResultBar(quizResultScreenController);
             quizResultScreenController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.removeAddress(1);
@@ -322,8 +331,10 @@ public class QuizScreenController implements Initializable {
         quizResultScreenController.setTime(formatDuration(seconds));
         quizResultScreenController.setStartedOn(startTime.format(formatter));
         quizResultScreenController.setCompletedOn(finishTime.format(formatter));
-        quizResultScreenController.setMarks("/" + questionList.size() + ".00");
-        quizResultScreenController.setGrade(0.00 + " out of 10.00 (" + 0 + "%)");
+        quizResultScreenController.setMarks(numberOfRightAnswers + ".00" + "/" + questionList.size() + ".00");
+        String gradeText = String.format("%.2f", 10D * numberOfRightAnswers / questionList.size()).replace(",", ".");
+        String gradePercent = String.format("%.0f", 100D * numberOfRightAnswers / questionList.size());
+        quizResultScreenController.setGrade(gradeText, "out of 10.00 (" + gradePercent + "%)");
     }
 
     private String formatDuration(long seconds) {
@@ -409,6 +420,8 @@ public class QuizScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
-        userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i
+        userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i, i>=0
+        correctAnswers = new HashMap<>();
+        numberOfRightAnswers = 0;
     }
 }

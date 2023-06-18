@@ -11,19 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
-
-import javafx.stage.StageStyle;
-import model2.Quiz;
-
 import java.net.URL;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 

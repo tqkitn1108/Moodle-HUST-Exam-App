@@ -123,11 +123,11 @@ public class GUI63Controller implements Initializable {
     public void addCategoryBox() {
         List<Category> categories = dbInteract.getAllCategories();
         for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
             if (quantity == 0) {
-                categoryBox.getItems().add(category.getCatTitle());
+                categoryBox.getItems().add(category.getCategoryTitle());
             } else {
-                categoryBox.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                categoryBox.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
             }
         }
     }

@@ -80,7 +80,7 @@
                         <Insets />
                      </VBox.margin>
                   </VBox>
-                  <AnchorPane fx:id="correctAnswer" prefWidth="200.0" />
+                  <AnchorPane fx:id="correctAnswerPane" prefWidth="200.0" />
                </children>
                <HBox.margin>
                   <Insets bottom="25.0" />
