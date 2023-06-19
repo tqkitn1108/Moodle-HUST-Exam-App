@@ -3,7 +3,6 @@ package controller.Kien_Controller;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
-import controller.Ha_Controller.GUI11Controller;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -48,9 +47,6 @@ public class QuizResultScreenController implements Initializable {
 
     @FXML
     private Label marks;
-
-    @FXML
-    private VBox progressContent;
 
     @FXML
     private FlowPane progressPane;
@@ -116,7 +112,7 @@ public class QuizResultScreenController implements Initializable {
                 questionLayoutController.setQuestion(questionList.get(i));
                 questionLayoutController.setAddAnswer(questionList.get(i));
                 correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
-                if (userAnswer.get(i) != null) {
+                if (!userAnswer.get(i).equals(List.of(-1))) {
                     for (Integer integer : userAnswer.get(i)) {
                         Node answerNode = questionLayoutController.questionBox.getChildren().get(integer + 1);
                         if (answerNode instanceof JFXCheckBox selectedCheckBox) {
@@ -128,7 +124,7 @@ public class QuizResultScreenController implements Initializable {
                             selectedRadio.setSelectedColor(Color.GRAY);
                         }
                     }
-                } else userAnswer.put(i, List.of(-5));
+                }
                 if (userAnswer.get(i).equals(correctAnswers.get(i))) {
                     questionLayoutController.setStateQues("Correct Answer");
                 } else questionLayoutController.setStateQues("Wrong Answer");

@@ -150,6 +150,7 @@ public class QuizScreenController implements Initializable {
                 questionLayoutController.setQuestionNum(i + 1);
                 questionLayoutController.setQuestion(questionList.get(i));
                 correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
+                userAnswer.put(i, List.of(-1));
                 toggleGroups[i] = questionLayoutController.getChoiceGroup();
                 int size = questionList.get(i).getOptions().size();
                 if (questionList.get(i).isMultipleAnswer()) {
@@ -181,6 +182,7 @@ public class QuizScreenController implements Initializable {
                                             radioButton.setSelected(true);
                                             radioButton.setToggleGroup(toggleGroups[finalI1]);
                                             radioButton.setSelected(false); //chuyển selected từ true -> false để thực hiện questionRectangleController.setDefault();
+                                            userAnswer.put(finalI1, List.of(-1));
                                         } else {
                                             List<Integer> answerList = new ArrayList<Integer>();
                                             for (int j = 1; j <= size; ++j) {
@@ -191,14 +193,10 @@ public class QuizScreenController implements Initializable {
                                             }
                                             userAnswer.put(finalI1, answerList);
                                         }
-                                        if (userAnswer.get(finalI1).equals(correctAnswers.get(finalI1))) {
-                                            numberOfRightAnswers++;
-                                        }
                                     }
                                 }
                         );
                     }
-
                 } else {
                     int finalI = i;
                     toggleGroups[i].selectedToggleProperty().addListener(
@@ -211,9 +209,6 @@ public class QuizScreenController implements Initializable {
                                         if (selectedRadio.isSelected()) {
                                             answerList.add(j - 1);
                                             userAnswer.put(finalI, answerList);
-                                            if (userAnswer.get(finalI).equals(correctAnswers.get(finalI))) {
-                                                numberOfRightAnswers++;
-                                            }
                                             break;
                                         }
                                     }
@@ -306,6 +301,11 @@ public class QuizScreenController implements Initializable {
         if (confirmStage != null) {
             confirmStage.close();
             overlayStackPane.getChildren().remove(overlay);
+        }
+        for (int i = 0; i < questionList.size(); i++) {
+            if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                numberOfRightAnswers++;
+            }
         }
         DataModel.getInstance().setNumber(questionList.size());
         DataModel.getInstance().setUserAnswer(userAnswer);
