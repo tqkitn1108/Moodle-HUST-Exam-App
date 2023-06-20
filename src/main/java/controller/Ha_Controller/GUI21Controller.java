@@ -71,7 +71,8 @@ public class GUI21Controller implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
@@ -156,7 +157,7 @@ public class GUI21Controller implements Initializable {
                 String itemWithOldQuantity = categoryBox3.getValue();
                 String cateTitle = getCateName(itemWithOldQuantity);
                 List<Question> quesList = new ArrayList<>();
-                if (fileName.endsWith(".txt")) {
+                if (fileName.endsWith(".txt")){
                     quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
                 }
                 if (fileName.endsWith(".docx") || fileName.endsWith(".doc")) {
@@ -188,6 +189,12 @@ public class GUI21Controller implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Wrong Format: " + e.getMessage());
                 alert.showAndWait();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             }
             fileLabel.setPrefHeight(0);
             file = null;
@@ -211,10 +218,12 @@ public class GUI21Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
             Node node = fxmlLoader.load();
             QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
-            questionInGUI31Controller.setQuesContent(question.getQuestionText());
-            questionInGUI31Controller.setWhiteBackground(i);
-            questionList.getChildren().add(node);
+            questionInGUI31Controller.setQuestion(question);
+            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
+            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
+            if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
             i++;
+            questionList.getChildren().add(node);
         }
     }
 
@@ -250,6 +259,7 @@ public class GUI21Controller implements Initializable {
         alert.setContentText("Add category successfully!");
         alert.showAndWait();
     }
+
     public String getCateName(String nameWithQuantity) {
         if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
             return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
@@ -274,15 +284,15 @@ public class GUI21Controller implements Initializable {
     public void addCategoryBox() {
         List<Category> categories = dbInteract.getAllCategories();
         for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
             if (quantity == 0) {
-                categoryBox1.getItems().add(category.getCatTitle());
-                categoryBox2.getItems().add(category.getCatTitle());
-                categoryBox3.getItems().add(category.getCatTitle());
+                categoryBox1.getItems().add(category.getCategoryTitle());
+                categoryBox2.getItems().add(category.getCategoryTitle());
+                categoryBox3.getItems().add(category.getCategoryTitle());
             } else {
-                categoryBox1.getItems().add(category.getCatTitle() + " (" + quantity + ")");
-                categoryBox2.getItems().add(category.getCatTitle() + " (" + quantity + ")");
-                categoryBox3.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                categoryBox1.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
+                categoryBox2.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
+                categoryBox3.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
             }
         }
     }

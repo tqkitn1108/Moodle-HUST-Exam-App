@@ -4,20 +4,21 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="28.0" prefHeight="26.0" style="-fx-background-color: #e6e6e6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI64Controller">
+<HBox alignment="CENTER_LEFT" maxHeight="28.0" prefHeight="26.0" prefWidth="600.0" style="-fx-background-color: #e6e6e6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI64Controller">
    <children>
       <Label>
          <graphic>
             <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00" />
          </graphic>
       </Label>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="25.0" style="-fx-background-color: #d3d3d3;" text="1">
+      <Label fx:id="order" alignment="CENTER" minWidth="25.0" prefHeight="18.0" prefWidth="25.0" style="-fx-background-color: #d3d3d3;" text="1">
          <HBox.margin>
             <Insets left="5.0" />
          </HBox.margin>
       </Label>
-      <Label>
+      <Label minWidth="13.0" prefWidth="13.0">
          <graphic>
             <FontAwesomeIconView fill="#333333" glyphName="TH_LIST" size="13" />
          </graphic>
@@ -25,7 +26,7 @@
             <Insets left="6.0" />
          </HBox.margin>
       </Label>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="19.0">
+      <Label alignment="CENTER" minWidth="19.0" prefHeight="18.0" prefWidth="19.0">
          <HBox.margin>
             <Insets />
          </HBox.margin>
@@ -33,9 +34,17 @@
             <FontAwesomeIconView fill="#009fe5" glyphName="GEAR" size="14.00" />
          </graphic>
       </Label>
-      <Label maxWidth="1500.0" prefHeight="22.0" prefWidth="319.0" text="Người dùng sẽ có thể chọn ra số lượng câu hỏi muốn thêm vào, các câu này lấy từ ngân hàng đề 67 câu của Sinh học kỳ 2 L7Chú ý nếu tích vào “Includes questions from subcategories too” sẽ thêm vào trong danh sách (bên dưới) các câu hỏi của các categories con." HBox.hgrow="ALWAYS">
+      <Label fx:id="mainQuesContent" prefHeight="22.0" text="Người dùng sẽ có thể chọn ra số lượng câu hỏi muốn thêm vào, các câu này lấy từ ngân hàng đề 67 câu của Sinh học kỳ 2 L7Chú ý nếu tích vào “Includes questions from subcategories too” sẽ thêm vào trong danh sách (bên dưới) các câu hỏi của các categories con." HBox.hgrow="ALWAYS">
          <HBox.margin>
             <Insets left="5.0" />
+         </HBox.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="subQuesContent" ellipsisString="" maxWidth="1500.0" prefHeight="22.0" text="Người dùng sẽ có thể chọn ra số lượng câu hỏi muốn thêm vào, các câu này lấy từ ngân hàng đề 67" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets left="8.0" />
          </HBox.margin>
       </Label>
       <Label>
@@ -54,7 +63,7 @@
             <Insets left="10.0" right="10.0" />
          </HBox.margin>
       </Label>
-      <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: #fff;" text="1.00">
+      <Label alignment="CENTER" contentDisplay="RIGHT" minWidth="60.0" prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: #fff;" text="1.00">
          <graphic>
             <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="15" wrappingWidth="1.0" />
          </graphic>
@@ -67,6 +76,6 @@
       </Label>
    </children>
    <padding>
-      <Insets left="15.0" right="10.0" />
+      <Insets left="15.0" right="5.0" />
    </padding>
 </HBox>

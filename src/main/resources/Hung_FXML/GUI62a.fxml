@@ -98,7 +98,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of marks: 0.00" textAlignment="RIGHT" wrappingWidth="156.63244104385376">
+                              <Text fx:id="totalOfMark" strokeType="OUTSIDE" strokeWidth="0.0" text="Total of marks: 0.00" textAlignment="RIGHT" wrappingWidth="156.63244104385376">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>

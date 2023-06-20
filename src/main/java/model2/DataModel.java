@@ -2,6 +2,7 @@ package model2;
 
 import model.DBInteract;
 
+import java.util.List;
 import java.util.Map;
 
 public class DataModel {
@@ -9,7 +10,7 @@ public class DataModel {
 
     private Integer number;
 
-    private Map<Integer, Integer> userAnswer;
+    private Map<Integer, List<Integer>> userAnswer;
 
     private DBInteract dbInteract;
 
@@ -32,11 +33,11 @@ public class DataModel {
         return number;
     }
 
-    public void setUserAnswer(Map<Integer, Integer> userAnswer) {
+    public void setUserAnswer(Map<Integer, List<Integer>> userAnswer) {
         this.userAnswer = userAnswer;
     }
 
-    public Map<Integer, Integer> getUserAnswer() {
+    public Map<Integer, List<Integer>> getUserAnswer() {
         return userAnswer;
     }
 

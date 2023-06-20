@@ -1,8 +1,8 @@
 package controller.Kien_Controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
-import controller.Ha_Controller.GUI11Controller;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -16,15 +16,17 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Question;
 import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class QuizResultScreenController implements Initializable {
 
@@ -41,10 +43,10 @@ public class QuizResultScreenController implements Initializable {
     private Label grade;
 
     @FXML
-    private Label marks;
+    private Text gradeText;
 
     @FXML
-    private VBox progressContent;
+    private Label marks;
 
     @FXML
     private FlowPane progressPane;
@@ -62,13 +64,22 @@ public class QuizResultScreenController implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
-    private Integer questionQuantity;
-    private Map<Integer, Integer> userAnswer;
+    private DBInteract dbInteract;
+    private List<Question> questionList;
+    private Map<Integer, List<Integer>> userAnswer;
+    private Map<Integer, List<Integer>> correctAnswers;
+
+    public void setQuizName(String quizName) {
+        questionList = dbInteract.getQuestionBelongToQuiz(quizName);
+        addQuestionList();
+        renderNavigation();
+    }
 
     public void setStartedOn(String text) {
         this.startedOn.setText(text);
@@ -86,27 +97,41 @@ public class QuizResultScreenController implements Initializable {
         this.marks.setText(marks);
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(String gradeText, String grade) {
+        this.gradeText.setText(gradeText);
         this.grade.setText(grade);
     }
 
     public void addQuestionList() {
-        for (int i = 0; i < questionQuantity; i++) {
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
                 questionLayoutController.setQuestionNum(i + 1);
-                questionLayoutController.setAddAnswer();
-                if (userAnswer.get(i) != null) {
-                    RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(userAnswer.get(i));
-                    selectedRadio.setSelected(true);
+                questionLayoutController.setQuestion(questionList.get(i));
+                questionLayoutController.setAddAnswer(questionList.get(i));
+                correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
+                if (!userAnswer.get(i).equals(List.of(-1))) {
+                    for (Integer integer : userAnswer.get(i)) {
+                        Node answerNode = questionLayoutController.questionBox.getChildren().get(integer + 1);
+                        if (answerNode instanceof JFXCheckBox selectedCheckBox) {
+                            selectedCheckBox.setSelected(true);
+                            selectedCheckBox.setCheckedColor(Color.GRAY);
+                        } else {
+                            JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
+                            selectedRadio.setSelected(true);
+                            selectedRadio.setSelectedColor(Color.GRAY);
+                        }
+                    }
                 }
-                for (int j= 1;j<=4;++j) {
-                    JFXRadioButton radioButton = (JFXRadioButton) questionLayoutController.questionBox.getChildren().get(j);
-                    radioButton.setDisable(true);
-                    radioButton.setStyle("-fx-opacity: 1;");
-                    radioButton.setSelectedColor(Color.GRAY);
+                if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                    questionLayoutController.setStateQues("Correct Answer");
+                } else questionLayoutController.setStateQues("Wrong Answer");
+                for (int j = 1; j <= questionList.get(i).getOptions().size(); ++j) {
+                    Node option = questionLayoutController.questionBox.getChildren().get(j);
+                    option.setDisable(true);
+                    option.setStyle("-fx-opacity: 1;");
                 }
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
@@ -116,14 +141,16 @@ public class QuizResultScreenController implements Initializable {
     }
 
     public void renderNavigation() {
-        for (int i = 0; i < questionQuantity; i++) {
+        for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionRectangle.fxml"));
             try {
                 Node node1 = fxmlLoader1.load();
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
-                questionRectangleController.setAnswered();
-                scrollToQuestion(i,questionRectangleController);
+                if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                    questionRectangleController.setRightAnswered();
+                } else questionRectangleController.setWrongAnswered();
+                scrollToQuestion(i, questionRectangleController);
                 progressPane.getChildren().add(node1);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,8 +164,8 @@ public class QuizResultScreenController implements Initializable {
             double scrollToY;
             if (i <= 2) scrollToY = quizListContainer.getChildren().get(i).getLayoutY();
             else scrollToY = quizListContainer.getChildren().get(i + 1).getLayoutY();
-            if (i > 0.5 * questionQuantity) {
-                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + 1D / questionQuantity);
+            if (i > 0.5 * questionList.size()) {
+                scrollPane.setVvalue(scrollToY / quizListContainer.getHeight() + 1D / questionList.size());
             } else
                 scrollPane.setVvalue(scrollToY / quizListContainer.getHeight());
         });
@@ -163,9 +190,8 @@ public class QuizResultScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        questionQuantity = DataModel.getInstance().getNumber();
+        dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = DataModel.getInstance().getUserAnswer();
-        addQuestionList();
-        renderNavigation();
+        correctAnswers = new HashMap<>();
     }
 }

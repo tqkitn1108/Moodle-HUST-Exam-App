@@ -28,7 +28,6 @@ public class TEST5 extends Application {
             for(Question question: quiz.getQuestions()){
                 question.showQ();
             }
-            System.out.println(quiz.getTimeLimit());
         }
 //        List<Category> categories = dbInteract.getAllCategories();
 //        for(Category category : categories){

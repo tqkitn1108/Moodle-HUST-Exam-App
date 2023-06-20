@@ -111,7 +111,7 @@
                                     <Font size="13.0" />
                                  </font>
                                         </Label>
-                                        <TextArea maxWidth="600.0" prefHeight="95.0" prefWidth="420.0" HBox.hgrow="ALWAYS" />
+                                        <TextArea fx:id="description" maxWidth="600.0" prefHeight="95.0" prefWidth="420.0" HBox.hgrow="ALWAYS" />
                                     </children>
                                     <padding>
                                         <Insets top="5.0" />

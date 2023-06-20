@@ -8,10 +8,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model.Question;
+import model2.DataModel;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GUI62aController implements Initializable {
@@ -23,6 +28,8 @@ public class GUI62aController implements Initializable {
     private VBox questionList;
     @FXML
     private Label pencilLabel;
+    @FXML
+    private Text totalOfMark;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
@@ -31,19 +38,37 @@ public class GUI62aController implements Initializable {
         this.screenListener = screenListener;
     }
 
-    public void setTitle(String title) {
-        this.title.setText(title);
+    private DBInteract dbInteract;
+    private List<Question> selectedQuestions;
+    private String quizName;
+
+    public void setTotalOfMark() {
+        this.totalOfMark.setText("Total of marks: " + selectedQuestions.size() + ".00");
+    }
+
+    public void setSelectedQuestions(List<Question> selectedQuestions) {
+        this.selectedQuestions = selectedQuestions;
+    }
+
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
+        this.title.setText("Editing quiz: " + this.quizName);
     }
 
     public void addQuestionToScrollPane() {
         pencilLabel.setText("Page 1");
         pencilLabel.setStyle("-fx-text-fill: #c34d53");
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI64.fxml"));
-            Node node = fxmlLoader.load();
-            questionList.getChildren().add(node);
-        } catch (Exception e) {
-            e.printStackTrace();
+        for(int i = 1; i <= selectedQuestions.size(); ++i) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI64.fxml"));
+                Node node = fxmlLoader.load();
+                QuestionInGUI64Controller questionInGUI64Controller = fxmlLoader.getController();
+                questionInGUI64Controller.setOrder(i);
+                questionInGUI64Controller.setQuestion(selectedQuestions.get(i-1));
+                questionList.getChildren().add(node);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -76,6 +101,9 @@ public class GUI62aController implements Initializable {
     @FXML
     public void saveEditing(ActionEvent event) {
         try {
+            for (Question question : selectedQuestions) {
+                dbInteract.addQuestionToQuiz(quizName,question.getQuestionName());
+            }
             this.headerListener.removeAddress(1);
             this.screenListener.removeTopScreen();
         } catch (Exception e) {
@@ -85,5 +113,6 @@ public class GUI62aController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dbInteract = DataModel.getInstance().getDbInteract();
     }
 }

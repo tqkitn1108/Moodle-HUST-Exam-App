@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+
+
+<ComboBox fx:id="jumpBox" maxWidth="200.0" onAction="#changeScreen" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.JumpBoxController" />

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Quiz;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,13 +17,10 @@ import java.util.ResourceBundle;
 public class CourseNameController implements Initializable {
     @FXML
     private MFXButton quizItem;
-    private Integer timeLimit;
-    public void setQuizItem(String quizName) {
-        this.quizItem.setText(quizName);
-    }
-
-    public void setTimeLimit(Integer timeLimit) {
-        this.timeLimit = timeLimit;
+    private Quiz quiz;
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        this.quizItem.setText(quiz.getQuizName());
     }
 
     private HeaderListener headerListener;
@@ -39,8 +37,7 @@ public class CourseNameController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI61.fxml"));
             Node node = fxmlLoader.load();
             GUI61Controller gui61Controller = fxmlLoader.getController();
-            gui61Controller.setQuizName(quizItem.getText());
-            gui61Controller.setTimeLimit(this.timeLimit);
+            gui61Controller.setQuiz(quiz);
             gui61Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("General");
             this.headerListener.addAddressToBreadcrumbs(quizItem.getText());

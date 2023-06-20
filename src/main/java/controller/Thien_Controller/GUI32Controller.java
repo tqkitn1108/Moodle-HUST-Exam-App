@@ -38,6 +38,8 @@ import java.util.Set;
 public class GUI32Controller implements Initializable {
 
     @FXML
+    private Label pageLabel;
+    @FXML
     private VBox myVBox;
     @FXML
     private VBox addChoiceVBox;
@@ -50,16 +52,6 @@ public class GUI32Controller implements Initializable {
     @FXML
     private ComboBox<String> cateBox;
     @FXML
-    private ComboBox<String> gradeComboBox1;
-    @FXML
-    private ComboBox<String> gradeComboBox2;
-    @FXML
-    private ComboBox<String> gradeComboBox3;
-    @FXML
-    private ComboBox<String> gradeComboBox4;
-    @FXML
-    private ComboBox<String> gradeComboBox5;
-    @FXML
     private Button addChoiceButton;
     @FXML
     Pane pane = new Pane();
@@ -68,24 +60,36 @@ public class GUI32Controller implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
-    private String[] grade = {"None", "100%", "90%", "83,33333%", "80%", "75%", "70%", "66.66667%", "60%", "50%", "40%", "33.33333%",
+    private String[] gradeArray = {"None", "100%", "90%", "83.33333%", "80%", "75%", "70%", "66.66667%", "60%", "50%", "40%", "33.33333%",
             "30%", "25%", "20%", "16.66667%", "14.28571%", "12.5%", "11.11111%", "10%", "5%", "-5%", "-10%", "-11.11111%", "-12.5%",
-            "-14.28571%", "-16.66667%", "-20%", "-25%", "-30%", "-33.33333%", "-40%", "-50%", "-60%", "-66.66667%", "-70%", "-75%", "-80%", "-83,33333%"};
+            "-14.28571%", "-16.66667%", "-20%", "-25%", "-30%", "-33.33333%", "-40%", "-50%", "-60%", "-66.66667%", "-70%", "-75%", "-80%", "-83.33333%"};
 
     private DBInteract dbInteract;
+    private Question question;
+
+    public void setPageLabel(String pageLabel) {
+        this.pageLabel.setText(pageLabel);
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+        setEditingState();
+    }
+
     public void setCateBox(String cateName) {
         List<Category> categories = dbInteract.getAllCategories();
         for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCatTitle()).size();
+            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
             if (quantity == 0) {
-                cateBox.getItems().add(category.getCatTitle());
+                cateBox.getItems().add(category.getCategoryTitle());
             } else {
-                cateBox.getItems().add(category.getCatTitle() + " (" + quantity + ")");
+                cateBox.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
             }
         }
         cateBox.setValue(cateName);
@@ -116,12 +120,12 @@ public class GUI32Controller implements Initializable {
                 images.add(imageView.getImage());
                 Node node1 = node.getParent();
                 while (node1 != null) {
-                    if(node1.getParent().lookup(".grade-box") == null) {
+                    if (node1.getParent().lookup(".grade-box") == null) {
                         node1 = node1.getParent();
                     } else {
                         ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
                         String tmp;
-                        if(gradeBox.getValue() != null && !gradeBox.getValue().equals("None")) {
+                        if (!gradeBox.getValue().equals("None")) {
                             tmp = gradeBox.getValue().replace("%", "");
                         } else tmp = "0";
                         grades.add(Double.parseDouble(tmp));
@@ -203,14 +207,62 @@ public class GUI32Controller implements Initializable {
         return nameWithQuantity;
     }
 
+    public void setEditingState() {
+        this.quesName.setText(question.getQuestionName());
+        this.quesText.setText(question.getQuestionText());
+        this.quesImg.setImage(question.getQuestionImage());
+        Set<Node> nodes = myVBox.lookupAll(".choice-text");
+        List<String> options = question.getOptions();
+        List<Image> images = question.getOptionImages();
+        List<Double> grades = question.getOptionGrades();
+        if(options.size() > 2) {
+            pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            pane.setVisible(true);
+            addChoiceButton.setVisible(false);
+        }
+        int index = 0;
+        for (Node node : nodes) {
+            TextArea textArea = (TextArea) node;
+            if (options.get(index).length() != 0) {
+                textArea.setText(options.get(index));
+                ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
+                imageView.setImage(images.get(index));
+                Node node1 = node.getParent();
+                while (node1 != null) {
+                    if (node1.getParent().lookup(".grade-box") == null) {
+                        node1 = node1.getParent();
+                    } else {
+                        ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
+                        if (grades.get(index) != 0D) {
+                            double grade = grades.get(index);
+                            String tmp;
+                            if (grade == (int) grade) {
+                                tmp = String.format("%d", (int) grade);
+                            } else tmp = String.format("%.5f", grade).replace(",", ".");
+                            tmp += "%";
+                            gradeBox.setValue(tmp);
+                        }
+                        break;
+                    }
+                }
+            }
+            index++;
+            if(index == options.size()) break;
+        }
+    }
+
+    public void setUpGradeBox() {
+        Set<Node> gradeBoxes = myVBox.lookupAll(".grade-box");
+        for (Node node : gradeBoxes) {
+            ComboBox<String> gradeBox = (ComboBox<String>) node;
+            gradeBox.getItems().addAll(gradeArray);
+            gradeBox.getSelectionModel().selectFirst();
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
-        gradeComboBox1.getItems().addAll(grade);
-        gradeComboBox2.getItems().addAll(grade);
-        gradeComboBox3.getItems().addAll(grade);
-        gradeComboBox4.getItems().addAll(grade);
-        gradeComboBox5.getItems().addAll(grade);
+        setUpGradeBox();
         pane.setPrefHeight(0);
         pane.setVisible(false);
         addChoiceButton.setOnAction(actionEvent -> {
