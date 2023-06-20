@@ -12,6 +12,7 @@ public class Question {
     private String questionText;
     private Image questionImage;
     private List<String> options;
+    private List<Character> optionLabels;
     private List<Image> optionImages;
     private List<Double> optionGrades;
 
@@ -35,6 +36,14 @@ public class Question {
         return optionGrades;
     }
 
+    public List<Character> getOptionLabels() {
+        return optionLabels;
+    }
+
+    public void setOptionLabels(List<Character> optionLabels) {
+        this.optionLabels = optionLabels;
+    }
+
     public void setOptionGrades(List<Double> optionGrades) {
         this.optionGrades = optionGrades;
     }
@@ -52,8 +61,8 @@ public class Question {
         List<Double> grades = new ArrayList<>(Collections.nCopies(options.size(),0.0));
         int index = 0;
         while (index < ans.size()) {
-            for (int i=0;i<options.size();i++) {
-                if (options.get(i).indexOf(ans.get(index)) == 0) {
+            for (int i=0;i<optionLabels.size();i++) {
+                if (optionLabels.get(i) == ans.get(index)) {
                     grades.set(i, 100.0 /ans.size());
                     break;
                 }
@@ -79,7 +88,7 @@ public class Question {
         else System.out.println();
         int n = options.size();
         for (int i=0;i<n;i++) {
-            System.out.print(options.get(i));
+            System.out.print(optionLabels.get(i) + ". " + options.get(i));
             if (optionImages.get(i) != null) System.out.println("+ /img " + optionGrades.get(i));
             else System.out.println(" " + optionGrades.get(i));
         }

@@ -10,7 +10,7 @@ public class DBInteract {
 
     private Connection conn;
 
-    public DBInteract() {
+    DBInteract() {
         conn = this.connect();
     }
 
@@ -18,7 +18,7 @@ public class DBInteract {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:src/main/resources/data.db";
+            String url = "jdbc:sqlite:data.db";
             conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("PRAGMA foreign_keys = ON");
@@ -46,8 +46,8 @@ public class DBInteract {
             int n = q.getOptions().size();
             for (int i = 0;i<n;i++) {
                 pstmt.setString(1, q.getQuestionName());
-                pstmt.setString(2, String.valueOf(q.getOptions().get(i).charAt(0)));
-                pstmt.setString(3, q.getOptions().get(i).substring(3));
+                pstmt.setString(2, String.valueOf(q.getOptionLabels().get(i)));
+                pstmt.setString(3, q.getOptions().get(i));
                 pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getOptionImages().get(i)));
                 pstmt.setDouble(5,q.getOptionGrades().get(i));
                 pstmt.executeUpdate();
@@ -105,13 +105,16 @@ public class DBInteract {
             List<String> options = new ArrayList<>();
             List<Image> optionImages = new ArrayList<>();
             List<Double> optionGrades = new ArrayList<>();
+            List<Character> optionLabels = new ArrayList<>();
             while (rs.next()) {
-                options.add(rs.getString(1) + ": " + rs.getString(2));
+                optionLabels.add(rs.getString(1).charAt(0));
+                options.add(rs.getString(2));
                 bytes = rs.getBytes(3);
                 if (bytes != null) optionImages.add(DataInteract.changeBytesToImage(bytes));
                 else optionImages.add(null);
                 optionGrades.add(rs.getDouble(4));
             }
+            q.setOptionLabels(optionLabels);
             q.setOptions(options);
             q.setOptionImages(optionImages);
             q.setOptionGrades(optionGrades);
@@ -356,12 +359,32 @@ public class DBInteract {
         }
     }
 
+    public void editQuestion(String questionName, Question newQuestion) throws Exception {
+        String sql = "SELECT catTitle FROM QUESTION,CATEGORY WHERE QUESTION.catID = CATEGORY.catID AND questionName = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,questionName);
+        ResultSet catRs = pstmt.executeQuery();
+
+        sql = "SELECT quizName FROM QUIZ_QUESTION, QUIZ WHERE QUIZ_QUESTION.quizID = QUIZ.quizID AND questionName = ?";
+        PreparedStatement pstmt2 = conn.prepareStatement(sql);
+        pstmt2.setString(1,questionName);
+        ResultSet quizRs = pstmt2.executeQuery();
+
+        deleteQuestion(questionName);
+
+        catRs.next();
+        insertQuestion(newQuestion, catRs.getString(1));
+        while (quizRs.next()) {
+            addQuestionToQuiz(quizRs.getString(1),newQuestion.getQuestionName());
+        }
+    }
+
     public void treeView(String categoryTitle, int level) {
         for (int i=0;i<level;i++) System.out.print(' ');
         System.out.println(categoryTitle);
         List<Category> subCategories = getSubCategoriesOf(categoryTitle);
         for (Category cat:subCategories) {
-            treeView(cat.getCatTitle(),level+1);
+            treeView(cat.getCategoryTitle(),level+1);
         }
     }
 }
