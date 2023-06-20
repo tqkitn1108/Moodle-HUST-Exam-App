@@ -92,6 +92,7 @@ public class Question {
             if (optionImages.get(i) != null) System.out.println("+ /img " + optionGrades.get(i));
             else System.out.println(" " + optionGrades.get(i));
         }
+
         System.out.println();
     }
 }

@@ -377,6 +377,7 @@ public class DBInteract {
         while (quizRs.next()) {
             addQuestionToQuiz(quizRs.getString(1),newQuestion.getQuestionName());
         }
+
     }
 
     public void treeView(String categoryTitle, int level) {

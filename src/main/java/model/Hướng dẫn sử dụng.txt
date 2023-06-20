@@ -1,6 +1,5 @@
 MAJOR CHANGES: thêm hàm editQuestion, tách options và optionLabels
 
-
 * DBInteract: class dùng để kết nối với database
 gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q vào cate
     + void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle): thêm 1 Category có ID, Title và parent(có thể là null)
