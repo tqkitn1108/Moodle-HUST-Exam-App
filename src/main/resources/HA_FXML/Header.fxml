@@ -174,7 +174,7 @@
                   </HBox>
                   <HBox fx:id="breadcrumbs" prefHeight="31.0">
                      <children>
-                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="Home" textFill="#c53624">
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" styleClass="text-underline" text="Home" textFill="#c53624">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -202,8 +202,11 @@
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
                         </MFXButton>
-                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="THI CUỐI KỲ" textFill="#c53624">
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" styleClass="text-underline" text="THI CUỐI KỲ" textFill="#c53624">
                            <graphic>
                               <Text strokeType="OUTSIDE" text="/">
                                  <font>

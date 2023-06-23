@@ -177,7 +177,7 @@
                   </HBox>
                   <MFXScrollPane fitToHeight="true" fitToWidth="true">
                      <content>
-                        <VBox fx:id="questionList" spacing="2.0" />
+                        <VBox fx:id="questionList" spacing="2.0" styleClass="question-list" />
                      </content></MFXScrollPane>
                </children>
                <BorderPane.margin>

@@ -33,7 +33,8 @@ public class GUI62aController implements Initializable {
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
@@ -48,6 +49,7 @@ public class GUI62aController implements Initializable {
 
     public void setSelectedQuestions(List<Question> selectedQuestions) {
         this.selectedQuestions = selectedQuestions;
+        DataModel.getInstance().setSelectedQuestions(selectedQuestions);
     }
 
     public void setQuizName(String quizName) {
@@ -58,13 +60,13 @@ public class GUI62aController implements Initializable {
     public void addQuestionToScrollPane() {
         pencilLabel.setText("Page 1");
         pencilLabel.setStyle("-fx-text-fill: #c34d53");
-        for(int i = 1; i <= selectedQuestions.size(); ++i) {
+        for (int i = 1; i <= selectedQuestions.size(); ++i) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI64.fxml"));
                 Node node = fxmlLoader.load();
                 QuestionInGUI64Controller questionInGUI64Controller = fxmlLoader.getController();
                 questionInGUI64Controller.setOrder(i);
-                questionInGUI64Controller.setQuestion(selectedQuestions.get(i-1));
+                questionInGUI64Controller.setQuestion(selectedQuestions.get(i - 1));
                 questionList.getChildren().add(node);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -78,6 +80,7 @@ public class GUI62aController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI63.fxml"));
             Node node = fxmlLoader.load();
             GUI63Controller gui63Controller = fxmlLoader.getController();
+            gui63Controller.setQuizName(quizName);
             gui63Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
@@ -102,7 +105,7 @@ public class GUI62aController implements Initializable {
     public void saveEditing(ActionEvent event) {
         try {
             for (Question question : selectedQuestions) {
-                dbInteract.addQuestionToQuiz(quizName,question.getQuestionName());
+                dbInteract.addQuestionToQuiz(quizName, question.getQuestionName());
             }
             this.headerListener.removeAddress(1);
             this.screenListener.removeTopScreen();

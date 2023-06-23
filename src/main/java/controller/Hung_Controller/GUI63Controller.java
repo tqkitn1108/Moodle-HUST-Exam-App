@@ -44,8 +44,14 @@ public class GUI63Controller implements Initializable {
     }
 
     private DBInteract dbInteract;
+    private String quizName;
     private List<Question> selectedQuestions;
     private List<Question> questionsInCategory;
+
+    public void setQuizName(String quizName) {
+        this.quizName = quizName;
+    }
+
     @FXML
     public void closeThisWindow(MouseEvent event) {
         this.screenListener.removeTopScreen();
@@ -74,7 +80,7 @@ public class GUI63Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
-
+            gui62aController.setQuizName(quizName);
             Set<Node> allSelectionBoxes = questionList.lookupAll(".selection-box");
             int index =0;
             for (Node node1 : allSelectionBoxes) {

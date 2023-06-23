@@ -1,6 +1,7 @@
 package model2;
 
 import model.DBInteract;
+import model.Question;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ public class DataModel {
     private Map<Integer, List<Integer>> userAnswer;
 
     private DBInteract dbInteract;
+
+    private List<Question> selectedQuestions;
 
     private DataModel() {
 
@@ -47,5 +50,13 @@ public class DataModel {
 
     public DBInteract getDbInteract() {
         return dbInteract;
+    }
+
+    public void setSelectedQuestions(List<Question> selectedQuestions) {
+        this.selectedQuestions = selectedQuestions;
+    }
+
+    public List<Question> getSelectedQuestions() {
+        return selectedQuestions;
     }
 }

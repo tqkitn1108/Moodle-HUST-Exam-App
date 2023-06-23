@@ -2,18 +2,19 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="28.0" prefHeight="26.0" prefWidth="600.0" style="-fx-background-color: #e6e6e6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI64Controller">
+<HBox alignment="CENTER_LEFT" maxHeight="28.0" minHeight="28.0" prefHeight="28.0" prefWidth="600.0" style="-fx-background-color: #e6e6e6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI64Controller">
    <children>
       <Label>
          <graphic>
             <FontAwesomeIconView fill="#3ea7e5" glyphName="ARROWS" size="14.00" />
          </graphic>
       </Label>
-      <Label fx:id="order" alignment="CENTER" minWidth="25.0" prefHeight="18.0" prefWidth="25.0" style="-fx-background-color: #d3d3d3;" text="1">
+      <Label fx:id="order" alignment="CENTER" minWidth="25.0" prefHeight="18.0" prefWidth="25.0" style="-fx-background-color: #d3d3d3;" styleClass="order-num" text="1">
          <HBox.margin>
             <Insets left="5.0" />
          </HBox.margin>
@@ -55,9 +56,12 @@
             <Insets left="20.0" />
          </HBox.margin>
       </Label>
-      <Label>
+      <Label styleClass="question-delete">
          <graphic>
-            <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" size="15" text="" />
+            <FontAwesomeIconView fill="#1ba7e5" glyphName="TRASH_ALT" onMouseClicked="#deleteThisQuestion" size="15" text="">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></FontAwesomeIconView>
          </graphic>
          <HBox.margin>
             <Insets left="10.0" right="10.0" />

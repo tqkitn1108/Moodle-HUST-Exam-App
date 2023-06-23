@@ -91,7 +91,8 @@
     -fx-faint-focus-color: -fx-control-inner-background;
 }
 
-.close-img-icon:hover {
+.close-img-icon:hover,
+.question-delete:hover {
     -fx-fill: #c22e35;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
@@ -126,5 +127,10 @@
 /******** CSS GUI7 *********/
 
 .finish-btn:hover {
+    -fx-underline: true;
+}
+
+/******** CSS Text-Btn *********/
+.text-underline: hover {
     -fx-underline: true;
 }
