@@ -18,6 +18,7 @@ public class DataInteract {
     public static void main(String[] args) {
         try {
             List<Question> questions = getQuestionsFromTxtFile("C:/Users/ACER/Desktop/New Text Document (3).txt");
+//            for (Question q:questions) q.showQ();
 //            //Category cat = new Category("1", "testQuiz");
             DBInteract dbi = new DBInteract();
 //            dbi.createNewCategory(null, "1","testCat");
@@ -88,6 +89,14 @@ public class DataInteract {
                 a.remove(x);
             }
 
+            Question q = questions.get(0);
+            q.setQuestionName("16");
+            List<Character> ans = new ArrayList<>();
+            ans.add('A');
+            ans.add('B');
+            q.setAns(ans);
+            dbi.editQuestion("1",q);
+
 
         }
         catch (Exception e) {
@@ -138,21 +147,26 @@ public class DataInteract {
 
                 List<String> options = new ArrayList<String>();
                 List<Image> optionImages = new ArrayList<>();
+                List<Character> optionLabels = new ArrayList<>();
                 while (++i < n && (lines.get(i) != null && !lines.get(i).equals(""))) {
-                    options.add(lines.get(i));
+                    options.add(lines.get(i).substring(3));
+                    optionLabels.add(lines.get(i).charAt(0));
                     optionImages.add(images.get(i));
                 }
                 q.setOptionImages(optionImages);
                 List<Character> ans = new ArrayList<>();
                 String s = options.get(options.size() - 1);
-                for (int j = 8; j < s.length(); j++) {
+                for (int j = 5; j < s.length(); j++) {
                     if (s.charAt(j) != ' ' && s.charAt(j) != ',') ans.add(s.charAt(j));
                 }
                 options.remove(options.size() - 1);
+                optionLabels.remove(optionLabels.size()-1);
+                q.setOptionLabels(optionLabels);
                 q.setOptions(options);
                 q.setAns(ans);
 
                 questions.add(q);
+
 
             } while (i < n);
             return questions;
@@ -184,18 +198,22 @@ public class DataInteract {
 
                 List<String> options = new ArrayList<String>();
                 List<Image> optionImages = new ArrayList<>();
+                List<Character> optionLabels = new ArrayList<>();
                 while (++i < n && (lines.get(i) != null && !lines.get(i).equals(""))) {
-                    options.add(lines.get(i));
+                    options.add(lines.get(i).substring(3));
+                    optionLabels.add(lines.get(i).charAt(0));
                     optionImages.add(null);
                 }
                 q.setOptionImages(optionImages);
 
                 List<Character> ans = new ArrayList<>();
                 String s = options.get(options.size() - 1);
-                for (int j = 8; j < s.length(); j++) {
+                for (int j = 5; j < s.length(); j++) {
                     if (s.charAt(j) != ' ' && s.charAt(j) != ',') ans.add(s.charAt(j));
                 }
                 options.remove(options.size() - 1);
+                optionLabels.remove(optionLabels.size()-1);
+                q.setOptionLabels(optionLabels);
                 q.setOptions(options);
                 q.setAns(ans);
 

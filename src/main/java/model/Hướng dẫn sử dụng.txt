@@ -1,6 +1,4 @@
-MAJOR CHANGES: Question hiện tại đã không còn ans, thay vào đó là List<Double> optionGrades
-Cũng đã cập nhật các database và các hàm liên quan để phù hợp với thay đổi
-
+MAJOR CHANGES: thêm hàm editQuestion, tách options và optionLabels
 
 * DBInteract: class dùng để kết nối với database
 gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q vào cate
@@ -18,6 +16,7 @@ gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q 
 	+ void deleteQuiz(String quizName)
 	+ List<Quiz> getAllQuizzes()
 	+ List<Category> getAllNonSubCategories(): lấy tất cả các cate ko phải cate con
+	+ void editQuestion(String questionName, Question newQuestion): thay thế Question cũ bằng Question mới
 
 - Lưu ý khi dùng DBInteract: phải khởi tạo đối tượng trước khi dùng hàm
 	+ DBInteract dbi = new DBInteract();
@@ -39,6 +38,7 @@ gồm	+ String questionName
 	+ String questionText
 	+ Image questionImage
 	+ List<String> options
+	+ List<String> optionLabels
 	+ List<Image> optionImages
 	+ List<Double> optionGrades
 	+ void setAns(List<Character> ans) dùng để set grade lúc đọc câu hỏi từ file, nma chắc cmay k dùng đâu
