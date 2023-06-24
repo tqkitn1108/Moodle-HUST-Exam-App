@@ -285,15 +285,18 @@ public class DataInteract {
             }
             String s = lines.get(i-1);
             if (s.indexOf("ANSWER: ") != 0) {
-                throw new ReadFileException("Error at line " + i + ": Question does not have answer");
+                throw new ReadFileException("Error at line " + i + ": Wrong answer format");
             }
+            boolean check = false;
             for (int j = 8; j < s.length(); j++) {
                 if (s.charAt(j) != ' ' && s.charAt(j) != ',') {
                     if (!optionLabels.contains(s.charAt(j))) {
                         throw new ReadFileException("Error at line " + i + ": Answer not in options");
                     }
+                    check = true;
                 }
             }
+            if (!check) throw new ReadFileException("Error at line " + i + ": Question does not have answer");
         } while (i < n);
     }
 }
