@@ -33,7 +33,7 @@ public class DBInteract {
 
         try {
             String sql = "INSERT INTO QUESTION(questionName,questionText,catID,questionImage,mediaPath) VALUES(?,?," +
-                    "(SELECT catID FROM CATEGORY WHERE catTitle = ?),?)";
+                    "(SELECT catID FROM CATEGORY WHERE catTitle = ?),?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQuestionName());
             pstmt.setString(2, q.getQuestionText());
@@ -250,7 +250,6 @@ public class DBInteract {
     public void deleteQuestion(String questionName) throws Exception {
         String sql = "DELETE FROM OPTIONS WHERE questionName = '" + questionName + "'";
         try {
-            //Connection conn = this.connect();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
 
