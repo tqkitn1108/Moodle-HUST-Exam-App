@@ -1,4 +1,4 @@
-MAJOR CHANGES: thêm hàm editQuestion, tách options và optionLabels
+MAJOR CHANGES: thêm mediaPath cho Question để chứa đường dẫn tới video/gif, thêm removeQuestionFromQuiz, sửa checkAikenFormat
 
 * DBInteract: class dùng để kết nối với database
 gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q vào cate
@@ -17,6 +17,7 @@ gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q 
 	+ List<Quiz> getAllQuizzes()
 	+ List<Category> getAllNonSubCategories(): lấy tất cả các cate ko phải cate con
 	+ void editQuestion(String questionName, Question newQuestion): thay thế Question cũ bằng Question mới
+	+ void removeQuestionFromQuiz(String quizName, String questionName): loại bỏ Question khỏi Quiz
 
 - Lưu ý khi dùng DBInteract: phải khởi tạo đối tượng trước khi dùng hàm
 	+ DBInteract dbi = new DBInteract();
@@ -37,13 +38,17 @@ gồm + List<Question> getQuestionsFromDocFile(String path): lấy Question từ
 gồm	+ String questionName
 	+ String questionText
 	+ Image questionImage
-	+ List<String> options
 	+ List<String> optionLabels
-	+ List<Image> optionImages
-	+ List<Double> optionGrades
+	+ List<Choice> choices
 	+ void setAns(List<Character> ans) dùng để set grade lúc đọc câu hỏi từ file, nma chắc cmay k dùng đâu
 	+ Boolean isMultipleAnswer(): kiểm tra Ques có phải là nhiều đáp án đúng hay ko
 tương tác bằng getter và setter
+
+
+* Choice: class đại diện cho 1 lựa chọn của câu hỏi
+    + String option: phần text
+    + Image optionImage: phần ảnh
+    + Double optionGrade: điểm tính theo %
 
 
 * Category:

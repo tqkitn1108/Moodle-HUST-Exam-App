@@ -14,6 +14,11 @@ public class Question {
     private Image questionImage;
     private List<Character> optionLabels;
     private List<Choice> choices;
+    private String mediaPath;
+
+    public String getMediaPath() {
+        return mediaPath;
+    }
 
     public List<Choice> getChoices() {
         return choices;
@@ -33,6 +38,10 @@ public class Question {
 
     public List<Character> getOptionLabels() {
         return optionLabels;
+    }
+
+    public void setMediaPath(String mediaPath) {
+        this.mediaPath = mediaPath;
     }
 
     public void setOptionLabels(List<Character> optionLabels) {

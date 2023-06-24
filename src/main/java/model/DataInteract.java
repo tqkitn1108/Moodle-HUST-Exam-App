@@ -265,7 +265,7 @@ public class DataInteract {
 
             List<Character> optionLabels = new ArrayList<>();
             while (++i < n && !lines.get(i).equals("null") && !lines.get(i).equals("")) {
-                if (lines.get(i).indexOf(". ") != 1 && lines.get(i).indexOf(": ") != 6) {
+                if (lines.get(i).indexOf(". ") != 1 && lines.get(i).indexOf("ANSWER: ") != 0) {
                     throw new ReadFileException("Error at line " + (i+1) + ": Answer label error");
                     //return false;
                 }
@@ -275,6 +275,14 @@ public class DataInteract {
                 throw new ReadFileException("Error at line " + i + ": Not enough option");
             }
             optionLabels.remove(optionLabels.size()-1);
+            int m = optionLabels.size();
+            for (int j = 1;j < m;j++) {
+                Character c = optionLabels.get(j);
+                for (int k = 0;k<j;k++) {
+                    if (optionLabels.get(k) == c) throw new ReadFileException("Error at line " + (i+j-m)
+                            + ": Option label as same as line " + (i+k-m));
+                }
+            }
             String s = lines.get(i-1);
             if (s.indexOf("ANSWER: ") != 0) {
                 throw new ReadFileException("Error at line " + i + ": Question does not have answer");
