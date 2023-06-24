@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DBInteract {
 
-    private Connection conn;
+    private final Connection conn;
 
     public DBInteract() {
         conn = this.connect();
@@ -32,13 +32,14 @@ public class DBInteract {
     public void insertQuestion(Question q, String categoryTitle) {
 
         try {
-            String sql = "INSERT INTO QUESTION(questionName,questionText,catID,questionImage) VALUES(?,?," +
+            String sql = "INSERT INTO QUESTION(questionName,questionText,catID,questionImage,mediaPath) VALUES(?,?," +
                     "(SELECT catID FROM CATEGORY WHERE catTitle = ?),?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQuestionName());
             pstmt.setString(2, q.getQuestionText());
             pstmt.setString(3, categoryTitle);
             pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getQuestionImage()));
+            pstmt.setString(5,q.getMediaPath());
             pstmt.executeUpdate();
 
             sql = "INSERT INTO OPTIONS(questionName, optionLabel, optionData, optionImage, optionGrade) VALUES(?,?,?,?,?)";
@@ -82,7 +83,7 @@ public class DBInteract {
     }
 
     public Question getQuestion(String questionName) {
-        String sql = "SELECT questionText,questionImage FROM QUESTION WHERE questionName = ?";
+        String sql = "SELECT questionText,questionImage,mediaPath FROM QUESTION WHERE questionName = ?";
         Question q = new Question();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -95,6 +96,7 @@ public class DBInteract {
                 bytes = rs.getBytes(2);
                 if (bytes != null) q.setQuestionImage(DataInteract.changeBytesToImage(bytes));
                 else q.setQuestionImage(null);
+                q.setMediaPath(rs.getString(3));
             } else return null;
 
             sql = "SELECT optionLabel, optionData, optionImage, optionGrade FROM OPTIONS WHERE questionName = ?";
@@ -325,7 +327,6 @@ public class DBInteract {
     public List<Quiz> getAllQuizzes() {
         String sql = "SELECT quizName, quizDescription, timeLimit FROM QUIZ";
         try {
-            Connection conn = this.connect();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             List<Quiz> quizzes = new ArrayList<>();
@@ -379,6 +380,15 @@ public class DBInteract {
             addQuestionToQuiz(quizRs.getString(1), newQuestion.getQuestionName());
         }
 
+    }
+
+    public void removeQuestionFromQuiz(String quizName, String questionName) throws Exception{
+        String sql = "DELETE FROM QUIZ_QUESTION WHERE quizID IN (SELECT quizID FROM QUIZ WHERE quizName = ?) " +
+                "AND questionName = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,quizName);
+        pstmt.setString(2,questionName);
+        pstmt.executeUpdate();
     }
 
     public void treeView(String categoryTitle, int level) {
