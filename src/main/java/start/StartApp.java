@@ -18,7 +18,7 @@ public class StartApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/HA_FXML/GUI11.fxml")));
         Stage stage = new Stage();
-        stage.setTitle("Hệ thống ôn thi trắc nghiệm");
+        stage.setTitle("PHẦN MỀM TẠO NGÂN HÀNG ĐỀ VÀ TỔ CHỨC THI TRẮC NGHIỆM");
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setMaximized(true);

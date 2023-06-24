@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Question;
@@ -21,15 +18,17 @@ public class QuestionInGUI31Controller implements Initializable {
     private Label quesContent;
     private Question question;
     private String cateNameWithNum;
-    private Integer number;
+
+    private QuestionInGUI31Controller questionInGUI31Controller;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
     public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
-    public void setNumber(Integer number) {
-        this.number = number;
+
+    public void setQuestionInGUI31Controller(QuestionInGUI31Controller questionInGUI31Controller) {
+        this.questionInGUI31Controller = questionInGUI31Controller;
     }
     public void setQuestion(Question question) {
         this.question = question;
@@ -49,7 +48,7 @@ public class QuestionInGUI31Controller implements Initializable {
             gui32Controller.setPageLabel("Editing Multiple choice question");
             gui32Controller.setCateBox(cateNameWithNum);
             gui32Controller.setQuestion(this.question);
-            gui32Controller.setNumber(number);
+            gui32Controller.setQuestionInGUI31Controllers(questionInGUI31Controller);
             gui32Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.hideMenuButton();
             this.headerListener.hideEditingBtn();

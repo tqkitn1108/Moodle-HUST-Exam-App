@@ -23,18 +23,18 @@ public class TEST5 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         DBInteract dbInteract = new DBInteract();
-//        List<Quiz> quizzes = dbInteract.getAllQuizzes();
-//        for(Quiz quiz : quizzes){
-//            for(Question question: quiz.getQuestions()){
-//                question.showQ();
-//            }
-//        }
-        List<Category> categories = dbInteract.getAllCategories();
-        for(Category category : categories){
-            for(Question question : category.getQuestions()){
+        List<Quiz> quizzes = dbInteract.getAllQuizzes();
+        for(Quiz quiz : quizzes){
+            for(Question question: quiz.getQuestions()){
                 question.showQ();
             }
         }
+//        List<Category> categories = dbInteract.getAllCategories();
+//        for(Category category : categories){
+//            for(Question question : category.getQuestions()){
+//                question.showQ();
+//            }
+//        }
     }
 
     public static void main(String[] args) {

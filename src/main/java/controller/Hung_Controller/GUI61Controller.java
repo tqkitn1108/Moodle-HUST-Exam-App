@@ -65,7 +65,7 @@ public class GUI61Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
-            gui62aController.setQuizName(this.quizName.getText());
+            gui62aController.setQuiz(quiz);
             gui62aController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("Edit quiz");
             this.screenListener.changeScreen(node);

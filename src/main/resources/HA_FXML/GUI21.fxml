@@ -57,7 +57,7 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
-                              <Label minHeight="22.0" prefHeight="22.0" text="The default category for questions shared in context">
+                              <Label fx:id="desLabel" minHeight="22.0" prefHeight="22.0" text="The default category for questions shared in context">
                                  <VBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
@@ -70,7 +70,7 @@
                                     <Insets left="10.0" top="10.0" />
                                  </VBox.margin>
                                  <children>
-                                    <JFXCheckBox fx:id="checkBox" checkedColor="#009fe5" selected="true" text="Also show questions from subcategories" />
+                                    <JFXCheckBox fx:id="checkBox" checkedColor="#009fe5" onAction="#showQuesFromSubCate" selected="true" text="Also show questions from subcategories" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="144.0" minHeight="33.0" prefHeight="33.0" prefWidth="588.0">

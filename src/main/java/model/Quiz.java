@@ -6,6 +6,11 @@ public class Quiz {
     private String quizName;
     private String quizDescription;
     private int timeLimit;
+    private boolean shuffle;
+
+    public boolean isShuffle() {
+        return shuffle;
+    }
 
     public String getQuizName() {
         return quizName;
@@ -29,6 +34,10 @@ public class Quiz {
 
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
     }
 
     public List<Question> getQuestions() {

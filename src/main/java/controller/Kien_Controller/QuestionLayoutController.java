@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Question;
+import model.Quiz;
 import model2.Choice;
 
 import java.net.URL;
@@ -25,7 +26,10 @@ public class QuestionLayoutController implements Initializable {
     public VBox questionBox;
     public Label questionContent;
     public AnchorPane correctAnswerPane;
+
+    private Quiz quiz;
     private List<Integer> correctAnswerList;
+    private List<Choice> choices;
     private ToggleGroup choiceGroup;
     private Set<JFXCheckBox> checkBoxGroup;
 
@@ -39,6 +43,10 @@ public class QuestionLayoutController implements Initializable {
 
     public List<Integer> getCorrectAnswerList() {
         return correctAnswerList;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     public void setQuestion(Question question) {
@@ -63,7 +71,10 @@ public class QuestionLayoutController implements Initializable {
     public void setChoices(Question question) {
         choiceGroup = new ToggleGroup();
         correctAnswerList = new ArrayList<>();
-        List<Choice> choices = question.getChoices();
+        choices = question.getChoices();
+        if(quiz.isShuffle()) {
+            Collections.shuffle(choices);
+        }
         List<Character> labels = question.getOptionLabels();
         if (!question.isMultipleAnswer()) {
             for (int i = 0; i < choices.size(); ++i) {
@@ -99,7 +110,7 @@ public class QuestionLayoutController implements Initializable {
             AnchorPane.setLeftAnchor(node, 0.0);
             AnchorPane.setRightAnchor(node, 0.0);
             CorrectAnsController correctAnsController = fxmlLoader.getController();
-            correctAnsController.setAnswerList(question.getOptionLabels(), question.getChoices(), correctAnswerList);
+            correctAnsController.setAnswerList(question.getOptionLabels(), choices, correctAnswerList);
             correctAnswerPane.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();

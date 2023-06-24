@@ -74,12 +74,11 @@ public class GUI32Controller implements Initializable {
 
     private DBInteract dbInteract;
     private Question question;
-    private List<QuestionInGUI31Controller> questionInGUI31Controllers;
+    private QuestionInGUI31Controller questionInGUI31Controllers;
     private boolean flag = false;
-    private Integer number;
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setQuestionInGUI31Controllers(QuestionInGUI31Controller questionInGUI31Controllers) {
+        this.questionInGUI31Controllers = questionInGUI31Controllers;
     }
 
     public void setPageLabel(String pageLabel) {
@@ -176,7 +175,7 @@ public class GUI32Controller implements Initializable {
                 }
             } else
                 dbInteract.editQuestion(quesName.getText(), newQuestion);
-            questionInGUI31Controllers.get(number - 1).setQuestion(newQuestion);
+            questionInGUI31Controllers.setQuestion(newQuestion);
             flag = true;
         }
     }
@@ -315,7 +314,6 @@ public class GUI32Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
-        questionInGUI31Controllers = DataModel.getInstance().getQuestionInGUI31Controllers();
         setUpGradeBox();
         pane.setPrefHeight(0);
         pane.setVisible(false);
