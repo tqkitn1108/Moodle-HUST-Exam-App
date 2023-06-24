@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.image.Image;
+import model2.Choice;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -36,20 +37,20 @@ public class DBInteract {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, q.getQuestionName());
             pstmt.setString(2, q.getQuestionText());
-            pstmt.setString(3,categoryTitle);
-            pstmt.setBytes(4,DataInteract.changeImageToBytes(q.getQuestionImage()));
+            pstmt.setString(3, categoryTitle);
+            pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getQuestionImage()));
             pstmt.executeUpdate();
 
             sql = "INSERT INTO OPTIONS(questionName, optionLabel, optionData, optionImage, optionGrade) VALUES(?,?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
 
-            int n = q.getOptions().size();
-            for (int i = 0;i<n;i++) {
+            int n = q.getChoices().size();
+            for (int i = 0; i < n; i++) {
                 pstmt.setString(1, q.getQuestionName());
                 pstmt.setString(2, String.valueOf(q.getOptionLabels().get(i)));
-                pstmt.setString(3, q.getOptions().get(i));
-                pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getOptionImages().get(i)));
-                pstmt.setDouble(5,q.getOptionGrades().get(i));
+                pstmt.setString(3, q.getChoices().get(i).getOption());
+                pstmt.setBytes(4, DataInteract.changeImageToBytes(q.getChoices().get(i).getOptionImage()));
+                pstmt.setDouble(5, q.getChoices().get(i).getOptionGrade());
                 pstmt.executeUpdate();
             }
 
@@ -63,20 +64,19 @@ public class DBInteract {
         try {
             String sql = "INSERT INTO CATEGORY(catID, catTitle) VALUES(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,categoryID);
-            pstmt.setString(2,categoryTitle);
+            pstmt.setString(1, categoryID);
+            pstmt.setString(2, categoryTitle);
             pstmt.executeUpdate();
 
             if (parentCategoryTitle == null) return;
             sql = "INSERT INTO SUBCAT(catID, subCatID) VALUES((SELECT catID FROM CATEGORY WHERE catTitle = ?),?)";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,parentCategoryTitle);
-            pstmt.setString(2,categoryID);
+            pstmt.setString(1, parentCategoryTitle);
+            pstmt.setString(2, categoryID);
             pstmt.executeUpdate();
 
             pstmt.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -86,21 +86,20 @@ public class DBInteract {
         Question q = new Question();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,questionName);
+            pstmt.setString(1, questionName);
             ResultSet rs = pstmt.executeQuery();
             byte[] bytes;
             if (rs.next()) {
                 q.setQuestionName(questionName);
                 q.setQuestionText(rs.getString(1));
                 bytes = rs.getBytes(2);
-                if(bytes != null) q.setQuestionImage(DataInteract.changeBytesToImage(bytes));
+                if (bytes != null) q.setQuestionImage(DataInteract.changeBytesToImage(bytes));
                 else q.setQuestionImage(null);
-            }
-            else return null;
+            } else return null;
 
             sql = "SELECT optionLabel, optionData, optionImage, optionGrade FROM OPTIONS WHERE questionName = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,questionName);
+            pstmt.setString(1, questionName);
             rs = pstmt.executeQuery();
             List<String> options = new ArrayList<>();
             List<Image> optionImages = new ArrayList<>();
@@ -115,9 +114,15 @@ public class DBInteract {
                 optionGrades.add(rs.getDouble(4));
             }
             q.setOptionLabels(optionLabels);
-            q.setOptions(options);
-            q.setOptionImages(optionImages);
-            q.setOptionGrades(optionGrades);
+            List<Choice> choices = new ArrayList<>();
+            for (int i = 0; i < options.size(); ++i) {
+                Choice choice = new Choice();
+                choice.setOption(options.get(i));
+                choice.setOptionImage(optionImages.get(i));
+                choice.setOptionGrade(optionGrades.get(i));
+                choices.add(choice);
+            }
+            q.setChoices(choices);
 
             return q;
 
@@ -138,8 +143,7 @@ public class DBInteract {
                 Question q = getQuestion(rs.getString(1));
                 questions.add(q);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return questions;
@@ -152,11 +156,10 @@ public class DBInteract {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                cats.add(new Category(rs.getString(1),rs.getString(2)));
+                cats.add(new Category(rs.getString(1), rs.getString(2)));
             }
             stmt.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return cats;
@@ -167,18 +170,17 @@ public class DBInteract {
                 "AND parent.catTitle = ? AND sub.catID = subCatID";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,categoryTitle);
+            pstmt.setString(1, categoryTitle);
             ResultSet rs = pstmt.executeQuery();
 
             List<Category> categories = new ArrayList<>();
             while (rs.next()) {
-                Category cat = new Category(rs.getString(1),rs.getString(2));
+                Category cat = new Category(rs.getString(1), rs.getString(2));
                 categories.add(cat);
             }
             pstmt.close();
             return categories;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -188,12 +190,11 @@ public class DBInteract {
         String sql = "SELECT catID FROM CATEGORY WHERE catTitle = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,categoryTitle);
+            pstmt.setString(1, categoryTitle);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) return rs.getString(1);
             else return null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -217,8 +218,8 @@ public class DBInteract {
         String sql = "INSERT INTO QUIZ_QUESTION(quizID, questionName) VALUES((SELECT quizID FROM QUIZ WHERE quizName = ?),?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,quizName);
-            pstmt.setString(2,questionName);
+            pstmt.setString(1, quizName);
+            pstmt.setString(2, questionName);
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
@@ -231,7 +232,7 @@ public class DBInteract {
         List<Question> questions = new ArrayList<>();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,quizName);
+            pstmt.setString(1, quizName);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 questions.add(getQuestion(rs.getString(1)));
@@ -307,12 +308,12 @@ public class DBInteract {
         try {
             Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,quizName);
+            pstmt.setString(1, quizName);
             pstmt.executeUpdate();
 
             sql = "DELETE FROM QUIZ WHERE quizName = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,quizName);
+            pstmt.setString(1, quizName);
             pstmt.executeUpdate();
 
             conn.close();
@@ -349,7 +350,7 @@ public class DBInteract {
             ResultSet rs = stmt.executeQuery(sql);
             List<Category> categories = new ArrayList<>();
             while (rs.next()) {
-                categories.add(new Category(rs.getString(1),rs.getString(2)));
+                categories.add(new Category(rs.getString(1), rs.getString(2)));
             }
             stmt.close();
             return categories;
@@ -362,12 +363,12 @@ public class DBInteract {
     public void editQuestion(String questionName, Question newQuestion) throws Exception {
         String sql = "SELECT catTitle FROM QUESTION,CATEGORY WHERE QUESTION.catID = CATEGORY.catID AND questionName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1,questionName);
+        pstmt.setString(1, questionName);
         ResultSet catRs = pstmt.executeQuery();
 
         sql = "SELECT quizName FROM QUIZ_QUESTION, QUIZ WHERE QUIZ_QUESTION.quizID = QUIZ.quizID AND questionName = ?";
         PreparedStatement pstmt2 = conn.prepareStatement(sql);
-        pstmt2.setString(1,questionName);
+        pstmt2.setString(1, questionName);
         ResultSet quizRs = pstmt2.executeQuery();
 
         deleteQuestion(questionName);
@@ -375,17 +376,17 @@ public class DBInteract {
         catRs.next();
         insertQuestion(newQuestion, catRs.getString(1));
         while (quizRs.next()) {
-            addQuestionToQuiz(quizRs.getString(1),newQuestion.getQuestionName());
+            addQuestionToQuiz(quizRs.getString(1), newQuestion.getQuestionName());
         }
 
     }
 
     public void treeView(String categoryTitle, int level) {
-        for (int i=0;i<level;i++) System.out.print(' ');
+        for (int i = 0; i < level; i++) System.out.print(' ');
         System.out.println(categoryTitle);
         List<Category> subCategories = getSubCategoriesOf(categoryTitle);
-        for (Category cat:subCategories) {
-            treeView(cat.getCategoryTitle(),level+1);
+        for (Category cat : subCategories) {
+            treeView(cat.getCategoryTitle(), level + 1);
         }
     }
 }

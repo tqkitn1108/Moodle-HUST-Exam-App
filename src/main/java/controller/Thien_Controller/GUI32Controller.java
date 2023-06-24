@@ -155,15 +155,20 @@ public class GUI32Controller implements Initializable {
             alert.showAndWait();
             flag = false;
         } else {
+            List<Choice> choices = new ArrayList<>();
+            for (int i = 0; i < count; ++i) {
+                Choice choice = new Choice();
+                choice.setOption(options.get(i));
+                choice.setOptionImage(images.get(i));
+                choice.setOptionGrade(grades.get(i));
+                choices.add(choice);
+            }
             Question newQuestion = new Question();
             newQuestion.setQuestionName(quesName.getText());
             newQuestion.setQuestionText(quesText.getText());
             newQuestion.setQuestionImage(quesImg.getImage());
             newQuestion.setOptionLabels(labels);
-            newQuestion.setOptions(options);
-            newQuestion.setOptionGrades(grades);
-            newQuestion.setOptionImages(images);
-            newQuestion.setChoices(options, images, grades);
+            newQuestion.setChoices(choices);
             if (question == null || !quesName.getText().equals(question.getQuestionName())) {
                 dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
                 if (question != null) {
@@ -255,10 +260,8 @@ public class GUI32Controller implements Initializable {
             this.closeIcon.setVisible(true);
         }
         Set<Node> nodes = myVBox.lookupAll(".choice-text");
-        List<String> options = question.getOptions();
-        List<Image> images = question.getOptionImages();
-        List<Double> grades = question.getOptionGrades();
-        if (options.size() > 2) {
+        List<Choice> choices = question.getChoices();
+        if (choices.size() > 2) {
             pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
             pane.setVisible(true);
             addChoiceButton.setVisible(false);
@@ -266,14 +269,14 @@ public class GUI32Controller implements Initializable {
         int index = 0;
         for (Node node : nodes) {
             TextArea textArea = (TextArea) node;
-            if (options.get(index).length() != 0) {
-                textArea.setText(options.get(index));
+            if (choices.get(index).getOption().length() != 0) {
+                textArea.setText(choices.get(index).getOption());
                 ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
-                if (images.get(index) != null) {
-                    imageView.setImage(images.get(index));
+                if (choices.get(index).getOptionImage() != null) {
+                    imageView.setImage(choices.get(index).getOptionImage());
                     imageView.setFitHeight(300);
                     imageView.setFitWidth(300);
-                    Node closeIcon = (Node) imageView.getParent().lookup(".close-img-icon");
+                    Node closeIcon = imageView.getParent().lookup(".close-img-icon");
                     closeIcon.setVisible(true);
                 }
                 Node node1 = node.getParent();
@@ -282,8 +285,8 @@ public class GUI32Controller implements Initializable {
                         node1 = node1.getParent();
                     } else {
                         ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
-                        if (grades.get(index) != 0D) {
-                            double grade = grades.get(index);
+                        if (choices.get(index).getOptionGrade() != 0D) {
+                            double grade = choices.get(index).getOptionGrade();
                             String tmp;
                             if (grade == (int) grade) {
                                 tmp = String.format("%d", (int) grade);
@@ -296,7 +299,7 @@ public class GUI32Controller implements Initializable {
                 }
             }
             index++;
-            if (index == options.size()) break;
+            if (index == choices.size()) break;
         }
     }
 

@@ -152,7 +152,7 @@ public class QuizScreenController implements Initializable {
                 correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
                 userAnswer.put(i, List.of(-1));
                 toggleGroups[i] = questionLayoutController.getChoiceGroup();
-                int size = questionList.get(i).getOptions().size();
+                int size = questionList.get(i).getChoices().size();
                 if (questionList.get(i).isMultipleAnswer()) {
                     Set<JFXCheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
                     AtomicInteger count = new AtomicInteger(); // Vai trò như biến đếm count (count đếm số lượng checkbox được select)

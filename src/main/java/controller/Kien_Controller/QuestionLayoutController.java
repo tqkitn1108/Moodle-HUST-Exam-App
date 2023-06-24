@@ -63,31 +63,28 @@ public class QuestionLayoutController implements Initializable {
     public void setChoices(Question question) {
         choiceGroup = new ToggleGroup();
         correctAnswerList = new ArrayList<>();
-        List<String> options = question.getOptions();
-        List<Image> images = question.getOptionImages();
-        List<Double> grades = question.getOptionGrades();
         List<Choice> choices = question.getChoices();
         List<Character> labels = question.getOptionLabels();
         if (!question.isMultipleAnswer()) {
-            for (int i = 0; i < options.size(); ++i) {
+            for (int i = 0; i < choices.size(); ++i) {
                 JFXRadioButton choice = new JFXRadioButton();
-                choice.setText(labels.get(i) + ". " + options.get(i));
-                choice.setGraphic(new ImageView(images.get(i)));
+                choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
+                choice.setGraphic(new ImageView(choices.get(i).getOptionImage()));
                 choice.setToggleGroup(choiceGroup);
                 choice.setWrapText(true);
-                if (grades.get(i) > 0) correctAnswerList.add(i);
+                if (choices.get(i).getOptionGrade() > 0) correctAnswerList.add(i);
                 VBox.setMargin(choice, new Insets(6, 20, 0, 20));
                 questionBox.getChildren().add(choice);
             }
         } else {
             checkBoxGroup = new LinkedHashSet<>();
-            for (int i = 0; i < options.size(); ++i) {
+            for (int i = 0; i < choices.size(); ++i) {
                 JFXCheckBox choice = new JFXCheckBox();
-                choice.setText(labels.get(i) + ". " + options.get(i));
-                choice.setGraphic(new ImageView(images.get(i)));
+                choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
+                choice.setGraphic(new ImageView(choices.get(i).getOptionImage()));
                 checkBoxGroup.add(choice);
                 choice.setWrapText(true);
-                if (grades.get(i) > 0) correctAnswerList.add(i);
+                if (choices.get(i).getOptionGrade() > 0) correctAnswerList.add(i);
                 VBox.setMargin(choice, new Insets(6, 20, 0, 20));
                 questionBox.getChildren().add(choice);
             }
@@ -102,7 +99,7 @@ public class QuestionLayoutController implements Initializable {
             AnchorPane.setLeftAnchor(node, 0.0);
             AnchorPane.setRightAnchor(node, 0.0);
             CorrectAnsController correctAnsController = fxmlLoader.getController();
-            correctAnsController.setAnswerList(question.getOptionLabels(), question.getOptions(), correctAnswerList);
+            correctAnsController.setAnswerList(question.getOptionLabels(), question.getChoices(), correctAnswerList);
             correctAnswerPane.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();

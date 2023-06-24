@@ -2,6 +2,7 @@ package model;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import model2.Choice;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFPicture;
@@ -153,7 +154,7 @@ public class DataInteract {
                     optionLabels.add(lines.get(i).charAt(0));
                     optionImages.add(images.get(i));
                 }
-                q.setOptionImages(optionImages);
+
                 List<Character> ans = new ArrayList<>();
                 String s = options.get(options.size() - 1);
                 for (int j = 5; j < s.length(); j++) {
@@ -162,7 +163,14 @@ public class DataInteract {
                 options.remove(options.size() - 1);
                 optionLabels.remove(optionLabels.size()-1);
                 q.setOptionLabels(optionLabels);
-                q.setOptions(options);
+                List<Choice> choices = new ArrayList<>();
+                for (int j = 0; j < options.size(); ++j) {
+                    Choice choice = new Choice();
+                    choice.setOption(options.get(i));
+                    choice.setOptionImage(optionImages.get(i));
+                    choices.add(choice);
+                }
+                q.setChoices(choices);
                 q.setAns(ans);
 
                 questions.add(q);
@@ -204,7 +212,6 @@ public class DataInteract {
                     optionLabels.add(lines.get(i).charAt(0));
                     optionImages.add(null);
                 }
-                q.setOptionImages(optionImages);
 
                 List<Character> ans = new ArrayList<>();
                 String s = options.get(options.size() - 1);
@@ -214,7 +221,14 @@ public class DataInteract {
                 options.remove(options.size() - 1);
                 optionLabels.remove(optionLabels.size()-1);
                 q.setOptionLabels(optionLabels);
-                q.setOptions(options);
+                List<Choice> choices = new ArrayList<>();
+                for (int j = 0; j < options.size(); ++j) {
+                    Choice choice = new Choice();
+                    choice.setOption(options.get(i));
+                    choice.setOptionImage(optionImages.get(i));
+                    choices.add(choice);
+                }
+                q.setChoices(choices);
                 q.setAns(ans);
 
                 questions.add(q);

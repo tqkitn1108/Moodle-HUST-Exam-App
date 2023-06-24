@@ -9,33 +9,32 @@ public class Choice {
 
     public Choice() {
     }
-
     public Choice(String options, Image optionImages, Double optionGrades) {
         this.options = options;
         this.optionImages = optionImages;
         this.optionGrades = optionGrades;
     }
-    public String getOptions() {
+    public String getOption() {
         return options;
     }
 
-    public Image getOptionImages() {
+    public Image getOptionImage() {
         return optionImages;
     }
 
-    public Double getOptionGrades() {
+    public Double getOptionGrade() {
         return optionGrades;
     }
 
-    public void setOptions(String options) {
+    public void setOption(String options) {
         this.options = options;
     }
 
-    public void setOptionImages(Image optionImages) {
+    public void setOptionImage(Image optionImages) {
         this.optionImages = optionImages;
     }
 
-    public void setOptionGrades(Double optionGrades) {
+    public void setOptionGrade(Double optionGrades) {
         this.optionGrades = optionGrades;
     }
 }

@@ -128,7 +128,7 @@ public class QuizResultScreenController implements Initializable {
                 if (userAnswer.get(i).equals(correctAnswers.get(i))) {
                     questionLayoutController.setStateQues("Correct Answer");
                 } else questionLayoutController.setStateQues("Wrong Answer");
-                for (int j = 1; j <= questionList.get(i).getOptions().size(); ++j) {
+                for (int j = 1; j <= questionList.get(i).getChoices().size(); ++j) {
                     Node option = questionLayoutController.questionBox.getChildren().get(j);
                     option.setDisable(true);
                     option.setStyle("-fx-opacity: 1;");

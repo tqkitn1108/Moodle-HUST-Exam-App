@@ -12,10 +12,7 @@ public class Question {
     private String questionName;
     private String questionText;
     private Image questionImage;
-    private List<String> options;
     private List<Character> optionLabels;
-    private List<Image> optionImages;
-    private List<Double> optionGrades;
     private List<Choice> choices;
 
     public List<Choice> getChoices() {
@@ -30,20 +27,8 @@ public class Question {
         return questionText;
     }
 
-    public List<String> getOptions() {
-        return options;
-    }
-
     public Image getQuestionImage() {
         return questionImage;
-    }
-
-    public List<Image> getOptionImages() {
-        return optionImages;
-    }
-
-    public List<Double> getOptionGrades() {
-        return optionGrades;
     }
 
     public List<Character> getOptionLabels() {
@@ -54,10 +39,6 @@ public class Question {
         this.optionLabels = optionLabels;
     }
 
-    public void setOptionGrades(List<Double> optionGrades) {
-        this.optionGrades = optionGrades;
-    }
-
     public void setQuestionName(String questionName) {
         this.questionName = questionName;
     }
@@ -66,12 +47,8 @@ public class Question {
         this.questionText = questionText;
     }
 
-    public void setOptions(List<String> options) {
-        this.options = options;
-    }
-
     public void setAns(List<Character> ans) {
-        List<Double> grades = new ArrayList<>(Collections.nCopies(options.size(), 0.0));
+        List<Double> grades = new ArrayList<>(Collections.nCopies(choices.size(), 0.0));
         int index = 0;
         while (index < ans.size()) {
             for (int i = 0; i < optionLabels.size(); i++) {
@@ -82,31 +59,23 @@ public class Question {
             }
             index++;
         }
-        optionGrades = grades;
+        for (int i = 0; i < choices.size(); ++i) {
+            choices.get(i).setOptionGrade(grades.get(i));
+        }
     }
 
     public void setQuestionImage(Image img) {
         questionImage = img;
     }
 
-    public void setOptionImages(List<Image> images) {
-        optionImages = images;
-    }
-
-    public void setChoices(List<String> options, List<Image> images, List<Double> grades) {
-        Choice choice = new Choice();
-        for (int i = 0; i < options.size(); ++i) {
-            choice.setOptions(options.get(i));
-            choice.setOptionImages(images.get(i));
-            choice.setOptionGrades(grades.get(i));
-        }
-        choices.add(choice);
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
     }
 
     public Boolean isMultipleAnswer() {
         int count = 0;
-        for (Double d : optionGrades) {
-            if (d > 0) count++;
+        for (Choice choice : choices) {
+            if (choice.getOptionGrade() > 0) count++;
         }
         return (count > 1);
     }
@@ -115,11 +84,11 @@ public class Question {
         System.out.print(questionText);
         if (questionImage != null) System.out.println("+ /image");
         else System.out.println();
-        int n = options.size();
+        int n = choices.size();
         for (int i = 0; i < n; i++) {
-            System.out.print(optionLabels.get(i) + ". " + options.get(i));
-            if (optionImages.get(i) != null) System.out.println("+ /img " + optionGrades.get(i));
-            else System.out.println(" " + optionGrades.get(i));
+            System.out.print(optionLabels.get(i) + ". " + choices.get(i).getOption());
+            if (choices.get(i).getOptionImage() != null) System.out.println("+ /img " + choices.get(i).getOptionGrade());
+            else System.out.println(" " + choices.get(i).getOptionGrade());
         }
 
         System.out.println();
