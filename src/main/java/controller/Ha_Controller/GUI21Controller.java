@@ -67,6 +67,7 @@ public class GUI21Controller implements Initializable {
     private ComboBox<String> categoryBox3;
 
     private DBInteract dbInteract;
+    List<QuestionInGUI31Controller> questionInGUI31Controllers;
     private File file, file2;
 
     private HeaderListener headerListener;
@@ -210,21 +211,30 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void selectItemInCateBox(ActionEvent event) throws IOException {
+    public void selectItemInCateBox(ActionEvent event) throws Exception {
         questionList.getChildren().clear();
         columnTittle.setVisible(true);
         int i = 1;
+        questionInGUI31Controllers = new ArrayList<>();
         for (Question question : dbInteract.getQuestionsBelongToCategory(getCateName(categoryBox1.getValue()))) {
+//            Đoạn code này để xóa các question không có choice
+//            if(question.getOptions().size() == 0) {
+//                dbInteract.deleteQuestion(question.getQuestionName());
+//                continue;
+//            }
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
             Node node = fxmlLoader.load();
             QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
             questionInGUI31Controller.setQuestion(question);
             questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
             questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
+            questionInGUI31Controller.setNumber(i);
+            questionInGUI31Controllers.add(questionInGUI31Controller);
             if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
             i++;
             questionList.getChildren().add(node);
         }
+        DataModel.getInstance().setQuestionInGUI31Controllers(questionInGUI31Controllers);
     }
 
     @FXML

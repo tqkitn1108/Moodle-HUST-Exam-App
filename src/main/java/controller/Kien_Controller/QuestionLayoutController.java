@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.Question;
+import model2.Choice;
 
 import java.net.URL;
 import java.util.*;
@@ -65,10 +66,12 @@ public class QuestionLayoutController implements Initializable {
         List<String> options = question.getOptions();
         List<Image> images = question.getOptionImages();
         List<Double> grades = question.getOptionGrades();
+        List<Choice> choices = question.getChoices();
+        List<Character> labels = question.getOptionLabels();
         if (!question.isMultipleAnswer()) {
             for (int i = 0; i < options.size(); ++i) {
                 JFXRadioButton choice = new JFXRadioButton();
-                choice.setText(options.get(i));
+                choice.setText(labels.get(i) + ". " + options.get(i));
                 choice.setGraphic(new ImageView(images.get(i)));
                 choice.setToggleGroup(choiceGroup);
                 choice.setWrapText(true);
@@ -80,7 +83,7 @@ public class QuestionLayoutController implements Initializable {
             checkBoxGroup = new LinkedHashSet<>();
             for (int i = 0; i < options.size(); ++i) {
                 JFXCheckBox choice = new JFXCheckBox();
-                choice.setText(options.get(i));
+                choice.setText(labels.get(i) + ". " + options.get(i));
                 choice.setGraphic(new ImageView(images.get(i)));
                 checkBoxGroup.add(choice);
                 choice.setWrapText(true);
@@ -99,7 +102,7 @@ public class QuestionLayoutController implements Initializable {
             AnchorPane.setLeftAnchor(node, 0.0);
             AnchorPane.setRightAnchor(node, 0.0);
             CorrectAnsController correctAnsController = fxmlLoader.getController();
-            correctAnsController.setAnswerList(question.getOptions(), correctAnswerList);
+            correctAnsController.setAnswerList(question.getOptionLabels(), question.getOptions(), correctAnswerList);
             correctAnswerPane.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();

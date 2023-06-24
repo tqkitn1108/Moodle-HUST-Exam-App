@@ -1,5 +1,6 @@
 package model2;
 
+import controller.Thien_Controller.QuestionInGUI31Controller;
 import model.DBInteract;
 import model.Question;
 
@@ -16,6 +17,8 @@ public class DataModel {
     private DBInteract dbInteract;
 
     private List<Question> selectedQuestions;
+
+    private List<QuestionInGUI31Controller> questionInGUI31Controllers;
 
     private DataModel() {
 
@@ -58,5 +61,13 @@ public class DataModel {
 
     public List<Question> getSelectedQuestions() {
         return selectedQuestions;
+    }
+
+    public void setQuestionInGUI31Controllers(List<QuestionInGUI31Controller> questionInGUI31Controllers) {
+        this.questionInGUI31Controllers = questionInGUI31Controllers;
+    }
+
+    public List<QuestionInGUI31Controller> getQuestionInGUI31Controllers() {
+        return questionInGUI31Controllers;
     }
 }

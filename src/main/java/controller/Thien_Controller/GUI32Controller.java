@@ -5,6 +5,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -26,6 +27,7 @@ import listeners.NewScreenListener;
 import model.Category;
 import model.DBInteract;
 import model.Question;
+import model2.Choice;
 import model2.DataModel;
 
 import java.io.File;
@@ -72,6 +74,13 @@ public class GUI32Controller implements Initializable {
 
     private DBInteract dbInteract;
     private Question question;
+    private List<QuestionInGUI31Controller> questionInGUI31Controllers;
+    private boolean flag = false;
+    private Integer number;
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
     public void setPageLabel(String pageLabel) {
         this.pageLabel.setText(pageLabel);
@@ -99,23 +108,27 @@ public class GUI32Controller implements Initializable {
     public void closeThisWindow(ActionEvent event) {
         try {
             this.headerListener.showMenuButton();
-            this.screenListener.removeTopScreen();
             this.headerListener.removeAddress(3);
+            this.screenListener.removeTopScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void saveChange(ActionEvent event) {
+    public void saveAndContinueEditing(ActionEvent event) throws Exception {
+        int count = 0; // Đếm số lượng đáp án được điền, nếu nhỏ hơn 2 thì báo lỗi
         Set<Node> nodes = myVBox.lookupAll(".choice-text");
         List<Image> images = new ArrayList<>();
+        List<Character> labels = new ArrayList<>();
         List<String> options = new ArrayList<>();
         List<Double> grades = new ArrayList<>();
         for (Node node : nodes) {
             TextArea textArea = (TextArea) node;
             if (textArea.getText().length() != 0) {
+                count++;
                 options.add(textArea.getText());
+                labels.add((char) (count + 64));
                 ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
                 images.add(imageView.getImage());
                 Node node1 = node.getParent();
@@ -134,15 +147,40 @@ public class GUI32Controller implements Initializable {
                 }
             }
         }
-        Question newQuestion = new Question();
-        newQuestion.setQuestionName(quesName.getText());
-        newQuestion.setQuestionText(quesText.getText());
-        newQuestion.setQuestionImage(quesImg.getImage());
-        newQuestion.setOptions(options);
-        newQuestion.setOptionGrades(grades);
-        newQuestion.setOptionImages(images);
-        dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
-        closeThisWindow(event);
+        if (count < 2) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("The number of choices must be greater than or equal to 2");
+            alert.showAndWait();
+            flag = false;
+        } else {
+            Question newQuestion = new Question();
+            newQuestion.setQuestionName(quesName.getText());
+            newQuestion.setQuestionText(quesText.getText());
+            newQuestion.setQuestionImage(quesImg.getImage());
+            newQuestion.setOptionLabels(labels);
+            newQuestion.setOptions(options);
+            newQuestion.setOptionGrades(grades);
+            newQuestion.setOptionImages(images);
+            newQuestion.setChoices(options, images, grades);
+            if (question == null || !quesName.getText().equals(question.getQuestionName())) {
+                dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
+                if (question != null) {
+                    dbInteract.deleteQuestion(question.getQuestionName());
+                }
+            } else
+                dbInteract.editQuestion(quesName.getText(), newQuestion);
+            questionInGUI31Controllers.get(number - 1).setQuestion(newQuestion);
+            flag = true;
+        }
+    }
+
+    @FXML
+    public void saveChange(ActionEvent event) throws Exception {
+        saveAndContinueEditing(event);
+        if (flag)
+            closeThisWindow(event);
     }
 
     @FXML
@@ -210,12 +248,17 @@ public class GUI32Controller implements Initializable {
     public void setEditingState() {
         this.quesName.setText(question.getQuestionName());
         this.quesText.setText(question.getQuestionText());
-        this.quesImg.setImage(question.getQuestionImage());
+        if (question.getQuestionImage() != null) {
+            this.quesImg.setImage(question.getQuestionImage());
+            this.quesImg.setFitWidth(300);
+            this.quesImg.setFitHeight(300);
+            this.closeIcon.setVisible(true);
+        }
         Set<Node> nodes = myVBox.lookupAll(".choice-text");
         List<String> options = question.getOptions();
         List<Image> images = question.getOptionImages();
         List<Double> grades = question.getOptionGrades();
-        if(options.size() > 2) {
+        if (options.size() > 2) {
             pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
             pane.setVisible(true);
             addChoiceButton.setVisible(false);
@@ -226,7 +269,13 @@ public class GUI32Controller implements Initializable {
             if (options.get(index).length() != 0) {
                 textArea.setText(options.get(index));
                 ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
-                imageView.setImage(images.get(index));
+                if (images.get(index) != null) {
+                    imageView.setImage(images.get(index));
+                    imageView.setFitHeight(300);
+                    imageView.setFitWidth(300);
+                    Node closeIcon = (Node) imageView.getParent().lookup(".close-img-icon");
+                    closeIcon.setVisible(true);
+                }
                 Node node1 = node.getParent();
                 while (node1 != null) {
                     if (node1.getParent().lookup(".grade-box") == null) {
@@ -247,7 +296,7 @@ public class GUI32Controller implements Initializable {
                 }
             }
             index++;
-            if(index == options.size()) break;
+            if (index == options.size()) break;
         }
     }
 
@@ -259,9 +308,11 @@ public class GUI32Controller implements Initializable {
             gradeBox.getSelectionModel().selectFirst();
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
+        questionInGUI31Controllers = DataModel.getInstance().getQuestionInGUI31Controllers();
         setUpGradeBox();
         pane.setPrefHeight(0);
         pane.setVisible(false);

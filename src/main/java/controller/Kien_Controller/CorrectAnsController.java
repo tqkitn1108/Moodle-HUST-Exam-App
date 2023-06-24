@@ -13,9 +13,9 @@ public class CorrectAnsController implements Initializable {
     @FXML
     private VBox answerList;
 
-    public void setAnswerList(List<String> options, List<Integer> correctAnswerList) {
-        for(Integer i : correctAnswerList) {
-            Label answerLabel = new Label(options.get(i));
+    public void setAnswerList(List<Character> labels, List<String> options, List<Integer> correctAnswerList) {
+        for (Integer i : correctAnswerList) {
+            Label answerLabel = new Label(labels.get(i) + ". " + options.get(i));
             answerLabel.setStyle("-fx-text-fill: #bb7b2e");
             answerLabel.setWrapText(true);
             answerList.getChildren().add(answerLabel);

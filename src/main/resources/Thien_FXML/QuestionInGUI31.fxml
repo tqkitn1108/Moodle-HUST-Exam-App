@@ -28,7 +28,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <Button mnemonicParsing="false" onAction="#openEditting" prefHeight="25.0" prefWidth="39.0" style="-fx-background-color: transparent;" text="Edit" textFill="#179ee5">
+      <Button mnemonicParsing="false" onAction="#openEditing" prefHeight="25.0" prefWidth="39.0" style="-fx-background-color: transparent;" text="Edit" textFill="#179ee5">
          <HBox.margin>
             <Insets />
          </HBox.margin>
