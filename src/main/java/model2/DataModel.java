@@ -1,6 +1,8 @@
 package model2;
 
+import controller.Kien_Controller.QuestionLayoutController;
 import controller.Thien_Controller.QuestionInGUI31Controller;
+import javafx.scene.Node;
 import model.DBInteract;
 import model.Question;
 
@@ -18,7 +20,8 @@ public class DataModel {
 
     private List<Question> selectedQuestions;
 
-    private List<QuestionInGUI31Controller> questionInGUI31Controllers;
+    private List<Node> questionNodes;
+    private List<QuestionLayoutController> questionLayoutControllers;
 
     private DataModel() {
 
@@ -63,11 +66,19 @@ public class DataModel {
         return selectedQuestions;
     }
 
-    public void setQuestionInGUI31Controllers(List<QuestionInGUI31Controller> questionInGUI31Controllers) {
-        this.questionInGUI31Controllers = questionInGUI31Controllers;
+    public void setQuestionNodes(List<Node> nodes) {
+        this.questionNodes = nodes;
     }
 
-    public List<QuestionInGUI31Controller> getQuestionInGUI31Controllers() {
-        return questionInGUI31Controllers;
+    public List<Node> getQuestionNodes() {
+        return questionNodes;
+    }
+
+    public void setQuestionLayoutControllers(List<QuestionLayoutController> questionLayoutControllers) {
+        this.questionLayoutControllers = questionLayoutControllers;
+    }
+
+    public List<QuestionLayoutController> getQuestionLayoutControllers() {
+        return questionLayoutControllers;
     }
 }

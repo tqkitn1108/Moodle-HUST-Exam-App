@@ -131,7 +131,7 @@
                            <children>
                               <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <JFXCheckBox checkedColor="#009fe5" selected="true" text="Shuffle">
+                                    <JFXCheckBox fx:id="shuffleBtn" checkedColor="#009fe5" text="Shuffle">
                                        <HBox.margin>
                                           <Insets right="5.0" />
                                        </HBox.margin>

@@ -63,8 +63,6 @@ public class QuizScreenController implements Initializable {
     private FlowPane progressPane;
     @FXML
     private VBox quizListContainer;
-
-    private DBInteract dbInteract;
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private Quiz quiz;
@@ -142,11 +140,14 @@ public class QuizScreenController implements Initializable {
     public void addQuestionList() {
         startTime = LocalDateTime.now();
         toggleGroups = new ToggleGroup[questionList.size()];
+        List<Node> questionNodes = new ArrayList<Node>();
+        List<QuestionLayoutController> questionLayoutControllers = new ArrayList<QuestionLayoutController>();
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
+                questionLayoutController.setQuiz(quiz);
                 questionLayoutController.setQuestionNum(i + 1);
                 questionLayoutController.setQuestion(questionList.get(i));
                 correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
@@ -216,11 +217,15 @@ public class QuizScreenController implements Initializable {
                             }
                     );
                 }
+                questionLayoutControllers.add(questionLayoutController);
+                questionNodes.add(node);
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        DataModel.getInstance().setQuestionNodes(questionNodes);
+        DataModel.getInstance().setQuestionLayoutControllers(questionLayoutControllers);
     }
 
     public void renderNavigation() {
@@ -419,7 +424,6 @@ public class QuizScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i, i>=0
         correctAnswers = new HashMap<>();
         numberOfRightAnswers = 0;

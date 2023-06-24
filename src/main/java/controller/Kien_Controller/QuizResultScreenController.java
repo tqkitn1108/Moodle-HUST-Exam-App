@@ -4,20 +4,15 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
@@ -72,6 +67,9 @@ public class QuizResultScreenController implements Initializable {
 
     private DBInteract dbInteract;
     private List<Question> questionList;
+
+    private List<Node> questionNodes;
+    private List<QuestionLayoutController> questionLayoutControllers;
     private Map<Integer, List<Integer>> userAnswer;
     private Map<Integer, List<Integer>> correctAnswers;
 
@@ -103,40 +101,31 @@ public class QuizResultScreenController implements Initializable {
     }
 
     public void addQuestionList() {
-        for (int i = 0; i < questionList.size(); i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
-            try {
-                Node node = fxmlLoader.load();
-                QuestionLayoutController questionLayoutController = fxmlLoader.getController();
-                questionLayoutController.setQuestionNum(i + 1);
-                questionLayoutController.setQuestion(questionList.get(i));
-                questionLayoutController.setAddAnswer(questionList.get(i));
-                correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
-                if (!userAnswer.get(i).equals(List.of(-1))) {
-                    for (Integer integer : userAnswer.get(i)) {
-                        Node answerNode = questionLayoutController.questionBox.getChildren().get(integer + 1);
-                        if (answerNode instanceof JFXCheckBox selectedCheckBox) {
-                            selectedCheckBox.setSelected(true);
-                            selectedCheckBox.setCheckedColor(Color.GRAY);
-                        } else {
-                            JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
-                            selectedRadio.setSelected(true);
-                            selectedRadio.setSelectedColor(Color.GRAY);
-                        }
+        for (int i = 0; i < questionNodes.size(); ++i) {
+            questionLayoutControllers.get(i).setAddAnswer(questionList.get(i));
+            correctAnswers.put(i, questionLayoutControllers.get(i).getCorrectAnswerList());
+            if (!userAnswer.get(i).equals(List.of(-1))) {
+                for (Integer integer : userAnswer.get(i)) {
+                    Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer + 1);
+                    if (answerNode instanceof JFXCheckBox selectedCheckBox) {
+                        selectedCheckBox.setSelected(true);
+                        selectedCheckBox.setCheckedColor(Color.GRAY);
+                    } else {
+                        JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
+                        selectedRadio.setSelected(true);
+                        selectedRadio.setSelectedColor(Color.GRAY);
                     }
                 }
-                if (userAnswer.get(i).equals(correctAnswers.get(i))) {
-                    questionLayoutController.setStateQues("Correct Answer");
-                } else questionLayoutController.setStateQues("Wrong Answer");
-                for (int j = 1; j <= questionList.get(i).getChoices().size(); ++j) {
-                    Node option = questionLayoutController.questionBox.getChildren().get(j);
-                    option.setDisable(true);
-                    option.setStyle("-fx-opacity: 1;");
-                }
-                quizListContainer.getChildren().add(node);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+            if (userAnswer.get(i).equals(correctAnswers.get(i))) {
+                questionLayoutControllers.get(i).setStateQues("Correct Answer");
+            } else questionLayoutControllers.get(i).setStateQues("Wrong Answer");
+            for (int j = 1; j <= questionList.get(i).getChoices().size(); ++j) {
+                Node option = questionLayoutControllers.get(i).questionBox.getChildren().get(j);
+                option.setDisable(true);
+                option.setStyle("-fx-opacity: 1;");
+            }
+            quizListContainer.getChildren().add(questionNodes.get(i));
         }
     }
 
@@ -193,5 +182,7 @@ public class QuizResultScreenController implements Initializable {
         dbInteract = DataModel.getInstance().getDbInteract();
         userAnswer = DataModel.getInstance().getUserAnswer();
         correctAnswers = new HashMap<>();
+        questionNodes = DataModel.getInstance().getQuestionNodes();
+        questionLayoutControllers = DataModel.getInstance().getQuestionLayoutControllers();
     }
 }

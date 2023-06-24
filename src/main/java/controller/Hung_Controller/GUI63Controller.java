@@ -1,8 +1,6 @@
 package controller.Hung_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
-import controller.Thien_Controller.GUI32Controller;
-import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +16,7 @@ import listeners.NewScreenListener;
 import model.Category;
 import model.DBInteract;
 import model.Question;
+import model.Quiz;
 import model2.DataModel;
 
 import java.io.IOException;
@@ -44,12 +43,12 @@ public class GUI63Controller implements Initializable {
     }
 
     private DBInteract dbInteract;
-    private String quizName;
+    private Quiz quiz;
     private List<Question> selectedQuestions;
     private List<Question> questionsInCategory;
 
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     @FXML
@@ -80,7 +79,7 @@ public class GUI63Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
             Node node = fxmlLoader.load();
             GUI62aController gui62aController = fxmlLoader.getController();
-            gui62aController.setQuizName(quizName);
+            gui62aController.setQuiz(quiz);
             Set<Node> allSelectionBoxes = questionList.lookupAll(".selection-box");
             int index =0;
             for (Node node1 : allSelectionBoxes) {

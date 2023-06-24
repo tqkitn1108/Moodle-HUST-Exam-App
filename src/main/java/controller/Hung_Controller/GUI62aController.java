@@ -1,5 +1,6 @@
 package controller.Hung_Controller;
 
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Question;
+import model.Quiz;
 import model2.DataModel;
 
 import java.net.URL;
@@ -30,6 +32,8 @@ public class GUI62aController implements Initializable {
     private Label pencilLabel;
     @FXML
     private Text totalOfMark;
+    @FXML
+    private JFXCheckBox shuffleBtn;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
@@ -41,7 +45,7 @@ public class GUI62aController implements Initializable {
 
     private DBInteract dbInteract;
     private List<Question> selectedQuestions;
-    private String quizName;
+    private Quiz quiz;
 
     public void setTotalOfMark() {
         this.totalOfMark.setText("Total of marks: " + selectedQuestions.size() + ".00");
@@ -52,9 +56,10 @@ public class GUI62aController implements Initializable {
         DataModel.getInstance().setSelectedQuestions(selectedQuestions);
     }
 
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
-        this.title.setText("Editing quiz: " + this.quizName);
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+        this.title.setText("Editing quiz: " + quiz.getQuizName());
+        shuffleBtn.setSelected(quiz.isShuffle());
     }
 
     public void addQuestionToScrollPane() {
@@ -80,7 +85,7 @@ public class GUI62aController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI63.fxml"));
             Node node = fxmlLoader.load();
             GUI63Controller gui63Controller = fxmlLoader.getController();
-            gui63Controller.setQuizName(quizName);
+            gui63Controller.setQuiz(quiz);
             gui63Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
@@ -104,9 +109,12 @@ public class GUI62aController implements Initializable {
     @FXML
     public void saveEditing(ActionEvent event) {
         try {
-            for (Question question : selectedQuestions) {
-                dbInteract.addQuestionToQuiz(quizName, question.getQuestionName());
+            if (selectedQuestions != null) {
+                for (Question question : selectedQuestions) {
+                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName());
+                }
             }
+            quiz.setShuffle(shuffleBtn.isSelected());
             this.headerListener.removeAddress(1);
             this.screenListener.removeTopScreen();
         } catch (Exception e) {
