@@ -111,7 +111,7 @@ public class GUI62aController implements Initializable {
         try {
             if (selectedQuestions != null) {
                 for (Question question : selectedQuestions) {
-                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName());
+                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName(),null);
                 }
             }
             quiz.setShuffle(shuffleBtn.isSelected());

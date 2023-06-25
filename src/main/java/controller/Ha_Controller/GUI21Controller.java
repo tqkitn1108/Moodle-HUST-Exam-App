@@ -168,7 +168,7 @@ public class GUI21Controller implements Initializable {
                     quesList = DataInteract.getQuestionsFromDocFile(file.getPath());
                 }
                 for (Question q : quesList) {
-                    dbInteract.insertQuestion(q, cateTitle);
+                    dbInteract.insertQuestion(q, cateTitle, null);
                 }
 
                 changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox1);

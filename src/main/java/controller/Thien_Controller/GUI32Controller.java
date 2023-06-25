@@ -169,11 +169,11 @@ public class GUI32Controller implements Initializable {
             newQuestion.setOptionLabels(labels);
             newQuestion.setChoices(choices);
             if (question == null || !quesName.getText().equals(question.getQuestionName())) {
-                dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
                 if (question != null) {
-                    dbInteract.deleteQuestion(question.getQuestionName());
+                    dbInteract.deleteQuestion(question.getQuestionName(),null);
                     questionInGUI31Controller.setQuestion(newQuestion);
                 }
+                dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()),null);
             } else {
                 dbInteract.editQuestion(quesName.getText(), newQuestion);
                 questionInGUI31Controller.setQuestion(newQuestion);
