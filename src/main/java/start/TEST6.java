@@ -25,10 +25,6 @@ public class TEST6 extends Application {
         for (Category category : dbInteract.getAllNonSubCategories()) {
             backtracking(category, 0);
         }
-
-        comboBox.setOnAction(event -> {
-            String tmp = comboBox.getValue().trim();
-        });
         // Hiển thị ComboBox và TreeView trên giao diện người dùng
         VBox root = new VBox(10);
         root.getChildren().add(comboBox);

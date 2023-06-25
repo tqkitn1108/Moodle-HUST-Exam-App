@@ -35,7 +35,6 @@ public class TEST5 extends Application {
                 question.showQ();
             }
         }
-
     }
 
     public static void main(String[] args) {

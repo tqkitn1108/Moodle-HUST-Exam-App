@@ -29,6 +29,7 @@ import model.DBInteract;
 import model.Question;
 import model2.Choice;
 import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.io.File;
 import java.net.URL;
@@ -107,6 +108,7 @@ public class GUI32Controller implements Initializable {
     public void closeThisWindow(ActionEvent event) {
         try {
             this.headerListener.showMenuButton();
+            this.headerListener.showEditingBtn();
             this.headerListener.removeAddress(3);
             this.screenListener.removeTopScreen();
         } catch (Exception e) {
@@ -147,11 +149,7 @@ public class GUI32Controller implements Initializable {
             }
         }
         if (count < 2) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("The number of choices must be greater than or equal to 2");
-            alert.showAndWait();
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "The number of choices must be greater than or equal to 2");
             flag = false;
         } else {
             List<Choice> choices = new ArrayList<>();
@@ -169,8 +167,10 @@ public class GUI32Controller implements Initializable {
             newQuestion.setOptionLabels(labels);
             newQuestion.setChoices(choices);
             if (question == null || !quesName.getText().equals(question.getQuestionName())) {
-                dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
-                if (question != null) {
+                dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()));
+                if (question == null) {
+
+                } else {
                     dbInteract.deleteQuestion(question.getQuestionName());
                     questionInGUI31Controller.setQuestion(newQuestion);
                 }
@@ -213,11 +213,7 @@ public class GUI32Controller implements Initializable {
         if (file != null) {
             String fileName = file.getName();
             if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Wrong Format! Please choose a image file");
-                alert.showAndWait();
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Wrong Format! Please choose a image file");
             } else {
                 Image image = new Image(file.toURI().toString());
                 Node button = (Node) event.getSource();
@@ -242,13 +238,6 @@ public class GUI32Controller implements Initializable {
         imageView.setFitHeight(75);
         imageView.setFitWidth(250);
         closeIcon.setVisible(false);
-    }
-
-    public String getCateName(String nameWithQuantity) {
-        if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
-            return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
-        }
-        return nameWithQuantity;
     }
 
     public void setEditingState() {

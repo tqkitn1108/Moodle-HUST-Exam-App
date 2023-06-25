@@ -28,13 +28,12 @@ import model.DBInteract;
 import model.DataInteract;
 import model.Question;
 import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GUI21Controller implements Initializable {
     @FXML
@@ -71,8 +70,7 @@ public class GUI21Controller implements Initializable {
     private DBInteract dbInteract;
     private File file, file2;
 
-    private Integer numberOfQuestions;
-
+    private Map<String, Integer> categoryLevel;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
 
@@ -139,17 +137,9 @@ public class GUI21Controller implements Initializable {
     @FXML
     public void importFile(ActionEvent event) {
         if (categoryBox3.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("No category is chosen, try again");
-            alert.showAndWait();
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "No category is chosen, try again!");
         } else if (file == null && file2 == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("No file is chosen, try again");
-            alert.showAndWait();
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "No file is chosen, try again!");
         } else if (file != null) {
             try {
                 String fileName = file.getName();
@@ -157,9 +147,9 @@ public class GUI21Controller implements Initializable {
                 if (!fileName.endsWith(".txt") && !fileName.endsWith(".docx") && !fileName.endsWith(".doc")) {
                     throw new WrongFormatException("Please choose a file with tail .txt, .doc or .docx");
                 }
-                // Đọc nội dung tệp và xử lý ở đây
+                // Đọc nội dung tệp và xử lý
                 String itemWithOldQuantity = categoryBox3.getValue();
-                String cateTitle = getCateName(itemWithOldQuantity);
+                String cateTitle = GeneralFunctions.getCateName(itemWithOldQuantity);
                 List<Question> quesList = new ArrayList<>();
                 if (fileName.endsWith(".txt")) {
                     quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
@@ -170,35 +160,16 @@ public class GUI21Controller implements Initializable {
                 for (Question q : quesList) {
                     dbInteract.insertQuestion(q, cateTitle);
                 }
-
-                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox1);
-                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox2);
-                changeItemInComboBox(cateTitle, itemWithOldQuantity, categoryBox3);
-//                categoryBox1.getItems().clear();
-//                categoryBox2.getItems().clear();
-//                categoryBox3.getItems().clear();
-//                addCategoryBox();
+                loadCategoryBox();
                 categoryBox3.setValue(cateTitle + " (" + dbInteract.getQuestionsBelongToCategory(cateTitle).size() + ")");
 
                 // Xử lý khi import thành công
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText(null);
-                alert.setContentText("Import successfully!");
-                alert.showAndWait();
+                GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Import successfully!");
             } catch (WrongFormatException e) {
                 // Xử lý khi định dạng tệp không đúng
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Wrong Format: " + e.getMessage());
-                alert.showAndWait();
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Wrong Format: " + e.getMessage());
             } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
             }
             fileLabel.setPrefHeight(0);
             file = null;
@@ -224,13 +195,24 @@ public class GUI21Controller implements Initializable {
     public void selectItemInCateBox() throws Exception {
         questionList.getChildren().clear();
         columnTittle.setVisible(true);
-        numberOfQuestions = 1;
-        List<Question> questions = dbInteract.getQuestionsBelongToCategory(getCateName(categoryBox1.getValue()));
-        displayQuestionList(questions);
+        setCateNameDisplay(categoryBox1);
+        int i = 1;
+        List<Question> questions = dbInteract.getQuestionsBelongToCategory(GeneralFunctions.getCateName(categoryBox1.getValue()));
+        for (Question question : questions) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
+            Node node = fxmlLoader.load();
+            QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
+            questionInGUI31Controller.setQuestion(question);
+            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
+            questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
+            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
+            if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
+            i++;
+            questionList.getChildren().add(node);
+        }
         if (checkBox.isSelected()) {
-            List<Category> subCategories = dbInteract.getSubCategoriesOf(getCateName(categoryBox1.getValue()));
+            List<Category> subCategories = dbInteract.getSubCategoriesOf(GeneralFunctions.getCateName(categoryBox1.getValue()));
             for (Category category : subCategories) {
-//                displayQuestionList(category.getQuestions());
                 for (Question question : category.getQuestions()) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
                     Node node = fxmlLoader.load();
@@ -239,8 +221,8 @@ public class GUI21Controller implements Initializable {
                     questionInGUI31Controller.setCateNameWithNum(category.getCategoryTitle() + " (" + category.getQuestions().size() + ")");
                     questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
                     questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
-                    if (numberOfQuestions % 2 == 1) node.setStyle("-fx-background-color: #fff");
-                    numberOfQuestions++;
+                    if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
+                    i++;
                     questionList.getChildren().add(node);
                 }
             }
@@ -269,30 +251,22 @@ public class GUI21Controller implements Initializable {
     @FXML
     public void addCategory(ActionEvent event) {
         if (cateName.getText().length() > 0) {
-            dbInteract.createNewCategory(getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
-            categoryBox1.getItems().clear();
-            categoryBox2.getItems().clear();
-            categoryBox3.getItems().clear();
-            addCategoryBox();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Add category successfully!");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please type category name!");
-            alert.showAndWait();
-        }
+            dbInteract.createNewCategory(GeneralFunctions.getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
+            String presentValue = categoryBox1.getValue();
+            loadCategoryBox();
+            categoryBox1.setValue(presentValue);
+            GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Add category successfully!");
+        } else
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Please type category name!");
     }
 
-    public String getCateName(String nameWithQuantity) {
-        if (nameWithQuantity.endsWith(")")) {
-            return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
-        }
-        return nameWithQuantity;
+    @FXML
+    public void selectCategory(ActionEvent event) {
+        setCateNameDisplay((ComboBox<String>) event.getSource());
+    }
+
+    public void setCateNameDisplay(ComboBox<String> comboBox) {
+        comboBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(comboBox.getValue())) * 9));
     }
 
     public void addImg() {
@@ -300,43 +274,30 @@ public class GUI21Controller implements Initializable {
         arrowImg.setImage(image);
     }
 
-    public void changeItemInComboBox(String cateTitle, String itemWithOldQuantity, ComboBox<String> comboBox) {
-        ObservableList<String> items = comboBox.getItems();
-        int index = items.indexOf(itemWithOldQuantity);
-        int quantity = dbInteract.getQuestionsBelongToCategory(cateTitle).size();
-        if (index != -1) {
-            items.set(index, cateTitle + " (" + quantity + ")");
+    public void loadCategoryBox() {
+        categoryBox1.getItems().clear();
+        categoryBox2.getItems().clear();
+        categoryBox3.getItems().clear();
+        categoryLevel = new HashMap<>();
+        for (Category category : dbInteract.getAllNonSubCategories()) {
+            showCategoryInTree(category, 0, categoryBox1);
+            showCategoryInTree(category, 0, categoryBox2);
+            showCategoryInTree(category, 0, categoryBox3);
         }
     }
 
-    public void addCategoryBox() {
-        List<Category> categories = dbInteract.getAllCategories();
-        for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
-            if (quantity == 0) {
-                categoryBox1.getItems().add(category.getCategoryTitle());
-                categoryBox2.getItems().add(category.getCategoryTitle());
-                categoryBox3.getItems().add(category.getCategoryTitle());
-            } else {
-                categoryBox1.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
-                categoryBox2.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
-                categoryBox3.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
+    public void showCategoryInTree(Category category, int order, ComboBox<String> comboBox) {
+        categoryLevel.put(category.getCategoryTitle(), order);
+        int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
+        if (quantity == 0)
+            comboBox.getItems().add("   ".repeat(order) + category.getCategoryTitle());
+        else
+            comboBox.getItems().add("   ".repeat(order) + category.getCategoryTitle() + " (" + quantity + ")");
+        List<Category> subCategories = dbInteract.getSubCategoriesOf(category.getCategoryTitle());
+        if (subCategories != null) {
+            for (Category subCategory : subCategories) {
+                showCategoryInTree(subCategory, order + 1, comboBox);
             }
-        }
-    }
-
-    public void displayQuestionList(List<Question> questions) throws IOException {
-        for (Question question : questions) {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
-            Node node = fxmlLoader.load();
-            QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
-            questionInGUI31Controller.setQuestion(question);
-            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
-            questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
-            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
-            if (numberOfQuestions % 2 == 1) node.setStyle("-fx-background-color: #fff");
-            numberOfQuestions++;
-            questionList.getChildren().add(node);
         }
     }
 
@@ -344,9 +305,6 @@ public class GUI21Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
         addImg();
-        addCategoryBox();
+        loadCategoryBox();
     }
-
-
 }
-

@@ -98,8 +98,7 @@ public class HeaderController implements Initializable {
             Node node = fxmlLoader.load();
             GUI21Controller gui21Controller = fxmlLoader.getController();
             for (int i = 0; i < listBtn.getChildren().size(); ++i) {
-                if (listBtn.getChildren().get(i) instanceof Button) {
-                    Button button = (Button) listBtn.getChildren().get(i);
+                if (listBtn.getChildren().get(i) instanceof Button button) {
                     int finalI = i;
                     button.setOnAction(event -> {
                         menuBtn.hide();

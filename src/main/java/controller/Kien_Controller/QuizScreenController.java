@@ -37,6 +37,7 @@ import model.DBInteract;
 import model.Question;
 import model.Quiz;
 import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -396,9 +397,9 @@ public class QuizScreenController implements Initializable {
 
                 // Sau khi tạo file PDF thành công
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thành công");
-                alert.setHeaderText("Tài liệu PDF đã được tạo thành công");
-                alert.setContentText("Thông báo thành công.");
+                alert.setTitle("Successfully");
+                alert.setHeaderText(null);
+                alert.setContentText("PDF document has been successfully created!");
 
                 alert.setOnCloseRequest(event -> {
                     try {
