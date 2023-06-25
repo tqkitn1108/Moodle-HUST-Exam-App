@@ -63,10 +63,10 @@ public class DataInteract {
             dbi.createNewCategory("CNXH","3","CNXH_Khó");
 
             for (int i=0;i<10;i++) {
-                dbi.insertQuestion(questions.get(i),"CNXH_Dễ");
+                dbi.insertQuestion(questions.get(i),"CNXH_Dễ",null);
             }
             for (int i=10;i<15;i++) {
-                dbi.insertQuestion(questions.get(i),"CNXH_Khó");
+                dbi.insertQuestion(questions.get(i),"CNXH_Khó",null);
             }
             dbi.createNewQuiz(quiz);
             List<Integer> a = new ArrayList<>();
@@ -74,7 +74,7 @@ public class DataInteract {
             Random random = new Random();
             for (int i=0;i<10;i++) {
                 int x = random.nextInt(a.size());
-                dbi.addQuestionToQuiz("CNXH_GK_1",String.valueOf(a.get(x)));
+                dbi.addQuestionToQuiz("CNXH_GK_1",String.valueOf(a.get(x)),null);
                 a.remove(x);
             }
 
@@ -86,7 +86,7 @@ public class DataInteract {
             for (int i=1;i<16;i++) a.add(i);
             for (int i=0;i<10;i++) {
                 int x = random.nextInt(a.size());
-                dbi.addQuestionToQuiz("CNXH_GK_2",String.valueOf(a.get(x)));
+                dbi.addQuestionToQuiz("CNXH_GK_2",String.valueOf(a.get(x)),null);
                 a.remove(x);
             }
 

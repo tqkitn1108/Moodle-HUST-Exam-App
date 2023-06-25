@@ -1,18 +1,19 @@
-MAJOR CHANGES: thêm mediaPath cho Question để chứa đường dẫn tới video/gif, thêm removeQuestionFromQuiz, sửa checkAikenFormat
+MAJOR CHANGES: thêm shuffle cho Quiz, thay đổi 1 số hàm trong DBInteract (xem các dấu ** bên dưới)
 
 * DBInteract: class dùng để kết nối với database
-gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q vào cate
+gồm
+**  + void insertQuestion(Question q, String categoryTitle, Connection conn): thêm Question q vào cate
     + void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle): thêm 1 Category có ID, Title và parent(có thể là null)
     + List<Question> getQuestionsBelongToCategory(String categoryTitle): lấy tất cả các Question của Category
     + List<Category> getAllCategories(): lấy tất cả các Category từ db
     + List<Category> getSubCategoriesOf(String categoryTitle): lấy tất cả Category con của cat
 	+ String getCategoryID(String categoryTitle) chắc cmay k dùng đâu :))
 	+ void createNewQuiz(Quiz quiz): cho quiz vào database
-	+ void addQuestionToQuiz(String quizName, String questionName): thêm câu hỏi có sẵn trong database vào quiz
+**  + void addQuestionToQuiz(String quizName, String questionName, Connection conn): thêm câu hỏi có sẵn trong database vào quiz
 	+ Question getQuestion(String questionName): lấy question có tên questionName
 	+ List<Question> getQuestionBelongToQuiz(String quizName): lấy question thuộc về quiz
-	+ void deleteQuestion(String questionName)
-	+ void deleteCategory(String categoryName): xóa cả cate, cate con và question thuộc về cả 2
+**	+ void deleteQuestion(String questionName, Connection conn)
+**	+ void deleteCategory(String categoryName, Connection conn): xóa cả cate, cate con và question thuộc về cả 2
 	+ void deleteQuiz(String quizName)
 	+ List<Quiz> getAllQuizzes()
 	+ List<Category> getAllNonSubCategories(): lấy tất cả các cate ko phải cate con
@@ -22,6 +23,7 @@ gồm + void insertQuestion(Question q, String categoryTitle): thêm Question q 
 - Lưu ý khi dùng DBInteract: phải khởi tạo đối tượng trước khi dùng hàm
 	+ DBInteract dbi = new DBInteract();
 	+ VD dùng hàm: dbi.createNewCategory(null,"1","testCategory")
+**	+ Các trường Connection nếu dùng bên ngoài DBInteract thì để mặc định là null
 	
 
       
@@ -61,4 +63,6 @@ tương tác bằng getter và setter
 	+ String quizName;
 	+ String quizDescription;
 	+ int timeLimit; (theo phút)
+	+ boolean shuffle
 	+ List<Question> getQuestions()
+	+ boolean isShuffle()

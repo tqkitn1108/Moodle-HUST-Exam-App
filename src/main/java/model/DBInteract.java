@@ -25,12 +25,16 @@ public class DBInteract {
         return conn;
     }
 
-    public void insertQuestion(Question q, String categoryTitle) {
+    public void insertQuestion(Question q, String categoryTitle, Connection conn) throws Exception{
+        boolean check = false;
+        if (conn == null) {
+            conn = this.connect();
+            check = true;
+        }
         String sql = "INSERT INTO QUESTION(questionName,questionText,catID,questionImage,mediaPath) VALUES(?,?," +
                 "(SELECT catID FROM CATEGORY WHERE catTitle = ?),?,?)";
         String sql2 = "INSERT INTO OPTIONS(questionName, optionLabel, optionData, optionImage, optionGrade) VALUES(?,?,?,?,?)";
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
              PreparedStatement pstmt2 = conn.prepareStatement(sql2);){
 
             pstmt.setString(1, q.getQuestionName());
@@ -49,10 +53,8 @@ public class DBInteract {
                 pstmt2.setDouble(5, q.getChoices().get(i).getOptionGrade());
                 pstmt2.executeUpdate();
             }
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
+        if (check) conn.close();
     }
 
     public void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle) {
@@ -186,30 +188,36 @@ public class DBInteract {
     }
 
     public void createNewQuiz(Quiz quiz) {
-        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit) VALUES(?,?,?)";
+        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit, shuffle) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql);){
 
             pstmt.setString(1, quiz.getQuizName());
             pstmt.setString(2, quiz.getQuizDescription());
             pstmt.setInt(3, quiz.getTimeLimit());
+            pstmt.setInt(4,quiz.isShuffle() ? 1 : 0);
             pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void addQuestionToQuiz(String quizName, String questionName) {
+    public void addQuestionToQuiz(String quizName, String questionName, Connection conn) throws Exception{
+        boolean check = false;
+        if (conn == null) {
+            conn = this.connect();
+            check = true;
+        }
         String sql = "INSERT INTO QUIZ_QUESTION(quizID, questionName) VALUES((SELECT quizID FROM QUIZ WHERE quizName = ?),?)";
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql);){
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);){
 
             pstmt.setString(1, quizName);
             pstmt.setString(2, questionName);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new Exception(e);
         }
+        if (check) conn.close();
     }
 
     public List<Question> getQuestionBelongToQuiz(String quizName) {
@@ -230,10 +238,14 @@ public class DBInteract {
         }
     }
 
-    public void deleteQuestion(String questionName) throws Exception {
+    public void deleteQuestion(String questionName, Connection conn) throws Exception {
+        boolean check = false;
+        if (conn == null) {
+            conn = this.connect();
+            check = true;
+        }
         String sql = "DELETE FROM OPTIONS WHERE questionName = '" + questionName + "'";
-        try (Connection conn = this.connect();
-             Statement stmt = conn.createStatement();) {
+        try (Statement stmt = conn.createStatement();) {
 
             stmt.executeUpdate(sql);
 
@@ -247,13 +259,18 @@ public class DBInteract {
             System.out.println(e.getMessage());
             throw new SQLException();
         }
+        if (check) conn.close();
     }
 
-    public void deleteCategory(String categoryTitle) throws Exception {
+    public void deleteCategory(String categoryTitle, Connection conn) throws Exception {
+        boolean check = false;
+        if (conn == null) {
+            conn = this.connect();
+            check = true;
+        }
         String sql = "SELECT catID FROM CATEGORY WHERE catTitle = '" + categoryTitle + "'";
         String sql2 = "DELETE FROM SUBCAT WHERE subCatID = ?";
-        try (Connection conn = this.connect();
-             Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement();
              Statement stmt1 = conn.createStatement();
              PreparedStatement pstmt = conn.prepareStatement(sql2);){
 
@@ -268,13 +285,13 @@ public class DBInteract {
                 while (subRs.next()) {
                     pstmt.setString(1,subRs.getString(2));
                     pstmt.executeUpdate();
-                    deleteCategory(subRs.getString(1));
+                    deleteCategory(subRs.getString(1),conn);
                 }
 
                 sql = "SELECT questionName FROM QUESTION WHERE catID = '" + rs.getString(1) + "'";
                 subRs = stmt1.executeQuery(sql);
                 while (subRs.next()) {
-                    deleteQuestion(subRs.getString(1));
+                    deleteQuestion(subRs.getString(1),conn);
                 }
 
 
@@ -287,6 +304,7 @@ public class DBInteract {
             System.out.println(e.getMessage());
             throw new SQLException();
         }
+        if (check) conn.close();
     }
 
     public void deleteQuiz(String quizName) {
@@ -309,7 +327,7 @@ public class DBInteract {
 
     public List<Quiz> getAllQuizzes() {
         List<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT quizName, quizDescription, timeLimit FROM QUIZ";
+        String sql = "SELECT quizName, quizDescription, timeLimit, shuffle FROM QUIZ";
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();){
 
@@ -319,6 +337,7 @@ public class DBInteract {
                 quiz.setQuizName(rs.getString(1));
                 quiz.setQuizDescription(rs.getString(2));
                 quiz.setTimeLimit(rs.getInt(3));
+                quiz.setShuffle((rs.getInt(4) == 1));
                 quizzes.add(quiz);
             }
         } catch (SQLException e) {
@@ -356,12 +375,12 @@ public class DBInteract {
             pstmt2.setString(1, questionName);
             ResultSet quizRs = pstmt2.executeQuery();
 
-            deleteQuestion(questionName);
+            deleteQuestion(questionName,conn);
 
             catRs.next();
-            insertQuestion(newQuestion, catRs.getString(1));
+            insertQuestion(newQuestion, catRs.getString(1),conn);
             while (quizRs.next()) {
-                addQuestionToQuiz(quizRs.getString(1), newQuestion.getQuestionName());
+                addQuestionToQuiz(quizRs.getString(1), newQuestion.getQuestionName(),conn);
             }
         }
     }
@@ -386,4 +405,5 @@ public class DBInteract {
             treeView(cat.getCategoryTitle(), level + 1);
         }
     }
+
 }
