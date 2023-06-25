@@ -112,13 +112,6 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void showQuesFromSubCate(ActionEvent event) throws Exception {
-        if (categoryBox1.getValue() != null) {
-            selectItemInCateBox(event);
-        }
-    }
-
-    @FXML
     public void chooseAFile(ActionEvent event) {
         Stage thisStage = (Stage) chooseBtn.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
@@ -221,37 +214,29 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void selectItemInCateBox(ActionEvent event) throws Exception {
+    public void showQuesFromSubCate() throws Exception {
+        if (categoryBox1.getValue() != null) {
+            selectItemInCateBox();
+        }
+    }
+
+    @FXML
+    public void selectItemInCateBox() throws Exception {
         questionList.getChildren().clear();
         columnTittle.setVisible(true);
         numberOfQuestions = 1;
         List<Question> questions = dbInteract.getQuestionsBelongToCategory(getCateName(categoryBox1.getValue()));
-        for (Question question : questions) {
-//            Đoạn code này để xóa các question không có choice
-//            if(question.getOptions().size() == 0) {
-//                dbInteract.deleteQuestion(question.getQuestionName());
-//                continue;
-//            }
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
-            Node node = fxmlLoader.load();
-            QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
-            questionInGUI31Controller.setQuestion(question);
-            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
-            questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
-            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
-            if (numberOfQuestions % 2 == 1) node.setStyle("-fx-background-color: #fff");
-            numberOfQuestions++;
-            questionList.getChildren().add(node);
-        }
+        displayQuestionList(questions);
         if (checkBox.isSelected()) {
             List<Category> subCategories = dbInteract.getSubCategoriesOf(getCateName(categoryBox1.getValue()));
             for (Category category : subCategories) {
+//                displayQuestionList(category.getQuestions());
                 for (Question question : category.getQuestions()) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
                     Node node = fxmlLoader.load();
                     QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
                     questionInGUI31Controller.setQuestion(question);
-                    questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
+                    questionInGUI31Controller.setCateNameWithNum(category.getCategoryTitle() + " (" + category.getQuestions().size() + ")");
                     questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
                     questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
                     if (numberOfQuestions % 2 == 1) node.setStyle("-fx-background-color: #fff");
@@ -283,17 +268,17 @@ public class GUI21Controller implements Initializable {
 
     @FXML
     public void addCategory(ActionEvent event) {
-        if(cateName.getText().length() > 0) {
-        dbInteract.createNewCategory(categoryBox2.getValue(), cateID.getText(), cateName.getText());
-        categoryBox1.getItems().clear();
-        categoryBox2.getItems().clear();
-        categoryBox3.getItems().clear();
-        addCategoryBox();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText(null);
-        alert.setContentText("Add category successfully!");
-        alert.showAndWait();
+        if (cateName.getText().length() > 0) {
+            dbInteract.createNewCategory(getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
+            categoryBox1.getItems().clear();
+            categoryBox2.getItems().clear();
+            categoryBox3.getItems().clear();
+            addCategoryBox();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Add category successfully!");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -304,7 +289,7 @@ public class GUI21Controller implements Initializable {
     }
 
     public String getCateName(String nameWithQuantity) {
-        if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
+        if (nameWithQuantity.endsWith(")")) {
             return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
         }
         return nameWithQuantity;
@@ -337,6 +322,21 @@ public class GUI21Controller implements Initializable {
                 categoryBox2.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
                 categoryBox3.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
             }
+        }
+    }
+
+    public void displayQuestionList(List<Question> questions) throws IOException {
+        for (Question question : questions) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
+            Node node = fxmlLoader.load();
+            QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
+            questionInGUI31Controller.setQuestion(question);
+            questionInGUI31Controller.setCateNameWithNum(categoryBox1.getValue());
+            questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
+            questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
+            if (numberOfQuestions % 2 == 1) node.setStyle("-fx-background-color: #fff");
+            numberOfQuestions++;
+            questionList.getChildren().add(node);
         }
     }
 

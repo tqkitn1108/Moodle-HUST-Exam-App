@@ -29,8 +29,6 @@ public class GUI11Controller implements Initializable {
     private StackPane stackPane;
     HeaderController headerController2;
 
-    private DBInteract dbInteract;
-
     private void addScreenToStackPane(Node node) {
         if (this.stackPane.getChildren().contains(node)) {
             this.stackPane.getChildren().remove(node);
@@ -207,7 +205,7 @@ public class GUI11Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dbInteract = new DBInteract();
+        DBInteract dbInteract = new DBInteract();
         DataModel.getInstance().setDbInteract(dbInteract);
         setHeader();
         addQuizList();

@@ -74,11 +74,11 @@ public class GUI32Controller implements Initializable {
 
     private DBInteract dbInteract;
     private Question question;
-    private QuestionInGUI31Controller questionInGUI31Controllers;
+    private QuestionInGUI31Controller questionInGUI31Controller;
     private boolean flag = false;
 
-    public void setQuestionInGUI31Controllers(QuestionInGUI31Controller questionInGUI31Controllers) {
-        this.questionInGUI31Controllers = questionInGUI31Controllers;
+    public void setQuestionInGUI31Controllers(QuestionInGUI31Controller questionInGUI31Controller) {
+        this.questionInGUI31Controller = questionInGUI31Controller;
     }
 
     public void setPageLabel(String pageLabel) {
@@ -172,10 +172,12 @@ public class GUI32Controller implements Initializable {
                 dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()));
                 if (question != null) {
                     dbInteract.deleteQuestion(question.getQuestionName());
+                    questionInGUI31Controller.setQuestion(newQuestion);
                 }
-            } else
+            } else {
                 dbInteract.editQuestion(quesName.getText(), newQuestion);
-            questionInGUI31Controllers.setQuestion(newQuestion);
+                questionInGUI31Controller.setQuestion(newQuestion);
+            }
             flag = true;
         }
     }

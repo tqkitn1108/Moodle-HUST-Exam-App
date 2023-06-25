@@ -16,6 +16,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
+import model2.DataModel;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class CourseListController implements Initializable {
     }
 
     public void loadQuizList() {
-        DBInteract dbInteract = new DBInteract();
+        DBInteract dbInteract = DataModel.getInstance().getDbInteract();
         List<Quiz> quizzes = dbInteract.getAllQuizzes();
         for (Quiz quiz : quizzes) {
             addNewQuiz(quiz);
