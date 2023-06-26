@@ -1,12 +1,11 @@
 package controller.Thien_Controller;
 
-import controller.Ha_Controller.GUI21Controller;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -33,10 +32,7 @@ import model2.GeneralFunctions;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class GUI32Controller implements Initializable {
 
@@ -60,6 +56,8 @@ public class GUI32Controller implements Initializable {
     Pane pane = new Pane();
     @FXML
     private FontAwesomeIconView closeIcon;
+
+    private Map<String, Integer> categoryLevel;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
@@ -92,16 +90,14 @@ public class GUI32Controller implements Initializable {
     }
 
     public void setCateBox(String cateName) {
-        List<Category> categories = dbInteract.getAllCategories();
-        for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
-            if (quantity == 0) {
-                cateBox.getItems().add(category.getCategoryTitle());
-            } else {
-                cateBox.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
-            }
+        categoryLevel = new HashMap<>();
+        for (Category category : dbInteract.getAllNonSubCategories()) {
+            showCategoryInTree(category, 0, cateBox);
         }
-        cateBox.setValue(cateName);
+        if (cateName != null) {
+            cateBox.setValue(cateName);
+            cateBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(cateName)) * 9));
+        }
     }
 
     @FXML
@@ -166,25 +162,27 @@ public class GUI32Controller implements Initializable {
             newQuestion.setQuestionImage(quesImg.getImage());
             newQuestion.setOptionLabels(labels);
             newQuestion.setChoices(choices);
-            if (question == null || !quesName.getText().equals(question.getQuestionName())) {
-<<<<<<< HEAD
-                dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()));
+            if (cateBox.getValue() == null) {
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Please choose a category!");
+                flag = false;
+            } else if (question == null || !quesName.getText().equals(question.getQuestionName())) {
+                dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
                 if (question == null) {
-
+                    DataModel.getInstance().getGui21Controller().loadCategoryBox();
+                    DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
+                    question = newQuestion;
                 } else {
-                    dbInteract.deleteQuestion(question.getQuestionName());
-=======
-                if (question != null) {
-                    dbInteract.deleteQuestion(question.getQuestionName(),null);
->>>>>>> f117b26d4ad31243922b7fbc7454ca7670c3ea70
+                    dbInteract.deleteQuestion(question.getQuestionName(), null);
                     questionInGUI31Controller.setQuestion(newQuestion);
+                    question = newQuestion;
                 }
-                dbInteract.insertQuestion(newQuestion, getCateName(cateBox.getValue()),null);
+                flag = true;
             } else {
                 dbInteract.editQuestion(quesName.getText(), newQuestion);
-                questionInGUI31Controller.setQuestion(newQuestion);
+                if (questionInGUI31Controller != null)
+                    questionInGUI31Controller.setQuestion(newQuestion);
+                flag = true;
             }
-            flag = true;
         }
     }
 
@@ -305,6 +303,26 @@ public class GUI32Controller implements Initializable {
             ComboBox<String> gradeBox = (ComboBox<String>) node;
             gradeBox.getItems().addAll(gradeArray);
             gradeBox.getSelectionModel().selectFirst();
+        }
+    }
+
+    @FXML
+    public void setCateNameDisplay(ActionEvent event) {
+        cateBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(cateBox.getValue())) * 9));
+    }
+
+    public void showCategoryInTree(Category category, int order, ComboBox<String> comboBox) {
+        categoryLevel.put(category.getCategoryTitle(), order);
+        int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
+        if (quantity == 0)
+            comboBox.getItems().add("   ".repeat(order) + category.getCategoryTitle());
+        else
+            comboBox.getItems().add("   ".repeat(order) + category.getCategoryTitle() + " (" + quantity + ")");
+        List<Category> subCategories = dbInteract.getSubCategoriesOf(category.getCategoryTitle());
+        if (subCategories != null) {
+            for (Category subCategory : subCategories) {
+                showCategoryInTree(subCategory, order + 1, comboBox);
+            }
         }
     }
 

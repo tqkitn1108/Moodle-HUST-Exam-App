@@ -213,12 +213,13 @@ public class GUI21Controller implements Initializable {
         if (checkBox.isSelected()) {
             List<Category> subCategories = dbInteract.getSubCategoriesOf(GeneralFunctions.getCateName(categoryBox1.getValue()));
             for (Category category : subCategories) {
+                int level = categoryLevel.get(category.getCategoryTitle());
                 for (Question question : category.getQuestions()) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Thien_FXML/QuestionInGUI31.fxml"));
                     Node node = fxmlLoader.load();
                     QuestionInGUI31Controller questionInGUI31Controller = fxmlLoader.getController();
                     questionInGUI31Controller.setQuestion(question);
-                    questionInGUI31Controller.setCateNameWithNum(category.getCategoryTitle() + " (" + category.getQuestions().size() + ")");
+                    questionInGUI31Controller.setCateNameWithNum("   ".repeat(level) + category.getCategoryTitle() + " (" + category.getQuestions().size() + ")");
                     questionInGUI31Controller.setQuestionInGUI31Controller(questionInGUI31Controller);
                     questionInGUI31Controller.setMainScreen(this.headerListener, this.screenListener);
                     if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
@@ -266,7 +267,9 @@ public class GUI21Controller implements Initializable {
     }
 
     public void setCateNameDisplay(ComboBox<String> comboBox) {
-        comboBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(comboBox.getValue())) * 9));
+        if (comboBox.getValue() != null) {
+            comboBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(comboBox.getValue())) * 9));
+        }
     }
 
     public void addImg() {
@@ -278,7 +281,6 @@ public class GUI21Controller implements Initializable {
         categoryBox1.getItems().clear();
         categoryBox2.getItems().clear();
         categoryBox3.getItems().clear();
-        categoryLevel = new HashMap<>();
         for (Category category : dbInteract.getAllNonSubCategories()) {
             showCategoryInTree(category, 0, categoryBox1);
             showCategoryInTree(category, 0, categoryBox2);
@@ -301,9 +303,16 @@ public class GUI21Controller implements Initializable {
         }
     }
 
+    public void setValueInCategoryBox1(String categoryName) {
+        int level = categoryLevel.get(categoryName);
+        int quantity = dbInteract.getQuestionsBelongToCategory(categoryName).size();
+        categoryBox1.setValue("   ".repeat(level) + categoryName + " (" + quantity + ")");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
+        categoryLevel = new HashMap<>();
         addImg();
         loadCategoryBox();
     }

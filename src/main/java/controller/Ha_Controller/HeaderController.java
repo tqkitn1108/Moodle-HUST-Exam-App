@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -97,6 +98,7 @@ public class HeaderController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
             Node node = fxmlLoader.load();
             GUI21Controller gui21Controller = fxmlLoader.getController();
+            DataModel.getInstance().setGui21Controller(gui21Controller);
             for (int i = 0; i < listBtn.getChildren().size(); ++i) {
                 if (listBtn.getChildren().get(i) instanceof Button button) {
                     int finalI = i;

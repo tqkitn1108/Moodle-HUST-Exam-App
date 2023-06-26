@@ -1,8 +1,10 @@
 package model2;
 
+import controller.Ha_Controller.GUI21Controller;
 import controller.Kien_Controller.QuestionLayoutController;
 import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import model.DBInteract;
 import model.Question;
 
@@ -22,6 +24,8 @@ public class DataModel {
 
     private List<Node> questionNodes;
     private List<QuestionLayoutController> questionLayoutControllers;
+
+    private GUI21Controller gui21Controller;
 
     private DataModel() {
 
@@ -80,5 +84,13 @@ public class DataModel {
 
     public List<QuestionLayoutController> getQuestionLayoutControllers() {
         return questionLayoutControllers;
+    }
+
+    public void setGui21Controller(GUI21Controller gui21Controller) {
+        this.gui21Controller = gui21Controller;
+    }
+
+    public GUI21Controller getGui21Controller() {
+        return gui21Controller;
     }
 }
