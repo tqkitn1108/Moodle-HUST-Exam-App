@@ -54,10 +54,15 @@ public class DBInteract {
                 pstmt2.executeUpdate();
             }
         }
+        catch (SQLException e) {
+            if (e.getMessage().contains("[SQLITE_CONSTRAINT_PRIMARYKEY]") && e.getMessage().contains("QUESTION.questionName")) {
+                throw new NameDuplicateException("Question name duplicate!");
+            }
+        }
         if (check) conn.close();
     }
 
-    public void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle) {
+    public void createNewCategory(String parentCategoryTitle, String categoryID, String categoryTitle) throws Exception{
         String sql = "INSERT INTO CATEGORY(catID, catTitle) VALUES(?,?)";
         String sql2 = "INSERT INTO SUBCAT(catID, subCatID) VALUES((SELECT catID FROM CATEGORY WHERE catTitle = ?),?)";
         try (Connection conn = this.connect();
@@ -73,8 +78,13 @@ public class DBInteract {
             pstmt2.setString(2, categoryID);
             pstmt2.executeUpdate();
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            if (e.getMessage().contains("[SQLITE_CONSTRAINT_PRIMARYKEY]") && e.getMessage().contains("CATEGORY.catID")) {
+                throw new NameDuplicateException("Category ID duplicate!");
+            }
+            else if (e.getMessage().contains("[SQLITE_CONSTRAINT_UNIQUE]") && e.getMessage().contains("CATEGORY.catTitle")) {
+                throw new NameDuplicateException("Category title duplicate");
+            }
         }
     }
 
@@ -187,18 +197,19 @@ public class DBInteract {
         }
     }
 
-    public void createNewQuiz(Quiz quiz) {
-        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit, shuffle) VALUES(?,?,?,?)";
+    public void createNewQuiz(Quiz quiz) throws Exception{
+        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit) VALUES(?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql);){
 
             pstmt.setString(1, quiz.getQuizName());
             pstmt.setString(2, quiz.getQuizDescription());
             pstmt.setInt(3, quiz.getTimeLimit());
-            pstmt.setInt(4,quiz.isShuffle() ? 1 : 0);
             pstmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            if (e.getMessage().contains("[SQLITE_CONSTRAINT_UNIQUE]") && e.getMessage().contains("QUIZ.quizName")) {
+                throw new NameDuplicateException("Quiz name duplicate");
+            }
         }
     }
 
@@ -393,6 +404,16 @@ public class DBInteract {
 
             pstmt.setString(1, quizName);
             pstmt.setString(2, questionName);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void setShuffle(String quizName, boolean isShuffle) throws Exception{
+        String sql = "UPDATE QUIZ SET shuffle = ? WHERE quizName = ?";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,isShuffle ? 1 : 0);
+            pstmt.setString(2,quizName);
             pstmt.executeUpdate();
         }
     }
