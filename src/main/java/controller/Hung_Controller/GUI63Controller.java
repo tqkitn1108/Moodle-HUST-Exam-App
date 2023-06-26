@@ -1,10 +1,12 @@
 package controller.Hung_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
+import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
@@ -18,13 +20,11 @@ import model.DBInteract;
 import model.Question;
 import model.Quiz;
 import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class GUI63Controller implements Initializable {
     @FXML
@@ -35,6 +35,8 @@ public class GUI63Controller implements Initializable {
     private HBox columnTittle;
     @FXML
     private JFXCheckBox checkBox;
+    @FXML
+    private JFXCheckBox showMoreQuestionCheckBox;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
     public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
@@ -46,6 +48,7 @@ public class GUI63Controller implements Initializable {
     private Quiz quiz;
     private List<Question> selectedQuestions;
     private List<Question> questionsInCategory;
+    private Map<String, Integer> categoryLevel;
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -60,7 +63,9 @@ public class GUI63Controller implements Initializable {
     public void selectCateBoxItem(ActionEvent event) throws IOException{
         questionList.getChildren().clear();
         columnTittle.setVisible(true);
-        questionsInCategory = dbInteract.getQuestionsBelongToCategory(getCateName(categoryBox.getValue()));
+        checkBox.setSelected(false);
+        setCateNameDisplay();
+        questionsInCategory = dbInteract.getQuestionsBelongToCategory(GeneralFunctions.getCateName(categoryBox.getValue()));
         int i = 1;
         for (Question question : questionsInCategory) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI63.fxml"));
@@ -71,6 +76,22 @@ public class GUI63Controller implements Initializable {
             if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
             i++;
             questionList.getChildren().add(node);
+        }
+        if (showMoreQuestionCheckBox.isSelected()) {
+            List<Category> subCategories = dbInteract.getSubCategoriesOf(GeneralFunctions.getCateName(categoryBox.getValue()));
+            for (Category category : subCategories) {
+                for (Question question : category.getQuestions()) {
+                    questionsInCategory.add(question);
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/QuestionInGUI63.fxml"));
+                    Node node = fxmlLoader.load();
+                    QuestionInGUI63Controller questionInGUI63Controller = fxmlLoader.getController();
+                    questionInGUI63Controller.setQuestion(question);
+                    questionInGUI63Controller.setMainScreen(this.headerListener, this.screenListener);
+                    if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
+                    i++;
+                    questionList.getChildren().add(node);
+                }
+            }
         }
     }
     @FXML
@@ -90,7 +111,6 @@ public class GUI63Controller implements Initializable {
                 index++;
             }
             gui62aController.setSelectedQuestions(selectedQuestions);
-            gui62aController.setTotalOfMark();
             gui62aController.addQuestionToScrollPane();
             gui62aController.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.removeTopScreen();  // Xóa giao diện GUI63
@@ -118,21 +138,30 @@ public class GUI63Controller implements Initializable {
         }
     }
 
-    public String getCateName(String nameWithQuantity) {
-        if (nameWithQuantity.charAt(nameWithQuantity.length() - 1) == ')') {
-            return nameWithQuantity.substring(0, nameWithQuantity.lastIndexOf('(') - 1);
+    @FXML
+    public void showQuesFromSubCate(ActionEvent event) throws IOException {
+        if (categoryBox.getValue() != null) {
+            selectCateBoxItem(event);
         }
-        return nameWithQuantity;
     }
 
-    public void addCategoryBox() {
-        List<Category> categories = dbInteract.getAllCategories();
-        for (Category category : categories) {
-            int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
-            if (quantity == 0) {
-                categoryBox.getItems().add(category.getCategoryTitle());
-            } else {
-                categoryBox.getItems().add(category.getCategoryTitle() + " (" + quantity + ")");
+    public void setCateNameDisplay() {
+        if (categoryBox.getValue() != null) {
+            categoryBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(categoryBox.getValue())) * 9));
+        }
+    }
+
+    public void showCategoryInTree(Category category, int order) {
+        categoryLevel.put(category.getCategoryTitle(), order);
+        int quantity = dbInteract.getQuestionsBelongToCategory(category.getCategoryTitle()).size();
+        if (quantity == 0)
+            categoryBox.getItems().add("   ".repeat(order) + category.getCategoryTitle());
+        else
+            categoryBox.getItems().add("   ".repeat(order) + category.getCategoryTitle() + " (" + quantity + ")");
+        List<Category> subCategories = dbInteract.getSubCategoriesOf(category.getCategoryTitle());
+        if (subCategories != null) {
+            for (Category subCategory : subCategories) {
+                showCategoryInTree(subCategory, order + 1);
             }
         }
     }
@@ -140,6 +169,9 @@ public class GUI63Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
         selectedQuestions = new ArrayList<>();
-        addCategoryBox();
+        categoryLevel = new HashMap<>();
+        for (Category category : dbInteract.getAllNonSubCategories()) {
+            showCategoryInTree(category, 0);
+        }
     }
 }

@@ -29,13 +29,14 @@ public class QuestionInGUI64Controller implements Initializable {
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
 
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
         this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
     private Question question;
     private List<Question> selectedQuestions;
+
     public void setOrder(int order) {
         this.order.setText(String.valueOf(order));
     }
@@ -53,11 +54,13 @@ public class QuestionInGUI64Controller implements Initializable {
         selectedQuestions.remove(Integer.parseInt(this.order.getText()) - 1);
         Set<Node> orderNumbers = questionList.lookupAll(".order-num");
         int j = 1;
-        for(Node orderNum : orderNumbers) {
+        for (Node orderNum : orderNumbers) {
             Label label = (Label) orderNum;
             label.setText(String.valueOf(j));
             j++;
         }
+        DataModel.getInstance().getQuantityLabel().setText(String.valueOf(j - 1));
+        DataModel.getInstance().getTotalMark().setText("Total of marks: " + String.valueOf(j - 1) + ".00");
     }
 
     @Override

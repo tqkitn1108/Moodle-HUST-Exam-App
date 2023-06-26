@@ -37,11 +37,16 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="286.0" spacing="10.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="282.0" text="Question: 0 | This quiz is open">
+                              <HBox prefHeight="18.0">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
-                              </Label>
+                                 <children>
+                                    <Label text="Question: " />
+                                    <Label fx:id="quantity" text="0" />
+                                    <Label text=" | This quiz is open" />
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="279.0" spacing="10.0">
                                  <children>
                                     <MFXButton style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE">
@@ -175,7 +180,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <MFXScrollPane fitToHeight="true" fitToWidth="true">
+                  <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="400.0">
                      <content>
                         <VBox fx:id="questionList" spacing="2.0" styleClass="question-list" />
                      </content></MFXScrollPane>

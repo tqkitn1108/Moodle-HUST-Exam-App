@@ -5,6 +5,8 @@ import controller.Kien_Controller.QuestionLayoutController;
 import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import model.DBInteract;
 import model.Question;
 
@@ -26,6 +28,9 @@ public class DataModel {
     private List<QuestionLayoutController> questionLayoutControllers;
 
     private GUI21Controller gui21Controller;
+
+    private Label quantityLabel;
+    private Text totalMark;
 
     private DataModel() {
 
@@ -92,5 +97,21 @@ public class DataModel {
 
     public GUI21Controller getGui21Controller() {
         return gui21Controller;
+    }
+
+    public void setQuantityLabel(Label quantityLabel) {
+        this.quantityLabel = quantityLabel;
+    }
+
+    public Label getQuantityLabel() {
+        return quantityLabel;
+    }
+
+    public void setTotalMark(Text totalMark) {
+        this.totalMark = totalMark;
+    }
+
+    public Text getTotalMark() {
+        return totalMark;
     }
 }

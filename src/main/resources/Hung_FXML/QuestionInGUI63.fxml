@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="584.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI63Controller">
+<HBox alignment="CENTER_LEFT" maxHeight="28.0" minHeight="28.0" prefHeight="28.0" prefWidth="584.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.QuestionInGUI63Controller">
    <children>
       <Label alignment="CENTER">
          <graphic>
@@ -34,15 +34,15 @@
             <Insets left="-10.0" top="10.0" />
          </HBox.margin>
       </Label>
-      <Label fx:id="mainQuesContent" contentDisplay="RIGHT" graphicTextGap="8.0" layoutX="66.0" layoutY="10.0" prefHeight="22.0" text="Thêm một số câu hỏi trong question bank (1 điểm)Trường hợp chọn tuỳ chọn Add “a random question” ở giao diện  sẽ thấy giao diện (6.5) như sau" HBox.hgrow="ALWAYS">
+      <Label fx:id="mainQuesContent" contentDisplay="RIGHT" graphicTextGap="8.0" layoutX="66.0" layoutY="10.0" lineSpacing="5.0" prefHeight="17.0" text="Thêm một số câu hỏi trong question bank (1 điểm)Trường hợp chọn tuỳ chọn Add “a random question” ở giao diện  sẽ thấy giao diện (6.5) như sau" HBox.hgrow="ALWAYS">
          <padding>
-            <Insets left="15.0" />
+            <Insets left="10.0" />
          </padding>
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="subQuesContent" ellipsisString="" maxWidth="1500.0" prefHeight="22.0" text="Thêm một số câu hỏi trong question bank (1 điểm)Trường hợp chọn tuỳ chọn Add “a random question” ở giao diện  sẽ thấy giao diện (6.5) như sau" HBox.hgrow="ALWAYS">
+      <Label fx:id="subQuesContent" ellipsisString="" lineSpacing="5.0" maxWidth="1500.0" prefHeight="17.0" text="Thêm một số câu hỏi trong question bank (1 điểm)Trường hợp chọn tuỳ chọn Add “a random question” ở giao diện  sẽ thấy giao diện (6.5) như sau" HBox.hgrow="ALWAYS">
          <HBox.margin>
             <Insets left="5.0" />
          </HBox.margin>

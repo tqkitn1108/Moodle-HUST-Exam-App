@@ -34,6 +34,8 @@ public class GUI62aController implements Initializable {
     private Text totalOfMark;
     @FXML
     private JFXCheckBox shuffleBtn;
+    @FXML
+    private Label quantity;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
@@ -47,10 +49,6 @@ public class GUI62aController implements Initializable {
     private List<Question> selectedQuestions;
     private Quiz quiz;
 
-    public void setTotalOfMark() {
-        this.totalOfMark.setText("Total of marks: " + selectedQuestions.size() + ".00");
-    }
-
     public void setSelectedQuestions(List<Question> selectedQuestions) {
         this.selectedQuestions = selectedQuestions;
         DataModel.getInstance().setSelectedQuestions(selectedQuestions);
@@ -63,6 +61,10 @@ public class GUI62aController implements Initializable {
     }
 
     public void addQuestionToScrollPane() {
+        quantity.setText(selectedQuestions.size() + "");
+        totalOfMark.setText("Total of marks: " + selectedQuestions.size() + ".00");
+        DataModel.getInstance().setQuantityLabel(quantity);
+        DataModel.getInstance().setTotalMark(totalOfMark);
         pencilLabel.setText("Page 1");
         pencilLabel.setStyle("-fx-text-fill: #c34d53");
         for (int i = 1; i <= selectedQuestions.size(); ++i) {

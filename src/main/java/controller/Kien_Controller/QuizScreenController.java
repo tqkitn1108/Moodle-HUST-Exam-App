@@ -2,8 +2,7 @@ package controller.Kien_Controller;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.jfoenix.controls.JFXCheckBox;
@@ -20,10 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -33,11 +29,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
-import model.DBInteract;
 import model.Question;
 import model.Quiz;
 import model2.DataModel;
-import model2.GeneralFunctions;
+import start.TEST6;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -71,6 +66,7 @@ public class QuizScreenController implements Initializable {
     private Map<Integer, List<Integer>> userAnswer;
     private Map<Integer, List<Integer>> correctAnswers;
     private Integer numberOfRightAnswers;
+    private String passwordPdf;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
 
@@ -359,68 +355,110 @@ public class QuizScreenController implements Initializable {
 
     @FXML
     public void exportToPdf() throws Exception {
-        try {
-            finishBtn.setVisible(false);
-            exportBtn.setVisible(true);
-            Stage thisStage = (Stage) exportBtn.getScene().getWindow();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save PDF File");
-            fileChooser.setInitialFileName("Baithitracnghiem.pdf");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-            File file = fileChooser.showSaveDialog(thisStage);
+        finishBtn.setVisible(false);
+        exportBtn.setVisible(true);
+        Stage thisStage = (Stage) exportBtn.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.setInitialFileName("Baithitracnghiem.pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+        File file = fileChooser.showSaveDialog(thisStage);
 
-            if (file != null) {
-                PdfWriter writer = new PdfWriter(new FileOutputStream(file.getPath()));
-                PdfDocument pdfDocument = new PdfDocument(writer);
-                Document document = new Document(pdfDocument, PageSize.A4);
-                document.setMargins(50, 50, 50, 50);
-
-                double vboxHeight = quizListContainer.getHeight();
-                double partWidth = quizListContainer.getWidth();
-                double startY = 0; // Vị trí bắt đầu chụp của VBox ở mỗi lần chụp
-                while (vboxHeight > startY) {
-                    double partHeight = vboxHeight - startY; // Phần VBox còn cần phải chụp
-
-                    // Tạo một đối tượng Rectangle để chỉ định phần của VBox bạn muốn chụp
-                    Rectangle2D partRect = new Rectangle2D(0, startY, partWidth, partHeight);
-
-                    SnapshotParameters params = new SnapshotParameters();
-                    params.setViewport(partRect);
-
-                    // Chuyển phần của VBox sang hình ảnh và chụp vào tài liệu PDF
-                    WritableImage partImage = quizListContainer.snapshot(params, null);
-                    Image partPdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(partImage, null), null));
-                    document.add(partPdfImage);
-                    startY += 1700;
-                }
-                document.close();
-
-                // Sau khi tạo file PDF thành công
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Successfully");
-                alert.setHeaderText(null);
-                alert.setContentText("PDF document has been successfully created!");
-
-                alert.setOnCloseRequest(event -> {
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
-                        Node node = fxmlLoader.load();
-                        CourseListController courseListController = fxmlLoader.getController();
-                        courseListController.setMainScreen(this.headerListener, this.screenListener);
-                        this.headerListener.showMenuButton();
-                        this.headerListener.showEditingBtn();
-                        this.headerListener.removeAddress(5);
-                        this.screenListener.removeTopScreen();
-                        this.screenListener.changeScreen(node);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                alert.showAndWait();
+        if (file != null) {
+            PdfWriter writer = new PdfWriter(new FileOutputStream(file.getPath()));
+            if (isEncrypted()) {
+                writer = new PdfWriter(new FileOutputStream(file.getPath()),
+                        new WriterProperties().setStandardEncryption(passwordPdf.getBytes(),
+                                passwordPdf.getBytes(),
+                                EncryptionConstants.ALLOW_PRINTING,
+                                EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            PdfDocument pdfDocument = new PdfDocument(writer);
+
+            Document document = new Document(pdfDocument, PageSize.A4);
+            document.setMargins(50, 50, 50, 50);
+
+            double vboxHeight = quizListContainer.getHeight();
+            double partWidth = quizListContainer.getWidth();
+            double startY = 0; // Vị trí bắt đầu chụp của VBox ở mỗi lần chụp
+            while (vboxHeight > startY) {
+                double partHeight = vboxHeight - startY; // Phần VBox còn cần phải chụp
+
+                // Tạo một đối tượng Rectangle để chỉ định phần của VBox bạn muốn chụp
+                Rectangle2D partRect = new Rectangle2D(0, startY, partWidth, partHeight);
+
+                SnapshotParameters params = new SnapshotParameters();
+                params.setViewport(partRect);
+
+                // Chuyển phần của VBox sang hình ảnh và chụp vào tài liệu PDF
+                WritableImage partImage = quizListContainer.snapshot(params, null);
+                Image partPdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(partImage, null), null));
+                document.add(partPdfImage);
+                startY += 1700;
+            }
+            document.close();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successfully");
+            alert.setHeaderText(null);
+            alert.setContentText("PDF document has been successfully created!");
+
+            alert.setOnCloseRequest(event -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+                    Node node = fxmlLoader.load();
+                    CourseListController courseListController = fxmlLoader.getController();
+                    courseListController.setMainScreen(this.headerListener, this.screenListener);
+                    this.headerListener.showMenuButton();
+                    this.headerListener.showEditingBtn();
+                    this.headerListener.removeAddress(5);
+                    this.screenListener.removeTopScreen();
+                    this.screenListener.changeScreen(node);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            alert.showAndWait();
         }
+    }
+
+    public boolean isEncrypted() throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to encrypt your PDF with a password?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            Stage thisStage = (Stage) quizListContainer.getScene().getWindow();
+            Scene thisScene = thisStage.getScene();
+            StackPane overlayStackPane = new StackPane(thisScene.getRoot());
+            overlayStackPane.setPrefSize(thisStage.getWidth() - 15, thisStage.getHeight() - 38);
+            Pane overlay = new Pane();
+            overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
+            overlayStackPane.getChildren().add(overlay);
+            thisScene.setRoot(overlayStackPane);
+            thisStage.setScene(thisScene);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Kien_FXML/GUI9.fxml"));
+            Parent confirmPane = loader.load();
+            Scene scene = new Scene(confirmPane);
+            Stage confirmStage = new Stage();
+            confirmStage.initStyle(StageStyle.UNDECORATED);
+            confirmStage.initModality(Modality.WINDOW_MODAL);
+            confirmStage.initOwner(thisStage);
+
+            confirmStage.setScene(scene);
+            confirmStage.showAndWait();
+
+            GUI9Controller gui9Controller = loader.getController();
+            passwordPdf = gui9Controller.getPassword();
+            if (gui9Controller.isCancelled) {
+                overlayStackPane.getChildren().remove(overlay);
+            }
+            return passwordPdf != null;
+        }
+        return false;
     }
 
     @Override
@@ -428,5 +466,6 @@ public class QuizScreenController implements Initializable {
         userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i, i>=0
         correctAnswers = new HashMap<>();
         numberOfRightAnswers = 0;
+        passwordPdf = "";
     }
 }

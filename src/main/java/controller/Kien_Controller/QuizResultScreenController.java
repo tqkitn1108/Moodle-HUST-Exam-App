@@ -108,11 +108,9 @@ public class QuizResultScreenController implements Initializable {
                 for (Integer integer : userAnswer.get(i)) {
                     Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer + 1);
                     if (answerNode instanceof JFXCheckBox selectedCheckBox) {
-                        selectedCheckBox.setSelected(true);
                         selectedCheckBox.setCheckedColor(Color.GRAY);
                     } else {
                         JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
-                        selectedRadio.setSelected(true);
                         selectedRadio.setSelectedColor(Color.GRAY);
                     }
                 }

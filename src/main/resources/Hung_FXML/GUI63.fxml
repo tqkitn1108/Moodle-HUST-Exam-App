@@ -67,12 +67,15 @@
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox fx:id="categoryBox" minHeight="28.0" minWidth="150.0" onAction="#selectCateBoxItem" prefHeight="28.0" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                    <ComboBox fx:id="categoryBox" minHeight="30.0" onAction="#selectCateBoxItem" prefHeight="30.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-border-color: #777;" visibleRowCount="20">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </ComboBox>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </HBox>
                               <VBox spacing="10.0">
                                  <children>
@@ -81,7 +84,7 @@
                                           <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" />
                                        </graphic>
                                     </Label>
-                                    <JFXCheckBox checkedColor="#009fe5" selected="true" text="Also show questions from subcategories" />
+                                    <JFXCheckBox fx:id="showMoreQuestionCheckBox" checkedColor="#009fe5" onAction="#showQuesFromSubCate" selected="true" text="Also show questions from subcategories" />
                                     <JFXCheckBox checkedColor="#009fe5" text="Also show old questions" />
                                  </children>
                                  <VBox.margin>

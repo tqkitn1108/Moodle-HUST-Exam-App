@@ -23,10 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
-import model.Category;
-import model.DBInteract;
-import model.DataInteract;
-import model.Question;
+import model.*;
 import model2.DataModel;
 import model2.GeneralFunctions;
 
@@ -145,7 +142,7 @@ public class GUI21Controller implements Initializable {
                 String fileName = file.getName();
                 // Kiểm tra định dạng tệp
                 if (!fileName.endsWith(".txt") && !fileName.endsWith(".docx") && !fileName.endsWith(".doc")) {
-                    throw new WrongFormatException("Please choose a file with tail .txt, .doc or .docx");
+                    throw new ReadFileException("Please choose a file with tail .txt, .doc or .docx");
                 }
                 // Đọc nội dung tệp và xử lý
                 String itemWithOldQuantity = categoryBox3.getValue();
@@ -164,10 +161,10 @@ public class GUI21Controller implements Initializable {
                 categoryBox3.setValue(cateTitle + " (" + dbInteract.getQuestionsBelongToCategory(cateTitle).size() + ")");
 
                 // Xử lý khi import thành công
-                GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Import successfully!");
-            } catch (WrongFormatException e) {
+                GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Import " + quesList.size() + " questions successfully!");
+            } catch (ReadFileException e) {
                 // Xử lý khi định dạng tệp không đúng
-                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Wrong Format: " + e.getMessage());
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Wrong Format", e.getMessage());
             } catch (Exception e) {
                 GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
             }
@@ -175,12 +172,6 @@ public class GUI21Controller implements Initializable {
             file = null;
             file2 = null;
             fileLabel.setVisible(false);
-        }
-    }
-
-    public static class WrongFormatException extends Exception {
-        public WrongFormatException(String message) {
-            super(message);
         }
     }
 

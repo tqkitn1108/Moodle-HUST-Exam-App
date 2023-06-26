@@ -1,48 +1,37 @@
 package start;
 
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Category;
-import model.DBInteract;
+import com.itextpdf.kernel.pdf.EncryptionConstants;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.WriterProperties;
 
-import java.util.List;
+import java.io.File;
 
-public class TEST6 extends Application {
+public class TEST6 {
+    public static final String DEST = "mypdf.pdf";
+    public static final String SRC = "example.pdf";
 
-    DBInteract dbInteract = new DBInteract();
-    ComboBox<String> comboBox = new ComboBox<String>();
+    public static final String OWNER_PASSWORD = "World";
+    public static final String USER_PASSWORD = "Hello";
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Khởi tạo ComboBox và danh sách các mục
-        for (Category category : dbInteract.getAllNonSubCategories()) {
-            backtracking(category, 0);
-        }
-        // Hiển thị ComboBox và TreeView trên giao diện người dùng
-        VBox root = new VBox(10);
-        root.getChildren().add(comboBox);
-        primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.show();
+    public static void main(String[] args) throws Exception {
+//        File file = new File(DEST);
+//        file.getParentFile().mkdirs();
+
+        new TEST6().manipulatePdf(DEST);
     }
 
-    public void backtracking(Category category, int order) {
-        comboBox.getItems().add("  ".repeat(order) + category.getCategoryTitle());
-        List<Category> subCategories = dbInteract.getSubCategoriesOf(category.getCategoryTitle());
-        if (subCategories != null) {
-            for (Category subCategory : subCategories) {
-                backtracking(subCategory, order + 1);
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public void manipulatePdf(String dest) throws Exception {
+        PdfDocument pdfDoc = new PdfDocument(
+                new PdfReader(SRC),
+                new PdfWriter(dest, new WriterProperties().setStandardEncryption(
+                        USER_PASSWORD.getBytes(),
+                        OWNER_PASSWORD.getBytes(),
+                        EncryptionConstants.ALLOW_PRINTING,
+                        EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA))
+        );
+        pdfDoc.close();
     }
 }
+
