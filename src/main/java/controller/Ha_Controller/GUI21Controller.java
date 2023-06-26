@@ -241,7 +241,7 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void addCategory(ActionEvent event) {
+    public void addCategory(ActionEvent event) throws Exception{
         if (cateName.getText().length() > 0) {
             dbInteract.createNewCategory(GeneralFunctions.getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
             String presentValue = categoryBox1.getValue();

@@ -17,6 +17,7 @@ public class test {
 //            q.showQ();
 //        }
 
-        List<Question> questions = DataInteract.getQuestionsFromTxtFile("C:/Users/ACER/Downloads/test.txt");
+//        List<Question> questions = DataInteract.getQuestionsFromTxtFile("C:/Users/ACER/Downloads/test.txt");
+        dbi.setShuffle("CNXH_GK_1",true);
     }
 }
