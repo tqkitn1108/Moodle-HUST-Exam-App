@@ -198,13 +198,14 @@ public class DBInteract {
     }
 
     public void createNewQuiz(Quiz quiz) throws Exception{
-        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit) VALUES(?,?,?)";
+        String sql = "INSERT INTO QUIZ(quizName, quizDescription, timeLimit, showDescription) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql);){
 
             pstmt.setString(1, quiz.getQuizName());
             pstmt.setString(2, quiz.getQuizDescription());
             pstmt.setInt(3, quiz.getTimeLimit());
+            pstmt.setInt(4,quiz.isShowDescription() ? 1 : 0);
             pstmt.executeUpdate();
         } catch (Exception e) {
             if (e.getMessage().contains("[SQLITE_CONSTRAINT_UNIQUE]") && e.getMessage().contains("QUIZ.quizName")) {
@@ -338,7 +339,7 @@ public class DBInteract {
 
     public List<Quiz> getAllQuizzes() {
         List<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT quizName, quizDescription, timeLimit, shuffle FROM QUIZ";
+        String sql = "SELECT quizName, quizDescription, timeLimit, shuffle, showDescription FROM QUIZ";
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();){
 
@@ -349,6 +350,7 @@ public class DBInteract {
                 quiz.setQuizDescription(rs.getString(2));
                 quiz.setTimeLimit(rs.getInt(3));
                 quiz.setShuffle((rs.getInt(4) == 1));
+                quiz.setShowDescription(rs.getInt(5) == 1);
                 quizzes.add(quiz);
             }
         } catch (SQLException e) {

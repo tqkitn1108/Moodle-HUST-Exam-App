@@ -7,6 +7,11 @@ public class Quiz {
     private String quizDescription;
     private int timeLimit;
     private boolean shuffle;
+    private boolean showDescription;
+
+    public boolean isShowDescription() {
+        return showDescription;
+    }
 
     public boolean isShuffle() {
         return shuffle;
@@ -22,6 +27,10 @@ public class Quiz {
 
     public String getQuizDescription() {
         return quizDescription;
+    }
+
+    public void setShowDescription(boolean showDescription) {
+        this.showDescription = showDescription;
     }
 
     public void setQuizDescription(String quizDescription) {
