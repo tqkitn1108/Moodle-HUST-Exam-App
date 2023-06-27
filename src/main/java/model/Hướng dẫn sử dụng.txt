@@ -66,5 +66,6 @@ tương tác bằng getter và setter
 	+ String quizDescription;
 	+ int timeLimit; (theo phút)
 	+ boolean shuffle
+	+ boolean showDescription
 	+ List<Question> getQuestions()
 	+ boolean isShuffle()
