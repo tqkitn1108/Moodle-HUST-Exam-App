@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
@@ -17,10 +18,15 @@ import java.util.ResourceBundle;
 public class CourseNameController implements Initializable {
     @FXML
     private MFXButton quizItem;
+    @FXML
+    private Label quizDesc;
     private Quiz quiz;
+
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
-        this.quizItem.setText(quiz.getQuizName());
+        quizItem.setText(quiz.getQuizName());
+        quizDesc.setText(quiz.getQuizDescription());
+//        quizDesc.setVisible(false);
     }
 
     private HeaderListener headerListener;

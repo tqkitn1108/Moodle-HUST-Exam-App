@@ -150,8 +150,7 @@ public class GUI21Controller implements Initializable {
                 List<Question> quesList = new ArrayList<>();
                 if (fileName.endsWith(".txt")) {
                     quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
-                }
-                if (fileName.endsWith(".docx") || fileName.endsWith(".doc")) {
+                } else {
                     quesList = DataInteract.getQuestionsFromDocFile(file.getPath());
                 }
                 for (Question q : quesList) {
@@ -241,7 +240,7 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void addCategory(ActionEvent event) throws Exception{
+    public void addCategory(ActionEvent event) throws Exception {
         if (cateName.getText().length() > 0) {
             dbInteract.createNewCategory(GeneralFunctions.getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
             String presentValue = categoryBox1.getValue();

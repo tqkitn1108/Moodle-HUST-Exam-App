@@ -61,7 +61,7 @@ public class GUI62aController implements Initializable {
     }
 
     public void addQuestionToScrollPane() {
-        quantity.setText(selectedQuestions.size() + "");
+        quantity.setText(String.valueOf(selectedQuestions.size()));
         totalOfMark.setText("Total of marks: " + selectedQuestions.size() + ".00");
         DataModel.getInstance().setQuantityLabel(quantity);
         DataModel.getInstance().setTotalMark(totalOfMark);
@@ -117,6 +117,7 @@ public class GUI62aController implements Initializable {
                 }
             }
             quiz.setShuffle(shuffleBtn.isSelected());
+            dbInteract.setShuffle(quiz.getQuizName(), shuffleBtn.isSelected());
             this.headerListener.removeAddress(1);
             this.screenListener.removeTopScreen();
         } catch (Exception e) {

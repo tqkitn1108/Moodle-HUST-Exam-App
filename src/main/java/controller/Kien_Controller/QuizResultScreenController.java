@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -106,9 +107,9 @@ public class QuizResultScreenController implements Initializable {
             correctAnswers.put(i, questionLayoutControllers.get(i).getCorrectAnswerList());
             if (!userAnswer.get(i).equals(List.of(-1))) {
                 for (Integer integer : userAnswer.get(i)) {
-                    Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer + 1);
-                    if (answerNode instanceof JFXCheckBox selectedCheckBox) {
-                        selectedCheckBox.setCheckedColor(Color.GRAY);
+                    Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer + 2);
+                    if (answerNode instanceof CheckBox selectedCheckBox) {
+                        selectedCheckBox.getStyleClass().add("selected-choice");
                     } else {
                         JFXRadioButton selectedRadio = (JFXRadioButton) answerNode;
                         selectedRadio.setSelectedColor(Color.GRAY);
@@ -119,7 +120,7 @@ public class QuizResultScreenController implements Initializable {
                 questionLayoutControllers.get(i).setStateQues("Correct Answer");
             } else questionLayoutControllers.get(i).setStateQues("Wrong Answer");
             for (int j = 1; j <= questionList.get(i).getChoices().size(); ++j) {
-                Node option = questionLayoutControllers.get(i).questionBox.getChildren().get(j);
+                Node option = questionLayoutControllers.get(i).questionBox.getChildren().get(j+1);
                 option.setDisable(true);
                 option.setStyle("-fx-opacity: 1;");
             }

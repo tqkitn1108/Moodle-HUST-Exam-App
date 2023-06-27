@@ -1,11 +1,12 @@
 package model2;
 
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 
 public class GeneralFunctions {
     public static String getCateName(String nameWithQuantity) {
         if (nameWithQuantity == null) return null;
-        String categoryName = nameWithQuantity.trim();
+        String categoryName = nameWithQuantity.replaceAll("^\\s+", "");
         if (categoryName.endsWith(")")) {
             return categoryName.substring(0, categoryName.lastIndexOf('(') - 1);
         }
@@ -19,5 +20,4 @@ public class GeneralFunctions {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

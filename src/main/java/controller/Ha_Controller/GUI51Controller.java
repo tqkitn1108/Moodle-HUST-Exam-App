@@ -29,6 +29,8 @@ public class GUI51Controller implements Initializable {
     @FXML
     private TextArea description;
     @FXML
+    private JFXCheckBox showDescBox;
+    @FXML
     private ComboBox<Integer> daybox1;
 
     @FXML

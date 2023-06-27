@@ -41,8 +41,6 @@ public class GUI32Controller implements Initializable {
     @FXML
     private VBox myVBox;
     @FXML
-    private VBox addChoiceVBox;
-    @FXML
     private TextField quesName;
     @FXML
     private TextArea quesText;
@@ -53,7 +51,9 @@ public class GUI32Controller implements Initializable {
     @FXML
     private Button addChoiceButton;
     @FXML
-    Pane pane = new Pane();
+    private Pane pane;
+    @FXML
+    private Pane pane2;
     @FXML
     private FontAwesomeIconView closeIcon;
 
@@ -75,6 +75,7 @@ public class GUI32Controller implements Initializable {
     private Question question;
     private QuestionInGUI31Controller questionInGUI31Controller;
     private boolean flag = false;
+    private String firstCategoryName;
 
     public void setQuestionInGUI31Controllers(QuestionInGUI31Controller questionInGUI31Controller) {
         this.questionInGUI31Controller = questionInGUI31Controller;
@@ -95,6 +96,7 @@ public class GUI32Controller implements Initializable {
             showCategoryInTree(category, 0, cateBox);
         }
         if (cateName != null) {
+            firstCategoryName = cateName;
             cateBox.setValue(cateName);
             cateBox.setPadding(new Insets(0, 0, 0, -categoryLevel.get(GeneralFunctions.getCateName(cateName)) * 9));
         }
@@ -122,11 +124,11 @@ public class GUI32Controller implements Initializable {
         List<Double> grades = new ArrayList<>();
         for (Node node : nodes) {
             TextArea textArea = (TextArea) node;
-            if (textArea.getText().length() != 0) {
+            ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
+            if (textArea.getText().length() != 0 || imageView.getImage() != null) {
                 count++;
                 options.add(textArea.getText());
                 labels.add((char) (count + 64));
-                ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
                 images.add(imageView.getImage());
                 Node node1 = node.getParent();
                 while (node1 != null) {
@@ -178,7 +180,14 @@ public class GUI32Controller implements Initializable {
                 }
                 flag = true;
             } else {
-                dbInteract.editQuestion(quesName.getText(), newQuestion);
+                if (cateBox.getValue().equals(firstCategoryName)) {
+                    dbInteract.editQuestion(quesName.getText(), newQuestion);
+                } else {
+                    dbInteract.deleteQuestion(quesName.getText(), null);
+                    dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
+                    DataModel.getInstance().getGui21Controller().loadCategoryBox();
+                    DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
+                }
                 if (questionInGUI31Controller != null)
                     questionInGUI31Controller.setQuestion(newQuestion);
                 flag = true;
@@ -258,12 +267,16 @@ public class GUI32Controller implements Initializable {
         if (choices.size() > 2) {
             pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
             pane.setVisible(true);
+            if (choices.size() > 5) {
+                pane2.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                pane2.setVisible(true);
+            }
             addChoiceButton.setVisible(false);
         }
         int index = 0;
         for (Node node : nodes) {
             TextArea textArea = (TextArea) node;
-            if (choices.get(index).getOption().length() != 0) {
+            if (choices.get(index).getOption().length() != 0 || choices.get(index).getOptionImage() != null) {
                 textArea.setText(choices.get(index).getOption());
                 ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
                 if (choices.get(index).getOptionImage() != null) {
@@ -332,12 +345,19 @@ public class GUI32Controller implements Initializable {
         setUpGradeBox();
         pane.setPrefHeight(0);
         pane.setVisible(false);
+        pane2.setPrefHeight(0);
+        pane2.setVisible(false);
         addChoiceButton.setOnAction(actionEvent -> {
-            pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
-            pane.setVisible(true);
-            addChoiceButton.setVisible(false);
-            addChoiceButton.setMinHeight(0);
-            addChoiceButton.setPrefHeight(0);
+            if (pane.getPrefHeight() == 0) {
+                pane.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                pane.setVisible(true);
+            } else {
+                pane2.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                pane2.setVisible(true);
+                addChoiceButton.setVisible(false);
+                addChoiceButton.setMinHeight(0);
+                addChoiceButton.setPrefHeight(0);
+            }
         });
     }
 }

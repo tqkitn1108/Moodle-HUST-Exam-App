@@ -166,8 +166,8 @@ public class DataInteract {
                 List<Choice> choices = new ArrayList<>();
                 for (int j = 0; j < options.size(); ++j) {
                     Choice choice = new Choice();
-                    choice.setOption(options.get(i));
-                    choice.setOptionImage(optionImages.get(i));
+                    choice.setOption(options.get(j));
+                    choice.setOptionImage(optionImages.get(j));
                     choices.add(choice);
                 }
                 q.setChoices(choices);
@@ -224,8 +224,8 @@ public class DataInteract {
                 List<Choice> choices = new ArrayList<>();
                 for (int j = 0; j < options.size(); ++j) {
                     Choice choice = new Choice();
-                    choice.setOption(options.get(i));
-                    choice.setOptionImage(optionImages.get(i));
+                    choice.setOption(options.get(j));
+                    choice.setOptionImage(optionImages.get(j));
                     choices.add(choice);
                 }
                 q.setChoices(choices);

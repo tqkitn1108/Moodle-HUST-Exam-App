@@ -24,11 +24,12 @@ public class TEST5 extends Application {
     public void start(Stage primaryStage) throws Exception {
         DBInteract dbInteract = new DBInteract();
         List<Quiz> quizzes = dbInteract.getAllQuizzes();
+//        dbInteract.deleteQuiz("Đây là quiz test nhé");
         for(Quiz quiz : quizzes){
 //            for(Question question: quiz.getQuestions()){
 //                question.showQ();
 //            }
-            System.out.println(quiz.isShuffle());
+            System.out.println(quiz.getQuizName());
         }
 //        List<Category> categories = dbInteract.getAllCategories();
 //        for(Category category : categories){

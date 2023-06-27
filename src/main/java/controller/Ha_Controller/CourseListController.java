@@ -41,7 +41,7 @@ public class CourseListController implements Initializable {
             CourseNameController courseNameController = fxmlLoader.getController();
             courseNameController.setQuiz(quiz);
             courseNameController.setMainScreen(this.headerListener, this.screenListener);
-            VBox.setMargin(node, new Insets(15,10,15,80));
+            VBox.setMargin(node, new Insets(10,10,10,80));
             quizList.getChildren().add(node);
         } catch (Exception e) {
             throw new RuntimeException(e);

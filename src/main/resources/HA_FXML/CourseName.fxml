@@ -2,23 +2,36 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<MFXButton fx:id="quizItem" graphicTextGap="8.0" onAction="#openQuiz" rippleColor="WHITE" styleClass="text-underline" text="Kiểm tra cuối kỳ môn IT4859Q" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseNameController">
-   <graphic>
-      <StackPane prefHeight="18.0" prefWidth="12.0">
-         <children>
-            <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
-            <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
-         </children>
-      </StackPane>
-   </graphic>
-   <font>
-      <Font size="16.0" />
-   </font>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
-</MFXButton>
+
+<VBox style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Ha_Controller.CourseNameController">
+   <children>
+      <MFXButton fx:id="quizItem" graphicTextGap="8.0" onAction="#openQuiz" rippleColor="WHITE" styleClass="text-underline" text="Kiểm tra cuối kỳ môn IT4859Q">
+         <graphic>
+            <StackPane prefHeight="18.0" prefWidth="12.0">
+               <children>
+                  <FontAwesomeIconView fill="#c6e5f8" glyphName="FILE" stroke="#4285f4" />
+                  <FontAwesomeIconView fill="#eb6713" glyphName="CHECK" />
+               </children>
+            </StackPane>
+         </graphic>
+         <font>
+            <Font size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </MFXButton>
+      <Label fx:id="quizDesc" text="Description">
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

@@ -116,6 +116,7 @@ public class QuizScreenController implements Initializable {
     private void setTimer() {
         totalSec = quiz.getTimeLimit() * 60L;
         this.timer = new Timer();
+        DataModel.getInstance().setTimer(timer);
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -152,9 +153,9 @@ public class QuizScreenController implements Initializable {
                 toggleGroups[i] = questionLayoutController.getChoiceGroup();
                 int size = questionList.get(i).getChoices().size();
                 if (questionList.get(i).isMultipleAnswer()) {
-                    Set<JFXCheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
+                    Set<CheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
                     AtomicInteger count = new AtomicInteger(); // Vai trò như biến đếm count (count đếm số lượng checkbox được select)
-                    for (JFXCheckBox checkBox : checkBoxes) {
+                    for (CheckBox checkBox : checkBoxes) {
                         int finalI1 = i;
                         checkBox.selectedProperty().addListener(
                                 (observable, oldValue, newValue) -> {
@@ -166,7 +167,7 @@ public class QuizScreenController implements Initializable {
                                         radioButton.setToggleGroup(toggleGroups[finalI1]);
                                         List<Integer> answerList = new ArrayList<Integer>();
                                         for (int j = 1; j <= size; ++j) {
-                                            JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                            CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j+1);
                                             if (selectedCheckBox.isSelected()) {
                                                 answerList.add(j - 1);
                                             }
@@ -184,7 +185,7 @@ public class QuizScreenController implements Initializable {
                                         } else {
                                             List<Integer> answerList = new ArrayList<Integer>();
                                             for (int j = 1; j <= size; ++j) {
-                                                JFXCheckBox selectedCheckBox = (JFXCheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                                CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j+1);
                                                 if (selectedCheckBox.isSelected()) {
                                                     answerList.add(j - 1);
                                                 }
@@ -203,7 +204,7 @@ public class QuizScreenController implements Initializable {
                                     questionLayoutController.setStateQues("Answered");
                                     List<Integer> answerList = new ArrayList<Integer>();
                                     for (int j = 1; j <= size; ++j) {
-                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
+                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j+1);
                                         if (selectedRadio.isSelected()) {
                                             answerList.add(j - 1);
                                             userAnswer.put(finalI, answerList);

@@ -12,6 +12,7 @@ import model.Question;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 public class DataModel {
     private static DataModel instance;
@@ -31,6 +32,8 @@ public class DataModel {
 
     private Label quantityLabel;
     private Text totalMark;
+
+    private Timer timer;
 
     private DataModel() {
 
@@ -113,5 +116,13 @@ public class DataModel {
 
     public Text getTotalMark() {
         return totalMark;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }

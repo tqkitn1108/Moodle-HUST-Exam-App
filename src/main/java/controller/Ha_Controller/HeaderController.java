@@ -58,11 +58,12 @@ public class HeaderController implements Initializable {
         if (lastBtn.getText().equals("Preview")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
-            alert.setHeaderText("You are in the test, are you sure you want to exit?");
-            alert.setContentText("When you get rid of the test, it means that you accept the test score not to be recorded.");
+            alert.setHeaderText(null);
+            alert.setContentText("When you get rid of the test, it means that you accept the test score not to be recorded. Are you sure you want to exit?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
+                    DataModel.getInstance().getTimer().cancel();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
                     Node node = fxmlLoader.load();
                     CourseListController courseListController = fxmlLoader.getController();
