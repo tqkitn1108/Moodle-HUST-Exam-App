@@ -1,7 +1,6 @@
 package controller.Hung_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
-import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Category;
@@ -45,18 +43,20 @@ public class GUI63Controller implements Initializable {
     }
 
     private DBInteract dbInteract;
-    private Quiz quiz;
     private List<Question> selectedQuestions;
     private List<Question> questionsInCategory;
     private Map<String, Integer> categoryLevel;
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
-
     @FXML
     public void closeThisWindow(MouseEvent event) {
         this.screenListener.removeTopScreen();
+    }
+
+    @FXML
+    public void showQuesFromSubCate(ActionEvent event) throws IOException {
+        if (categoryBox.getValue() != null) {
+            selectCateBoxItem(event);
+        }
     }
 
     @FXML
@@ -97,10 +97,9 @@ public class GUI63Controller implements Initializable {
     @FXML
     public void addSelectedQuestion(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62.fxml"));
             Node node = fxmlLoader.load();
-            GUI62aController gui62aController = fxmlLoader.getController();
-            gui62aController.setQuiz(quiz);
+            GUI62Controller gui62Controller = fxmlLoader.getController();
             Set<Node> allSelectionBoxes = questionList.lookupAll(".selection-box");
             int index =0;
             for (Node node1 : allSelectionBoxes) {
@@ -110,9 +109,9 @@ public class GUI63Controller implements Initializable {
                 }
                 index++;
             }
-            gui62aController.setSelectedQuestions(selectedQuestions);
-            gui62aController.addQuestionToScrollPane();
-            gui62aController.setMainScreen(this.headerListener, this.screenListener);
+            gui62Controller.setSelectedQuestions(selectedQuestions);
+            gui62Controller.addQuestionToScrollPane();
+            gui62Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.removeTopScreen();  // Xóa giao diện GUI63
             this.screenListener.removeTopScreen(); // Xóa giao diện GUI62a đã có
             this.screenListener.changeScreen(node); // Load giao diện GUI62a hiện tại
@@ -135,13 +134,6 @@ public class GUI63Controller implements Initializable {
                 JFXCheckBox box = (JFXCheckBox) node;
                 box.setSelected(false);
             }
-        }
-    }
-
-    @FXML
-    public void showQuesFromSubCate(ActionEvent event) throws IOException {
-        if (categoryBox.getValue() != null) {
-            selectCateBoxItem(event);
         }
     }
 

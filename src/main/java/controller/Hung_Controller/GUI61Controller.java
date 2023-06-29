@@ -1,5 +1,6 @@
 package controller.Hung_Controller;
 
+import controller.Ha_Controller.CourseListController;
 import controller.Kien_Controller.GUI72Controller;
 import controller.Kien_Controller.QuizScreenController;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,20 +21,18 @@ import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
-import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GUI61Controller implements Initializable {
     @FXML
     private Label quizName;
     @FXML
     private Text timeLimit;
+    @FXML
+    private ComboBox<String> jumpBox;
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
 
@@ -42,6 +42,7 @@ public class GUI61Controller implements Initializable {
     }
 
     private Quiz quiz;
+
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
         this.quizName.setText(quiz.getQuizName());
@@ -49,6 +50,10 @@ public class GUI61Controller implements Initializable {
     }
 
     public void setTimeLimit(Integer timeLimit) {
+        if(timeLimit == 0) {
+            this.timeLimit.setText("Time limit: 0 second");
+            return;
+        }
         int hrs = timeLimit / 60;
         int mins = timeLimit % 60;
         String hrText = "", minText = "";
@@ -62,11 +67,10 @@ public class GUI61Controller implements Initializable {
     @FXML
     public void editingQuiz(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62a.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62.fxml"));
             Node node = fxmlLoader.load();
-            GUI62aController gui62aController = fxmlLoader.getController();
-            gui62aController.setQuiz(quiz);
-            gui62aController.setMainScreen(this.headerListener, this.screenListener);
+            GUI62Controller gui62Controller = fxmlLoader.getController();
+            gui62Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("Edit quiz");
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
@@ -125,7 +129,21 @@ public class GUI61Controller implements Initializable {
         }
     }
 
+    @FXML
+    public void jumpToAnotherPage(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+        Node node = fxmlLoader.load();
+        CourseListController courseListController = fxmlLoader.getController();
+        courseListController.setMainScreen(this.headerListener, this.screenListener);
+        this.headerListener.showMenuButton();
+        this.headerListener.showEditingBtn();
+        this.headerListener.removeAddress(5);
+        this.screenListener.removeTopScreen();
+        this.screenListener.changeScreen(node);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        jumpBox.getItems().add("Home");
     }
 }

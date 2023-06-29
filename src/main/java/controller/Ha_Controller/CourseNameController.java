@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
+import model2.DataModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +45,7 @@ public class CourseNameController implements Initializable {
             Node node = fxmlLoader.load();
             GUI61Controller gui61Controller = fxmlLoader.getController();
             gui61Controller.setQuiz(quiz);
+            DataModel.getInstance().setQuiz(quiz);
             gui61Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("General");
             this.headerListener.addAddressToBreadcrumbs(quizItem.getText());

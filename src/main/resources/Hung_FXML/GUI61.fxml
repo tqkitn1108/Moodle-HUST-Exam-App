@@ -134,7 +134,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </MFXButton>
-                  <ComboBox maxWidth="200.0" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;">
+                  <ComboBox fx:id="jumpBox" maxWidth="200.0" onAction="#jumpToAnotherPage" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>

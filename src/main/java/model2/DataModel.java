@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import model.DBInteract;
 import model.Question;
+import model.Quiz;
 
 import java.util.List;
 import java.util.Map;
@@ -32,8 +33,8 @@ public class DataModel {
 
     private Label quantityLabel;
     private Text totalMark;
-
     private Timer timer;
+    private Quiz quiz;
 
     private DataModel() {
 
@@ -124,5 +125,13 @@ public class DataModel {
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
     }
 }

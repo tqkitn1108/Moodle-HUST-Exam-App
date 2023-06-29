@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 
 public class HeaderController implements Initializable {
-
     @FXML
     private MenuButton menuBtn;
     @FXML

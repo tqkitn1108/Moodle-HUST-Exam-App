@@ -162,7 +162,6 @@ public class GUI21Controller implements Initializable {
                 // Xử lý khi import thành công
                 GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Import " + quesList.size() + " questions successfully!");
             } catch (ReadFileException e) {
-                // Xử lý khi định dạng tệp không đúng
                 GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Wrong Format", e.getMessage());
             } catch (Exception e) {
                 GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
@@ -240,15 +239,19 @@ public class GUI21Controller implements Initializable {
     }
 
     @FXML
-    public void addCategory(ActionEvent event) throws Exception {
-        if (cateName.getText().length() > 0) {
-            dbInteract.createNewCategory(GeneralFunctions.getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
-            String presentValue = categoryBox1.getValue();
-            loadCategoryBox();
-            categoryBox1.setValue(presentValue);
-            GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Add category successfully!");
-        } else
-            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Please type category name!");
+    public void addCategory(ActionEvent event) {
+        try {
+            if (cateName.getText().length() > 0) {
+                dbInteract.createNewCategory(GeneralFunctions.getCateName(categoryBox2.getValue()), cateID.getText(), cateName.getText());
+                String presentValue = categoryBox1.getValue();
+                loadCategoryBox();
+                categoryBox1.setValue(presentValue);
+                GeneralFunctions.showAlert(Alert.AlertType.INFORMATION, "Success", "Add category successfully!");
+            } else
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Please type category name!");
+        } catch (Exception e) {
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
     }
 
     @FXML

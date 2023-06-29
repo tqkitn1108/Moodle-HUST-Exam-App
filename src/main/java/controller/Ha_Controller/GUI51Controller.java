@@ -7,15 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
 import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -134,6 +132,9 @@ public class GUI51Controller implements Initializable {
     @FXML
     private void createNewQuiz(ActionEvent event) {
         try {
+            if (quizName.getText().length() == 0) {
+                throw new Exception("Please fill the question name field");
+            }
             String unit = textbox1.getValue();
             int quizTime = minbox3.getValue();
             if (unit.equals("hours")) {
@@ -148,6 +149,7 @@ public class GUI51Controller implements Initializable {
             newQuiz.setQuizName(quizName.getText());
             newQuiz.setTimeLimit(quizTime);
             newQuiz.setQuizDescription(description.getText());
+            newQuiz.setShowDescription(showDescBox.isSelected());
             dbInteract.createNewQuiz(newQuiz);
             courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.showMenuButton();
@@ -156,7 +158,7 @@ public class GUI51Controller implements Initializable {
             this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 

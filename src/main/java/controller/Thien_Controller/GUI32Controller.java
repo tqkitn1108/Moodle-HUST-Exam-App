@@ -115,83 +115,88 @@ public class GUI32Controller implements Initializable {
     }
 
     @FXML
-    public void saveAndContinueEditing(ActionEvent event) throws Exception {
-        int count = 0; // Đếm số lượng đáp án được điền, nếu nhỏ hơn 2 thì báo lỗi
-        Set<Node> nodes = myVBox.lookupAll(".choice-text");
-        List<Image> images = new ArrayList<>();
-        List<Character> labels = new ArrayList<>();
-        List<String> options = new ArrayList<>();
-        List<Double> grades = new ArrayList<>();
-        for (Node node : nodes) {
-            TextArea textArea = (TextArea) node;
-            ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
-            if (textArea.getText().length() != 0 || imageView.getImage() != null) {
-                count++;
-                options.add(textArea.getText());
-                labels.add((char) (count + 64));
-                images.add(imageView.getImage());
-                Node node1 = node.getParent();
-                while (node1 != null) {
-                    if (node1.getParent().lookup(".grade-box") == null) {
-                        node1 = node1.getParent();
-                    } else {
-                        ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
-                        String tmp;
-                        if (!gradeBox.getValue().equals("None")) {
-                            tmp = gradeBox.getValue().replace("%", "");
-                        } else tmp = "0";
-                        grades.add(Double.parseDouble(tmp));
-                        break;
+    public void saveAndContinueEditing(ActionEvent event) {
+        try {
+            int count = 0; // Đếm số lượng đáp án được điền, nếu nhỏ hơn 2 thì báo lỗi
+            Set<Node> nodes = myVBox.lookupAll(".choice-text");
+            List<Image> images = new ArrayList<>();
+            List<Character> labels = new ArrayList<>();
+            List<String> options = new ArrayList<>();
+            List<Double> grades = new ArrayList<>();
+            for (Node node : nodes) {
+                TextArea textArea = (TextArea) node;
+                ImageView imageView = (ImageView) node.getParent().lookup(".image-view");
+                if (textArea.getText().length() != 0 || imageView.getImage() != null) {
+                    count++;
+                    options.add(textArea.getText());
+                    labels.add((char) (count + 64));
+                    images.add(imageView.getImage());
+                    Node node1 = node.getParent();
+                    while (node1 != null) {
+                        if (node1.getParent().lookup(".grade-box") == null) {
+                            node1 = node1.getParent();
+                        } else {
+                            ComboBox<String> gradeBox = (ComboBox<String>) node1.getParent().lookup(".grade-box");
+                            String tmp;
+                            if (!gradeBox.getValue().equals("None")) {
+                                tmp = gradeBox.getValue().replace("%", "");
+                            } else tmp = "0";
+                            grades.add(Double.parseDouble(tmp));
+                            break;
+                        }
                     }
                 }
             }
-        }
-        if (count < 2) {
-            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "The number of choices must be greater than or equal to 2");
-            flag = false;
-        } else {
-            List<Choice> choices = new ArrayList<>();
-            for (int i = 0; i < count; ++i) {
-                Choice choice = new Choice();
-                choice.setOption(options.get(i));
-                choice.setOptionImage(images.get(i));
-                choice.setOptionGrade(grades.get(i));
-                choices.add(choice);
-            }
-            Question newQuestion = new Question();
-            newQuestion.setQuestionName(quesName.getText());
-            newQuestion.setQuestionText(quesText.getText());
-            newQuestion.setQuestionImage(quesImg.getImage());
-            newQuestion.setOptionLabels(labels);
-            newQuestion.setChoices(choices);
-            if (cateBox.getValue() == null) {
-                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "Please choose a category!");
+            if (count < 2) {
+                GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", "The number of choices must be greater than or equal to 2");
                 flag = false;
-            } else if (question == null || !quesName.getText().equals(question.getQuestionName())) {
-                dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
-                if (question == null) {
-                    DataModel.getInstance().getGui21Controller().loadCategoryBox();
-                    DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
-                    question = newQuestion;
-                } else {
-                    dbInteract.deleteQuestion(question.getQuestionName(), null);
-                    questionInGUI31Controller.setQuestion(newQuestion);
-                    question = newQuestion;
-                }
-                flag = true;
             } else {
-                if (cateBox.getValue().equals(firstCategoryName)) {
-                    dbInteract.editQuestion(quesName.getText(), newQuestion);
-                } else {
-                    dbInteract.deleteQuestion(quesName.getText(), null);
-                    dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
-                    DataModel.getInstance().getGui21Controller().loadCategoryBox();
-                    DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
+                List<Choice> choices = new ArrayList<>();
+                for (int i = 0; i < count; ++i) {
+                    Choice choice = new Choice();
+                    choice.setOption(options.get(i));
+                    choice.setOptionImage(images.get(i));
+                    choice.setOptionGrade(grades.get(i));
+                    choices.add(choice);
                 }
-                if (questionInGUI31Controller != null)
-                    questionInGUI31Controller.setQuestion(newQuestion);
-                flag = true;
+                Question newQuestion = new Question();
+                newQuestion.setQuestionName(quesName.getText());
+                newQuestion.setQuestionText(quesText.getText());
+                newQuestion.setQuestionImage(quesImg.getImage());
+                newQuestion.setOptionLabels(labels);
+                newQuestion.setChoices(choices);
+                if (cateBox.getValue() == null) {
+                    flag = false;
+                    throw new Exception("Please choose a category!");
+                }
+                if (question == null || !quesName.getText().equals(question.getQuestionName())) {
+                    dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
+                    if (question == null) {
+                        DataModel.getInstance().getGui21Controller().loadCategoryBox();
+                        DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
+                        question = newQuestion;
+                    } else {
+                        dbInteract.deleteQuestion(question.getQuestionName(), null);
+                        questionInGUI31Controller.setQuestion(newQuestion);
+                        question = newQuestion;
+                    }
+                    flag = true;
+                } else {
+                    if (cateBox.getValue().equals(firstCategoryName)) {
+                        dbInteract.editQuestion(quesName.getText(), newQuestion);
+                    } else {
+                        dbInteract.deleteQuestion(quesName.getText(), null);
+                        dbInteract.insertQuestion(newQuestion, GeneralFunctions.getCateName(cateBox.getValue()), null);
+                        DataModel.getInstance().getGui21Controller().loadCategoryBox();
+                        DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
+                    }
+                    if (questionInGUI31Controller != null)
+                        questionInGUI31Controller.setQuestion(newQuestion);
+                    flag = true;
+                }
             }
+        } catch (Exception e) {
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 
