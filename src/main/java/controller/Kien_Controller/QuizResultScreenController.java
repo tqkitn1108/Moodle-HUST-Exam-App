@@ -107,7 +107,7 @@ public class QuizResultScreenController implements Initializable {
             correctAnswers.put(i, questionLayoutControllers.get(i).getCorrectAnswerList());
             if (!userAnswer.get(i).equals(List.of(-1))) {
                 for (Integer integer : userAnswer.get(i)) {
-                    Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer + 2);
+                    Node answerNode = questionLayoutControllers.get(i).questionBox.getChildren().get(integer);
                     if (answerNode instanceof CheckBox selectedCheckBox) {
                         selectedCheckBox.getStyleClass().add("selected-choice");
                     } else {
@@ -119,8 +119,8 @@ public class QuizResultScreenController implements Initializable {
             if (userAnswer.get(i).equals(correctAnswers.get(i))) {
                 questionLayoutControllers.get(i).setStateQues("Correct Answer");
             } else questionLayoutControllers.get(i).setStateQues("Wrong Answer");
-            for (int j = 1; j <= questionList.get(i).getChoices().size(); ++j) {
-                Node option = questionLayoutControllers.get(i).questionBox.getChildren().get(j+1);
+            for (int j = 0; j < questionList.get(i).getChoices().size(); ++j) {
+                Node option = questionLayoutControllers.get(i).questionBox.getChildren().get(j);
                 option.setDisable(true);
                 option.setStyle("-fx-opacity: 1;");
             }

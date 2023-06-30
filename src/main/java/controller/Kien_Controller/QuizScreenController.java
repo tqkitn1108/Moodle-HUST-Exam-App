@@ -65,6 +65,7 @@ public class QuizScreenController implements Initializable {
     private List<Question> questionList;
     private Map<Integer, List<Integer>> userAnswer;
     private Map<Integer, List<Integer>> correctAnswers;
+    private List<QuestionLayoutController> questionLayoutControllers;
     private Integer numberOfRightAnswers;
     private String passwordPdf;
     private HeaderListener headerListener;
@@ -139,7 +140,7 @@ public class QuizScreenController implements Initializable {
         startTime = LocalDateTime.now();
         toggleGroups = new ToggleGroup[questionList.size()];
         List<Node> questionNodes = new ArrayList<Node>();
-        List<QuestionLayoutController> questionLayoutControllers = new ArrayList<QuestionLayoutController>();
+        questionLayoutControllers = new ArrayList<QuestionLayoutController>();
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
@@ -166,10 +167,10 @@ public class QuizScreenController implements Initializable {
                                         radioButton.setSelected(true);
                                         radioButton.setToggleGroup(toggleGroups[finalI1]);
                                         List<Integer> answerList = new ArrayList<Integer>();
-                                        for (int j = 1; j <= size; ++j) {
-                                            CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j+1);
+                                        for (int j = 0; j < size; ++j) {
+                                            CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
                                             if (selectedCheckBox.isSelected()) {
-                                                answerList.add(j - 1);
+                                                answerList.add(j);
                                             }
                                         }
                                         userAnswer.put(finalI1, answerList);
@@ -184,10 +185,10 @@ public class QuizScreenController implements Initializable {
                                             userAnswer.put(finalI1, List.of(-1));
                                         } else {
                                             List<Integer> answerList = new ArrayList<Integer>();
-                                            for (int j = 1; j <= size; ++j) {
-                                                CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j+1);
+                                            for (int j = 0; j < size; ++j) {
+                                                CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
                                                 if (selectedCheckBox.isSelected()) {
-                                                    answerList.add(j - 1);
+                                                    answerList.add(j);
                                                 }
                                             }
                                             userAnswer.put(finalI1, answerList);
@@ -203,10 +204,10 @@ public class QuizScreenController implements Initializable {
                                 if (newToggle != null) {
                                     questionLayoutController.setStateQues("Answered");
                                     List<Integer> answerList = new ArrayList<Integer>();
-                                    for (int j = 1; j <= size; ++j) {
-                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j+1);
+                                    for (int j = 0; j < size; ++j) {
+                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
                                         if (selectedRadio.isSelected()) {
-                                            answerList.add(j - 1);
+                                            answerList.add(j);
                                             userAnswer.put(finalI, answerList);
                                             break;
                                         }
@@ -306,9 +307,9 @@ public class QuizScreenController implements Initializable {
             overlayStackPane.getChildren().remove(overlay);
         }
         for (int i = 0; i < questionList.size(); i++) {
-            if (userAnswer.get(i).equals(correctAnswers.get(i))) {
-                numberOfRightAnswers++;
-            }
+            if (questionLayoutControllers.get(i).mediaPlayer != null)
+                questionLayoutControllers.get(i).mediaPlayer.pause();
+            if (userAnswer.get(i).equals(correctAnswers.get(i))) numberOfRightAnswers++;
         }
         DataModel.getInstance().setNumber(questionList.size());
         DataModel.getInstance().setUserAnswer(userAnswer);

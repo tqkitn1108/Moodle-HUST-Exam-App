@@ -14,12 +14,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 import model.Question;
 import model.Quiz;
 import model2.Choice;
 
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -32,12 +38,16 @@ public class QuestionLayoutController implements Initializable {
     @FXML
     private ImageView questionImg;
     public AnchorPane correctAnswerPane;
+    @FXML
+    private MediaView mediaView;
 
     private Quiz quiz;
     private List<Integer> correctAnswerList;
     private List<Choice> choices;
     private ToggleGroup choiceGroup;
     private Set<CheckBox> checkBoxGroup;
+    public MediaPlayer mediaPlayer;
+    boolean isPlaying = false;
 
     public ToggleGroup getChoiceGroup() {
         return choiceGroup;
@@ -56,7 +66,7 @@ public class QuestionLayoutController implements Initializable {
     }
 
     public void setQuestion(Question question) {
-        setQuestionContent(question.getQuestionName() + ": " + question.getQuestionText(), question.getQuestionImage());
+        setQuestionContent(question.getQuestionName() + ": " + question.getQuestionText(), question.getQuestionImage(), question.getMediaPath());
         setChoices(question);
     }
 
@@ -68,13 +78,21 @@ public class QuestionLayoutController implements Initializable {
         this.questionNum.setText(number.toString());
     }
 
-    public void setQuestionContent(String questionContent, Image image) {
+    public void setQuestionContent(String questionContent, Image image, String mediaPath) {
         this.questionContent.setText(questionContent);
         this.questionContent.setWrapText(true);
         questionImg.setImage(image);
         if (image != null && image.getHeight() > 350) {
             questionImg.setFitHeight(350);
             questionImg.setPreserveRatio(true);
+        }
+        if (mediaPath != null) {
+            File file = new File(mediaPath.replace("\\", "/"));
+            Media media = new Media(file.toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaView.setFitHeight(350);
+            mediaView.setFitWidth(500);
         }
     }
 
@@ -141,6 +159,23 @@ public class QuestionLayoutController implements Initializable {
             correctAnswerPane.getChildren().add(node);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void playVideo(MouseEvent event) {
+        if (mediaPlayer.getCurrentTime().equals(mediaPlayer.getTotalDuration())) {
+            mediaPlayer.seek(mediaPlayer.getStartTime());
+            mediaPlayer.play();
+            isPlaying = true;
+        } else {
+            if (isPlaying) {
+                mediaPlayer.pause();
+                isPlaying = false;
+            } else {
+                mediaPlayer.play();
+                isPlaying = true;
+            }
         }
     }
 

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefWidth="867.0" style="-fx-background-color: #ffffff; -fx-border-width: 0px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuestionLayoutController">
@@ -63,7 +64,7 @@
             </AnchorPane>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <VBox fx:id="questionBox" style="-fx-background-color: #e7f3f5;">
+                  <VBox style="-fx-background-color: #e7f3f5;">
                      <children>
                         <Label fx:id="questionContent" alignment="TOP_LEFT" contentDisplay="BOTTOM" graphicTextGap="8.0" maxWidth="880.0" prefWidth="880.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
@@ -75,9 +76,15 @@
                         </Label>
                         <ImageView fx:id="questionImg" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
-                              <Insets bottom="15.0" left="15.0" />
+                              <Insets bottom="5.0" left="15.0" />
                            </VBox.margin>
                         </ImageView>
+                        <MediaView fx:id="mediaView" onMouseClicked="#playVideo">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" />
+                           </VBox.margin>
+                        </MediaView>
+                        <VBox fx:id="questionBox" />
                      </children>
                      <padding>
                         <Insets bottom="40.0" />

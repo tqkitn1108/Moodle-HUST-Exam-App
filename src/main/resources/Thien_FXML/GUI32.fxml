@@ -125,8 +125,16 @@
                                                    </cursor>
                                                 </FontAwesomeIconView>
                                              </children>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
                                           </HBox>
-                                          <MFXButton alignment="CENTER" onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image" textFill="WHITE">
+                                          <Label fx:id="videoPathLabel">
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <MFXButton alignment="CENTER" onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image/Video" textFill="WHITE">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
