@@ -2,6 +2,8 @@ package controller.Hung_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
 import controller.Ha_Controller.CourseListController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
@@ -27,8 +28,6 @@ import java.util.ResourceBundle;
 public class GUI62Controller implements Initializable {
     @FXML
     private Label title;
-    @FXML
-    private MenuButton menuBtn;
     @FXML
     private VBox questionList;
     @FXML
@@ -55,8 +54,13 @@ public class GUI62Controller implements Initializable {
     private Quiz quiz;
 
     public void setSelectedQuestions(List<Question> selectedQuestions) {
-        this.selectedQuestions = selectedQuestions;
-        DataModel.getInstance().setSelectedQuestions(selectedQuestions);
+        if (selectedQuestions != null) {
+            ObservableList<Question> list = FXCollections.observableArrayList();
+            list.addAll(selectedQuestions);
+            this.selectedQuestions.addAll(list);
+        }
+        DataModel.getInstance().setSelectedQuestions(this.selectedQuestions);
+        addQuestionToScrollPane();
     }
 
     public void addQuestionToScrollPane() {
@@ -109,9 +113,12 @@ public class GUI62Controller implements Initializable {
     @FXML
     public void saveEditing(ActionEvent event) {
         try {
+            for (Question question : quiz.getQuestions()) {
+                dbInteract.removeQuestionFromQuiz(quiz.getQuizName(), question.getQuestionName());
+            }
             if (selectedQuestions != null) {
                 for (Question question : selectedQuestions) {
-                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName(),null);
+                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName(), null);
                 }
             }
             quiz.setShuffle(shuffleBtn.isSelected());
@@ -135,6 +142,7 @@ public class GUI62Controller implements Initializable {
         this.screenListener.removeTopScreen();
         this.screenListener.changeScreen(node);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
@@ -142,5 +150,8 @@ public class GUI62Controller implements Initializable {
         title.setText("Editing quiz: " + quiz.getQuizName());
         shuffleBtn.setSelected(quiz.isShuffle());
         jumpBox.getItems().add("Home");
+        if (DataModel.getInstance().getSelectedQuestions() == null) {
+            selectedQuestions = quiz.getQuestions();
+        } else selectedQuestions = DataModel.getInstance().getSelectedQuestions();
     }
 }

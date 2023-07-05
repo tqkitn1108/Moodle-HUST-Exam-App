@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import controller.Thien_Controller.GUI32Controller;
 import controller.Thien_Controller.QuestionInGUI31Controller;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +27,6 @@ import model2.DataModel;
 import model2.GeneralFunctions;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -147,7 +145,7 @@ public class GUI21Controller implements Initializable {
                 // Đọc nội dung tệp và xử lý
                 String itemWithOldQuantity = categoryBox3.getValue();
                 String cateTitle = GeneralFunctions.getCateName(itemWithOldQuantity);
-                List<Question> quesList = new ArrayList<>();
+                List<Question> quesList;
                 if (fileName.endsWith(".txt")) {
                     quesList = DataInteract.getQuestionsFromTxtFile(file.getPath());
                 } else {

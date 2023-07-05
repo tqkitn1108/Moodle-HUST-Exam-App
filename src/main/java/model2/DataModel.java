@@ -36,6 +36,8 @@ public class DataModel {
     private Timer timer;
     private Quiz quiz;
 
+    private String userName;
+
     private DataModel() {
 
     }
@@ -133,5 +135,13 @@ public class DataModel {
 
     public Quiz getQuiz() {
         return quiz;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

@@ -151,7 +151,7 @@
                                     <Insets right="25.0" />
                                  </VBox.margin>
                               </HBox>
-                              <MenuButton fx:id="menuBtn" mnemonicParsing="false" style="-fx-background-color: #fafafa;" styleClass="menu-gui62a" text="Add" textFill="#009fe5">
+                              <MenuButton mnemonicParsing="false" style="-fx-background-color: #fafafa;" styleClass="menu-gui62a" text="Add" textFill="#009fe5">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="a new question">
                                        <graphic>

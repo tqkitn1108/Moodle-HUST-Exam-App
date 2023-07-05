@@ -4,7 +4,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 
@@ -12,7 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class QuestionRectangleController implements Initializable {
-
     @FXML
     private Label number;
     @FXML
@@ -48,6 +46,9 @@ public class QuestionRectangleController implements Initializable {
     public void setRightAnswered() {
         icon.setGlyphName("CHECK");
         state.setStyle("-fx-background-color:  #3DBE29");
+    }
+
+    public void setFlagAnswer() {
     }
 
     @Override

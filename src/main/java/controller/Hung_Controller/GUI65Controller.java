@@ -1,7 +1,6 @@
 package controller.Hung_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
-import io.github.palexdev.materialfx.controls.MFXPagination;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Pagination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
@@ -129,7 +126,6 @@ public class GUI65Controller implements Initializable {
             Node node = fxmlLoader.load();
             GUI62Controller gui62Controller = fxmlLoader.getController();
             gui62Controller.setSelectedQuestions(randomSublist);
-            gui62Controller.addQuestionToScrollPane();
             gui62Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.removeTopScreen();  // Xóa giao diện GUI65
             this.screenListener.removeTopScreen(); // Xóa giao diện GUI62a đã có

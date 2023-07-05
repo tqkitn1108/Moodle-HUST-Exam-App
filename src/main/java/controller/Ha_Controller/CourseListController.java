@@ -1,16 +1,10 @@
 package controller.Ha_Controller;
 
-import controller.Hung_Controller.GUI61Controller;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
@@ -19,7 +13,6 @@ import model.Quiz;
 import model2.DataModel;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 

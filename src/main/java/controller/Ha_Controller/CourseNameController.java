@@ -27,7 +27,7 @@ public class CourseNameController implements Initializable {
         this.quiz = quiz;
         quizItem.setText(quiz.getQuizName());
         quizDesc.setText(quiz.getQuizDescription());
-//        quizDesc.setVisible(false);
+        if(!quiz.isShowDescription()) quizDesc.setVisible(false);
     }
 
     private HeaderListener headerListener;

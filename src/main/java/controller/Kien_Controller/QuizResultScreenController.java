@@ -1,6 +1,5 @@
 package controller.Kien_Controller;
 
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -25,36 +24,23 @@ import java.net.URL;
 import java.util.*;
 
 public class QuizResultScreenController implements Initializable {
-
     @FXML
     private MFXScrollPane scrollPane;
-
     @FXML
     private Label completedOn;
-
-    @FXML
-    private Label finishReviewBtn;
-
     @FXML
     private Label grade;
-
     @FXML
     private Text gradeText;
-
     @FXML
     private Label marks;
-
     @FXML
     private FlowPane progressPane;
-
     @FXML
     private VBox quizListContainer;
-
     public Label startedOn;
-
     @FXML
     private Label state;
-
     @FXML
     private Label time;
 

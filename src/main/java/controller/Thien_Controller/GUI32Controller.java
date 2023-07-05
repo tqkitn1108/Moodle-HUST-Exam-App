@@ -4,11 +4,9 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import listeners.HeaderListener;
@@ -223,7 +220,7 @@ public class GUI32Controller implements Initializable {
     }
 
     @FXML
-    public void saveChange(ActionEvent event) throws Exception {
+    public void saveChange(ActionEvent event) {
         saveAndContinueEditing(event);
         if (flag)
             closeThisWindow(event);
@@ -304,7 +301,7 @@ public class GUI32Controller implements Initializable {
             this.quesImg.setFitHeight(300);
             this.closeIcon.setVisible(true);
         }
-        if (question.getMediaPath().length() > 0) {
+        if (question.getMediaPath() != null && question.getMediaPath().length() > 0) {
             videoPathLabel.setText(question.getMediaPath());
             ImageView imageView = new ImageView(new Image("/img/video-play-icon.png"));
             imageView.setFitHeight(20);

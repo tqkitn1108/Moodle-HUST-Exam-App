@@ -1,6 +1,5 @@
 package controller.Kien_Controller;
 
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.util.Duration;
 import model.Question;
 import model.Quiz;
 import model2.Choice;
@@ -30,14 +28,19 @@ import java.net.URL;
 import java.util.*;
 
 public class QuestionLayoutController implements Initializable {
-    public Label questionNum;
-    public Label stateQues;
-    public Label flag;
+    @FXML
+    private Label questionNum;
+    @FXML
+    private Label stateQues;
+    @FXML
+    private Label flag;
     public VBox questionBox;
-    public Label questionContent;
+    @FXML
+    private Label questionContent;
     @FXML
     private ImageView questionImg;
-    public AnchorPane correctAnswerPane;
+    @FXML
+    private AnchorPane correctAnswerPane;
     @FXML
     private MediaView mediaView;
 

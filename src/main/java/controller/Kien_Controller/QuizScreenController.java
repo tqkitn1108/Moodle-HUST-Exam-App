@@ -5,7 +5,6 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
-import com.jfoenix.controls.JFXCheckBox;
 import controller.Ha_Controller.CourseListController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -32,10 +31,8 @@ import listeners.NewScreenListener;
 import model.Question;
 import model.Quiz;
 import model2.DataModel;
-import start.TEST6;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -81,7 +78,6 @@ public class QuizScreenController implements Initializable {
     }
 
     private Timer timer;
-
     ToggleGroup[] toggleGroups;
     Pane overlay;
     StackPane overlayStackPane;

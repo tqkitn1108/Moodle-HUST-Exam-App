@@ -6,8 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import listeners.HeaderListener;
-import listeners.NewScreenListener;
 import model.Question;
 import model2.DataModel;
 
@@ -17,24 +15,13 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class QuestionInGUI64Controller implements Initializable {
-
     @FXML
     private Label mainQuesContent;
-
     @FXML
     private Label order;
-
     @FXML
     private Label subQuesContent;
-    private HeaderListener headerListener;
-    private NewScreenListener screenListener;
 
-    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
-        this.headerListener = headerListener;
-        this.screenListener = screenListener;
-    }
-
-    private Question question;
     private List<Question> selectedQuestions;
 
     public void setOrder(int order) {
@@ -42,7 +29,6 @@ public class QuestionInGUI64Controller implements Initializable {
     }
 
     public void setQuestion(Question question) {
-        this.question = question;
         this.mainQuesContent.setText(question.getQuestionName() + ": " + question.getQuestionText());
         this.subQuesContent.setText(question.getQuestionName() + ": " + question.getQuestionText());
     }

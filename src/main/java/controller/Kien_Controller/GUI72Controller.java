@@ -1,14 +1,9 @@
 package controller.Kien_Controller;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -20,15 +15,10 @@ import java.util.ResourceBundle;
 
 
 public class GUI72Controller implements Initializable {
-
     @FXML
     private FontAwesomeIconView closeIcon;
-
     @FXML
     private Label closeBtn;
-
-    @FXML
-    private MFXButton startAttemptBtn;
 
     public boolean isCancelled = false;
     public boolean isPreviewed = false;

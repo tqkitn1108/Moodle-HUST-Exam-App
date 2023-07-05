@@ -16,7 +16,6 @@ import listeners.NewScreenListener;
 import model.Category;
 import model.DBInteract;
 import model.Question;
-import model.Quiz;
 import model2.DataModel;
 import model2.GeneralFunctions;
 
@@ -72,7 +71,6 @@ public class GUI63Controller implements Initializable {
             Node node = fxmlLoader.load();
             QuestionInGUI63Controller questionInGUI63Controller = fxmlLoader.getController();
             questionInGUI63Controller.setQuestion(question);
-            questionInGUI63Controller.setMainScreen(this.headerListener, this.screenListener);
             if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
             i++;
             questionList.getChildren().add(node);
@@ -86,7 +84,6 @@ public class GUI63Controller implements Initializable {
                     Node node = fxmlLoader.load();
                     QuestionInGUI63Controller questionInGUI63Controller = fxmlLoader.getController();
                     questionInGUI63Controller.setQuestion(question);
-                    questionInGUI63Controller.setMainScreen(this.headerListener, this.screenListener);
                     if (i % 2 == 1) node.setStyle("-fx-background-color: #fff");
                     i++;
                     questionList.getChildren().add(node);
@@ -110,7 +107,6 @@ public class GUI63Controller implements Initializable {
                 index++;
             }
             gui62Controller.setSelectedQuestions(selectedQuestions);
-            gui62Controller.addQuestionToScrollPane();
             gui62Controller.setMainScreen(this.headerListener, this.screenListener);
             this.screenListener.removeTopScreen();  // Xóa giao diện GUI63
             this.screenListener.removeTopScreen(); // Xóa giao diện GUI62a đã có

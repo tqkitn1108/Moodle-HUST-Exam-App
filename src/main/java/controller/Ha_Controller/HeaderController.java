@@ -2,14 +2,11 @@ package controller.Ha_Controller;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -32,6 +29,8 @@ public class HeaderController implements Initializable {
     private VBox listBtn;
     @FXML
     private HBox breadcrumbs;
+    @FXML
+    private Text userName;
 
     public HBox getBreadcrumbs() {
         return breadcrumbs;
@@ -136,6 +135,7 @@ public class HeaderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         openQuestionMenu();
+        userName.setText(DataModel.getInstance().getUserName());
     }
 
 }

@@ -19,7 +19,7 @@
          <children>
             <HBox>
                <children>
-                  <Label fx:id="quizName" prefHeight="46.0" prefWidth="414.0" text="Finish attempt confirmation" wrapText="true" HBox.hgrow="ALWAYS">
+                  <Label prefHeight="46.0" prefWidth="414.0" text="Finish attempt confirmation" wrapText="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -72,7 +72,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </MFXButton>
-                  <MFXButton fx:id="submitBtn" onMouseClicked="#submit" style="-fx-background-color: #ddd;" text="Submit all and finish">
+                  <MFXButton onMouseClicked="#submit" style="-fx-background-color: #ddd;" text="Submit all and finish">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

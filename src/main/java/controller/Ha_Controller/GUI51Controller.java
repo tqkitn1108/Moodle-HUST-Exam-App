@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GUI51Controller implements Initializable {
-
     @FXML
     private JFXCheckBox checkBox;
     @FXML
@@ -29,43 +28,9 @@ public class GUI51Controller implements Initializable {
     @FXML
     private JFXCheckBox showDescBox;
     @FXML
-    private ComboBox<Integer> daybox1;
-
+    private ComboBox<Integer> daybox1, daybox2, hourbox1, hourbox2, minbox1, minbox2, minbox3, yearbox1, yearbox2;
     @FXML
-    private ComboBox<Integer> daybox2;
-
-    @FXML
-    private ComboBox<Integer> hourbox1;
-
-    @FXML
-    private ComboBox<Integer> hourbox2;
-
-    @FXML
-    private ComboBox<Integer> minbox1;
-
-    @FXML
-    private ComboBox<Integer> minbox2;
-
-    @FXML
-    private ComboBox<Integer> minbox3;
-
-    @FXML
-    private ComboBox<String> monthbox1;
-
-    @FXML
-    private ComboBox<String> monthbox2;
-
-    @FXML
-    private ComboBox<String> textbox1;
-
-    @FXML
-    private ComboBox<String> textbox2;
-
-    @FXML
-    private ComboBox<Integer> yearbox1;
-
-    @FXML
-    private ComboBox<Integer> yearbox2;
+    private ComboBox<String> monthbox1, monthbox2, textbox1, textbox2;
 
     private HeaderListener headerListener;
     private NewScreenListener screenListener;
@@ -77,7 +42,7 @@ public class GUI51Controller implements Initializable {
 
     private void setupMinBox(ComboBox<Integer> comboBox) {
         // Populate the ComboBox with values from 1 to 60.
-        for (int i = 0; i <= 59; i++) {
+        for (int i = 0; i <= 90; i++) {
             comboBox.getItems().add(i);
         }
         // Set the default value of the ComboBox to 1.
@@ -151,6 +116,7 @@ public class GUI51Controller implements Initializable {
             newQuiz.setQuizDescription(description.getText());
             newQuiz.setShowDescription(showDescBox.isSelected());
             dbInteract.createNewQuiz(newQuiz);
+
             courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.showMenuButton();
             this.headerListener.showEditingBtn();
