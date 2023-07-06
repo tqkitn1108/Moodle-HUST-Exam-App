@@ -11,8 +11,11 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class DataInteract {
@@ -107,6 +110,8 @@ public class DataInteract {
     }
 
     public static List<Question> getQuestionsFromDocFile(String path) throws Exception{
+        LocalDateTime importTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy_hh:mm:ss", Locale.ENGLISH);
         try (FileInputStream fis = new FileInputStream(path);
              XWPFDocument doc = new XWPFDocument(fis);) {
 
@@ -140,13 +145,19 @@ public class DataInteract {
                 if (i == n) break;
                 Question q = new Question();
 
-                int index = lines.get(i).indexOf(':');
-                q.setQuestionName(lines.get(i).substring(0, index));
-                q.setQuestionText(lines.get(i).substring(index + 2));
+                int index = lines.get(i).indexOf(": ");
+                if (index != -1) {
+                    q.setQuestionName(lines.get(i).substring(0, index));
+                    q.setQuestionText(lines.get(i).substring(index + 2));
+                }
+                else {
+                    q.setQuestionName(importTime.format(formatter) + "_" + (questions.size() + 1));
+                    q.setQuestionText(lines.get(i));
+                }
 
                 if (images.get(i) != null) q.setQuestionImage(images.get(i));
 
-                List<String> options = new ArrayList<String>();
+                List<String> options = new ArrayList<>();
                 List<Image> optionImages = new ArrayList<>();
                 List<Character> optionLabels = new ArrayList<>();
                 while (++i < n && (lines.get(i) != null && !lines.get(i).equals(""))) {
@@ -182,6 +193,9 @@ public class DataInteract {
     }
 
     public static List<Question> getQuestionsFromTxtFile(String path) throws Exception{
+        LocalDateTime importTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy_hh:mm:ss", Locale.ENGLISH);
+
         List<String> lines = new ArrayList<>();
         try (FileReader fr = new FileReader(path);
             BufferedReader br = new BufferedReader(fr);) {
@@ -199,9 +213,15 @@ public class DataInteract {
                 if (i == n) break;
                 Question q = new Question();
 
-                int index = lines.get(i).indexOf(':');
-                q.setQuestionName(lines.get(i).substring(0, index));
-                q.setQuestionText(lines.get(i).substring(index + 2));
+                int index = lines.get(i).indexOf(": ");
+                if (index != -1) {
+                    q.setQuestionName(lines.get(i).substring(0, index));
+                    q.setQuestionText(lines.get(i).substring(index + 2));
+                }
+                else {
+                    q.setQuestionName(importTime.format(formatter) + "_" + (questions.size() + 1));
+                    q.setQuestionText(lines.get(i));
+                }
                 q.setQuestionImage(null);
 
                 List<String> options = new ArrayList<String>();
@@ -258,10 +278,12 @@ public class DataInteract {
             while (i < n && (lines.get(i).equals("") || lines.get(i).equals("null"))) i++;
             if (i == n) break;
 
+            /*
             if (!lines.get(i).contains(": ") || lines.get(i).indexOf(": ") == 0) {
                 throw new ReadFileException("Error at line " + (i+1) + ": Question does not have name");
                 //return false;
             }
+            */
 
             List<Character> optionLabels = new ArrayList<>();
             while (++i < n && !lines.get(i).equals("null") && !lines.get(i).equals("")) {
