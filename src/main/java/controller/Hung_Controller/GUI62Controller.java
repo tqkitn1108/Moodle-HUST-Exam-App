@@ -85,49 +85,37 @@ public class GUI62Controller implements Initializable {
     }
 
     @FXML
-    public void openQuestionBank(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI63.fxml"));
-            Node node = fxmlLoader.load();
-            GUI63Controller gui63Controller = fxmlLoader.getController();
-            gui63Controller.setMainScreen(this.headerListener, this.screenListener);
-            this.screenListener.changeScreen(node);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void openQuestionBank(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI63.fxml"));
+        Node node = fxmlLoader.load();
+        GUI63Controller gui63Controller = fxmlLoader.getController();
+        gui63Controller.setMainScreen(this.headerListener, this.screenListener);
+        this.screenListener.changeScreen(node);
     }
 
     @FXML
-    public void addRandomQuestion(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI65.fxml"));
-            Node node = fxmlLoader.load();
-            GUI65Controller gui65Controller = fxmlLoader.getController();
-            gui65Controller.setMainScreen(this.headerListener, this.screenListener);
-            this.screenListener.changeScreen(node);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void addRandomQuestion(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI65.fxml"));
+        Node node = fxmlLoader.load();
+        GUI65Controller gui65Controller = fxmlLoader.getController();
+        gui65Controller.setMainScreen(this.headerListener, this.screenListener);
+        this.screenListener.changeScreen(node);
     }
 
     @FXML
-    public void saveEditing(ActionEvent event) {
-        try {
-            for (Question question : quiz.getQuestions()) {
-                dbInteract.removeQuestionFromQuiz(quiz.getQuizName(), question.getQuestionName());
-            }
-            if (selectedQuestions != null) {
-                for (Question question : selectedQuestions) {
-                    dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName(), null);
-                }
-            }
-            quiz.setShuffle(shuffleBtn.isSelected());
-            dbInteract.setShuffle(quiz.getQuizName(), shuffleBtn.isSelected());
-            this.headerListener.removeAddress(1);
-            this.screenListener.removeTopScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void saveEditing(ActionEvent event) throws Exception {
+        for (Question question : quiz.getQuestions()) {
+            dbInteract.removeQuestionFromQuiz(quiz.getQuizName(), question.getQuestionName());
         }
+        if (selectedQuestions != null) {
+            for (Question question : selectedQuestions) {
+                dbInteract.addQuestionToQuiz(quiz.getQuizName(), question.getQuestionName(), null);
+            }
+        }
+        quiz.setShuffle(shuffleBtn.isSelected());
+        dbInteract.setShuffle(quiz.getQuizName(), shuffleBtn.isSelected());
+        this.headerListener.removeAddress(1);
+        this.screenListener.removeTopScreen();
     }
 
     @FXML

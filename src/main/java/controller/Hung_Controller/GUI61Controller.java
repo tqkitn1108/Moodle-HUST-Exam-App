@@ -21,6 +21,7 @@ import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
+import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +51,7 @@ public class GUI61Controller implements Initializable {
     }
 
     public void setTimeLimit(Integer timeLimit) {
-        if(timeLimit == 0) {
+        if (timeLimit == 0) {
             this.timeLimit.setText("Time limit: 0 second");
             return;
         }
@@ -65,18 +66,15 @@ public class GUI61Controller implements Initializable {
     }
 
     @FXML
-    public void editingQuiz(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62.fxml"));
-            Node node = fxmlLoader.load();
-            GUI62Controller gui62Controller = fxmlLoader.getController();
-            gui62Controller.setSelectedQuestions(null);
-            gui62Controller.setMainScreen(this.headerListener, this.screenListener);
-            this.headerListener.addAddressToBreadcrumbs("Edit quiz");
-            this.screenListener.changeScreen(node);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void editingQuiz(ActionEvent event) throws IOException {
+        DataModel.getInstance().setSelectedQuestions(null);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Hung_FXML/GUI62.fxml"));
+        Node node = fxmlLoader.load();
+        GUI62Controller gui62Controller = fxmlLoader.getController();
+        gui62Controller.setSelectedQuestions(null);
+        gui62Controller.setMainScreen(this.headerListener, this.screenListener);
+        this.headerListener.addAddressToBreadcrumbs("Edit quiz");
+        this.screenListener.changeScreen(node);
     }
 
     @FXML

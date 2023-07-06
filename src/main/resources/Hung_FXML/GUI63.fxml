@@ -67,7 +67,7 @@
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox fx:id="categoryBox" minHeight="30.0" onAction="#selectCateBoxItem" prefHeight="30.0" prefWidth="225.0" style="-fx-background-color: #fff; -fx-border-color: #777;" visibleRowCount="20">
+                                    <ComboBox fx:id="categoryBox" minHeight="30.0" onAction="#selectCateBoxItem" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;" visibleRowCount="20">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
