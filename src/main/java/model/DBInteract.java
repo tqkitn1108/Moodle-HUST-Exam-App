@@ -384,16 +384,22 @@ public class DBInteract {
 
             pstmt.setString(1, questionName);
             ResultSet catRs = pstmt.executeQuery();
+            catRs.next();
+            String catTitle = catRs.getString(1);
 
             pstmt2.setString(1, questionName);
             ResultSet quizRs = pstmt2.executeQuery();
+            List<String> quizNames = new ArrayList<>();
+            while (quizRs.next()) {
+                quizNames.add(quizRs.getString(1));
+            }
 
             deleteQuestion(questionName,conn);
 
-            catRs.next();
-            insertQuestion(newQuestion, catRs.getString(1),conn);
-            while (quizRs.next()) {
-                addQuestionToQuiz(quizRs.getString(1), newQuestion.getQuestionName(),conn);
+            insertQuestion(newQuestion, catTitle, conn);
+
+            for (String quizName : quizNames) {
+                addQuestionToQuiz(quizName, newQuestion.getQuestionName(),conn);
             }
         }
     }
