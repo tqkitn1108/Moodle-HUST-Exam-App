@@ -129,7 +129,7 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </HBox>
-                                          <Label fx:id="videoPathLabel">
+                                          <Label fx:id="mediaPathLabel">
                                              <VBox.margin>
                                                 <Insets left="10.0" />
                                              </VBox.margin>
@@ -447,7 +447,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>
@@ -530,7 +530,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>
@@ -704,7 +704,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>
@@ -787,7 +787,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>

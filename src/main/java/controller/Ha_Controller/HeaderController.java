@@ -29,8 +29,6 @@ public class HeaderController implements Initializable {
     private VBox listBtn;
     @FXML
     private HBox breadcrumbs;
-    @FXML
-    private Text userName;
 
     public HBox getBreadcrumbs() {
         return breadcrumbs;
@@ -135,7 +133,6 @@ public class HeaderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         openQuestionMenu();
-        userName.setText(DataModel.getInstance().getUserName());
     }
 
 }

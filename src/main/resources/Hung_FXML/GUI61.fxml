@@ -58,11 +58,11 @@
                   </Button>
                </children>
             </HBox>
-            <VBox alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="600.0" spacing="15.0">
+            <VBox alignment="CENTER" minHeight="50.0" prefHeight="50.0" prefWidth="600.0" spacing="15.0">
                <children>
                   <Text fx:id="timeLimit" strokeType="OUTSIDE" strokeWidth="0.0" text="Time limit: 1 hour">
                      <VBox.margin>
-                        <Insets right="35.0" />
+                        <Insets />
                      </VBox.margin>
                      <font>
                         <Font size="13.0" />
@@ -74,7 +74,7 @@
                      </font></Text>
                </children>
                <VBox.margin>
-                  <Insets left="15.0" right="100.0" />
+                  <Insets left="15.0" right="15.0" top="5.0" />
                </VBox.margin>
             </VBox>
             <Label text="Summary of your previous attempts" textAlignment="CENTER" textFill="#c93e34">
@@ -82,10 +82,10 @@
                   <Font name="System Bold" size="16.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" top="10.0" />
+                  <Insets bottom="10.0" left="15.0" top="15.0" />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="40.0" prefWidth="615.0" style="-fx-background-color: #009fe5;">
+            <HBox minHeight="25.0" prefHeight="40.0" prefWidth="615.0" style="-fx-background-color: #009fe5;">
                <children>
                   <Label maxWidth="400.0" minHeight="25.0" prefHeight="30.0" prefWidth="200.0" text="Attempt" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <HBox.margin>
@@ -105,7 +105,7 @@
                   </Label>
                </children>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="15.0" right="15.0" top="5.0" />
                </VBox.margin>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="615.0" style="-fx-background-color: #f7f7f7;">
@@ -128,7 +128,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                      <VBox.margin>
-                        <Insets top="30.0" />
+                        <Insets top="40.0" />
                      </VBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />

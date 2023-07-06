@@ -90,12 +90,21 @@ public class QuestionLayoutController implements Initializable {
             questionImg.setPreserveRatio(true);
         }
         if (mediaPath != null) {
-            File file = new File(mediaPath.replace("\\", "/"));
-            Media media = new Media(file.toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaView.setMediaPlayer(mediaPlayer);
-            mediaView.setFitHeight(350);
-            mediaView.setFitWidth(500);
+            if (mediaPath.endsWith(".mp4")) {
+                File file = new File(mediaPath.replace("\\", "/"));
+                Media media = new Media(file.toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+                mediaView.setMediaPlayer(mediaPlayer);
+                mediaView.setFitHeight(350);
+                mediaView.setFitWidth(500);
+            } else if (mediaPath.endsWith(".gif")) {
+                Image image1 = new Image(mediaPath);
+                questionImg.setImage(image1);
+                if (image1.getHeight() > 350) {
+                    questionImg.setFitHeight(350);
+                    questionImg.setPreserveRatio(true);
+                }
+            }
         }
     }
 
@@ -113,8 +122,8 @@ public class QuestionLayoutController implements Initializable {
                 choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
                 Image image = choices.get(i).getOptionImage();
                 ImageView imageView = new ImageView(image);
-                if (image != null && image.getHeight() > 350) {
-                    imageView.setFitHeight(350);
+                if (image != null && image.getHeight() > 300) {
+                    imageView.setFitHeight(300);
                     imageView.setPreserveRatio(true);
                 }
                 choice.setGraphic(imageView);
@@ -133,14 +142,15 @@ public class QuestionLayoutController implements Initializable {
                 choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
                 Image image = choices.get(i).getOptionImage();
                 ImageView imageView = new ImageView(image);
-                if (image != null && image.getHeight() > 350) {
-                    imageView.setFitHeight(350);
+                if (image != null && image.getHeight() > 300) {
+                    imageView.setFitHeight(300);
                     imageView.setPreserveRatio(true);
                 }
                 choice.setGraphic(imageView);
                 checkBoxGroup.add(choice);
                 choice.setWrapText(true);
                 choice.setMaxWidth(850);
+                choice.setContentDisplay(ContentDisplay.RIGHT);
                 choice.getStyleClass().add("choice");
                 choice.setCursor(Cursor.HAND);
                 if (choices.get(i).getOptionGrade() > 0) correctAnswerList.add(i);

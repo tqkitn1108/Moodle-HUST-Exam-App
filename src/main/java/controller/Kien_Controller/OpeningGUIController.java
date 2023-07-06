@@ -11,8 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +27,9 @@ public class OpeningGUIController implements Initializable {
     @FXML
     private MFXTextField nameField;
 
+    private Parent root;
+    private Text userName;
+
     @FXML
     void coloring(MouseEvent event) {
         openAppBtn.setStyle("-fx-background-color: #009fe5");
@@ -38,12 +41,11 @@ public class OpeningGUIController implements Initializable {
     }
 
     @FXML
-    public void openApp(ActionEvent event) throws IOException {
+    public void openApp(ActionEvent event){
         Stage thisStage = (Stage) openAppBtn.getScene().getWindow();
         if (nameField.getText().length() > 0) {
-            DataModel.getInstance().setUserName(nameField.getText());
-        } else DataModel.getInstance().setUserName("Unknown Username");
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/HA_FXML/GUI11.fxml")));
+            userName.setText(nameField.getText());
+        } else userName.setText("Unknown Username");
         Stage stage = new Stage();
         stage.setTitle("PHẦN MỀM TẠO NGÂN HÀNG ĐỀ VÀ TỔ CHỨC THI TRẮC NGHIỆM");
         Scene scene = new Scene(root);
@@ -57,5 +59,11 @@ public class OpeningGUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         imageView.setImage(new Image("/img/opening-image.jpg"));
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/HA_FXML/GUI11.fxml")));
+            userName = (Text) root.lookup(".user-name");;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
