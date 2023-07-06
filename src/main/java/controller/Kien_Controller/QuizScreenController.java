@@ -2,8 +2,7 @@ package controller.Kien_Controller;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import controller.Ha_Controller.CourseListController;
@@ -19,10 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -32,12 +28,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Question;
+import model.Quiz;
 import model2.DataModel;
-import model2.Question;
-import model2.Quiz;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +41,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuizScreenController implements Initializable {
     @FXML
@@ -57,27 +53,23 @@ public class QuizScreenController implements Initializable {
     @FXML
     private Label time;
     @FXML
-    private VBox progressContent;
-    @FXML
     private FlowPane progressPane;
     @FXML
     private VBox quizListContainer;
-
     private LocalDateTime startTime;
     private LocalDateTime finishTime;
     private Quiz quiz;
     private List<Question> questionList;
-    private Map<Integer, Integer> userAnswer;
-
+    private Map<Integer, List<Integer>> userAnswer;
+    private Map<Integer, List<Integer>> correctAnswers;
+    private List<QuestionLayoutController> questionLayoutControllers;
+    private Integer numberOfRightAnswers;
+    private String passwordPdf;
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
 
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -85,8 +77,7 @@ public class QuizScreenController implements Initializable {
         this.time.setVisible(false);
     }
 
-    private Timer timer = new Timer();
-
+    private Timer timer;
     ToggleGroup[] toggleGroups;
     Pane overlay;
     StackPane overlayStackPane;
@@ -94,13 +85,10 @@ public class QuizScreenController implements Initializable {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
-        this.getData();
-    }
-
-    private void getData() {
-        if (quiz != null) {
-            this.questionList = quiz.getQuestions();
-        }
+        questionList = quiz.getQuestions();
+        addQuestionList();
+        renderNavigation();
+        setTimer();
     }
 
     // Timer fields
@@ -123,8 +111,9 @@ public class QuizScreenController implements Initializable {
     }
 
     private void setTimer() {
-        totalSec = questionList.size() * 30L;
+        totalSec = quiz.getTimeLimit() * 60L;
         this.timer = new Timer();
+        DataModel.getInstance().setTimer(timer);
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -145,41 +134,93 @@ public class QuizScreenController implements Initializable {
 
     public void addQuestionList() {
         startTime = LocalDateTime.now();
-        // Tạo ra questionList mẫu làm ví dụ
-        questionList = new ArrayList<Question>();
-        for (int i = 0; i < 50; i++) {
-            questionList.add(new Question("Question " + (i + 1)));
-        }
-
         toggleGroups = new ToggleGroup[questionList.size()];
+        List<Node> questionNodes = new ArrayList<Node>();
+        questionLayoutControllers = new ArrayList<QuestionLayoutController>();
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
                 Node node = fxmlLoader.load();
                 QuestionLayoutController questionLayoutController = fxmlLoader.getController();
+                questionLayoutController.setQuiz(quiz);
                 questionLayoutController.setQuestionNum(i + 1);
-                questionLayoutController.setQuestionContent(questionList.get(i).getQuestion());
-                toggleGroups[i] = questionLayoutController.choice;
-                int finalI = i;
-                toggleGroups[i].selectedToggleProperty().addListener(
-                        (ov, oldToggle, newToggle) -> {
-                            if (newToggle != null) {
-                                questionLayoutController.setStateQues("Answered");
-                                for (int j = 1; j <= 4; ++j) {
-                                    RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
-                                    if (selectedRadio.isSelected()) {
-                                        userAnswer.put(finalI, j);
-                                        break;
+                questionLayoutController.setQuestion(questionList.get(i));
+                correctAnswers.put(i, questionLayoutController.getCorrectAnswerList());
+                userAnswer.put(i, List.of(-1));
+                toggleGroups[i] = questionLayoutController.getChoiceGroup();
+                int size = questionList.get(i).getChoices().size();
+                if (questionList.get(i).isMultipleAnswer()) {
+                    Set<CheckBox> checkBoxes = questionLayoutController.getCheckBoxGroup();
+                    AtomicInteger count = new AtomicInteger(); // Vai trò như biến đếm count (count đếm số lượng checkbox được select)
+                    for (CheckBox checkBox : checkBoxes) {
+                        int finalI1 = i;
+                        checkBox.selectedProperty().addListener(
+                                (observable, oldValue, newValue) -> {
+                                    if (newValue) {
+                                        count.getAndIncrement();
+                                        questionLayoutController.setStateQues("Answered");
+                                        RadioButton radioButton = new RadioButton();
+                                        radioButton.setSelected(true);
+                                        radioButton.setToggleGroup(toggleGroups[finalI1]);
+                                        List<Integer> answerList = new ArrayList<Integer>();
+                                        for (int j = 0; j < size; ++j) {
+                                            CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                            if (selectedCheckBox.isSelected()) {
+                                                answerList.add(j);
+                                            }
+                                        }
+                                        userAnswer.put(finalI1, answerList);
+                                    } else {
+                                        count.getAndDecrement();
+                                        if (count.get() == 0) {
+                                            questionLayoutController.setStateQues("Not yet answered");
+                                            RadioButton radioButton = new RadioButton();
+                                            radioButton.setSelected(true);
+                                            radioButton.setToggleGroup(toggleGroups[finalI1]);
+                                            radioButton.setSelected(false); //chuyển selected từ true -> false để thực hiện questionRectangleController.setDefault();
+                                            userAnswer.put(finalI1, List.of(-1));
+                                        } else {
+                                            List<Integer> answerList = new ArrayList<Integer>();
+                                            for (int j = 0; j < size; ++j) {
+                                                CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
+                                                if (selectedCheckBox.isSelected()) {
+                                                    answerList.add(j);
+                                                }
+                                            }
+                                            userAnswer.put(finalI1, answerList);
+                                        }
+                                    }
+                                }
+                        );
+                    }
+                } else {
+                    int finalI = i;
+                    toggleGroups[i].selectedToggleProperty().addListener(
+                            (ov, oldToggle, newToggle) -> {
+                                if (newToggle != null) {
+                                    questionLayoutController.setStateQues("Answered");
+                                    List<Integer> answerList = new ArrayList<Integer>();
+                                    for (int j = 0; j < size; ++j) {
+                                        RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
+                                        if (selectedRadio.isSelected()) {
+                                            answerList.add(j);
+                                            userAnswer.put(finalI, answerList);
+                                            break;
+                                        }
                                     }
                                 }
                             }
-                        }
-                );
+                    );
+                }
+                questionLayoutControllers.add(questionLayoutController);
+                questionNodes.add(node);
                 quizListContainer.getChildren().add(node);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        DataModel.getInstance().setQuestionNodes(questionNodes);
+        DataModel.getInstance().setQuestionLayoutControllers(questionLayoutControllers);
     }
 
     public void renderNavigation() {
@@ -189,11 +230,11 @@ public class QuizScreenController implements Initializable {
                 Node node1 = fxmlLoader1.load();
                 QuestionRectangleController questionRectangleController = fxmlLoader1.getController();
                 questionRectangleController.setNumber(i + 1);
+
                 toggleGroups[i].selectedToggleProperty().addListener(
                         (ov, oldToggle, newToggle) -> {
                             if (newToggle != null) {
                                 questionRectangleController.setAnswered();
-
                             } else {
                                 questionRectangleController.setDefault();
                             }
@@ -261,15 +302,20 @@ public class QuizScreenController implements Initializable {
             confirmStage.close();
             overlayStackPane.getChildren().remove(overlay);
         }
+        for (int i = 0; i < questionList.size(); i++) {
+            if (questionLayoutControllers.get(i).mediaPlayer != null)
+                questionLayoutControllers.get(i).mediaPlayer.pause();
+            if (userAnswer.get(i).equals(correctAnswers.get(i))) numberOfRightAnswers++;
+        }
         DataModel.getInstance().setNumber(questionList.size());
         DataModel.getInstance().setUserAnswer(userAnswer);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuizResultScreen.fxml"));
             Node node = fxmlLoader.load();
             QuizResultScreenController quizResultScreenController = fxmlLoader.getController();
+            quizResultScreenController.setQuizName(quiz.getQuizName());
             setResultBar(quizResultScreenController);
-            quizResultScreenController.setHeaderListener(this.headerListener);
-            quizResultScreenController.setScreenListener(this.screenListener);
+            quizResultScreenController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.removeAddress(1);
             this.headerListener.addAddressToBreadcrumbs("Review");
             this.screenListener.removeTopScreen();
@@ -285,8 +331,10 @@ public class QuizScreenController implements Initializable {
         quizResultScreenController.setTime(formatDuration(seconds));
         quizResultScreenController.setStartedOn(startTime.format(formatter));
         quizResultScreenController.setCompletedOn(finishTime.format(formatter));
-        quizResultScreenController.setMarks("/" + questionList.size() + ".00");
-        quizResultScreenController.setGrade(0.00 + " out of 10.00 (" + 0 + "%)");
+        quizResultScreenController.setMarks(numberOfRightAnswers + ".00" + "/" + questionList.size() + ".00");
+        String gradeText = String.format("%.2f", 10D * numberOfRightAnswers / questionList.size()).replace(",", ".");
+        String gradePercent = String.format("%.0f", 100D * numberOfRightAnswers / questionList.size());
+        quizResultScreenController.setGrade(gradeText, "out of 10.00 (" + gradePercent + "%)");
     }
 
     private String formatDuration(long seconds) {
@@ -305,76 +353,117 @@ public class QuizScreenController implements Initializable {
 
     @FXML
     public void exportToPdf() throws Exception {
-        try {
-            finishBtn.setVisible(false);
-            exportBtn.setVisible(true);
-            Stage thisStage = (Stage) exportBtn.getScene().getWindow();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save PDF File");
-            fileChooser.setInitialFileName("Baithitracnghiem.pdf");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-            File file = fileChooser.showSaveDialog(thisStage);
+        finishBtn.setVisible(false);
+        exportBtn.setVisible(true);
+        Stage thisStage = (Stage) exportBtn.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.setInitialFileName("Baithitracnghiem.pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+        File file = fileChooser.showSaveDialog(thisStage);
 
-            if (file != null) {
-                PdfWriter writer = new PdfWriter(new FileOutputStream(file.getPath()));
-                PdfDocument pdfDocument = new PdfDocument(writer);
-                Document document = new Document(pdfDocument, PageSize.A4);
-                document.setMargins(50, 50, 50, 50);
-
-                double vboxHeight = quizListContainer.getHeight();
-                double partWidth = quizListContainer.getWidth();
-                double startY = 0; // Vị trí bắt đầu chụp của VBox ở mỗi lần chụp
-                while (vboxHeight > startY) {
-                    double partHeight = vboxHeight - startY; // Phần VBox còn cần phải chụp
-
-                    // Tạo một đối tượng Rectangle để chỉ định phần của VBox bạn muốn chụp
-                    Rectangle2D partRect = new Rectangle2D(0, startY, partWidth, partHeight);
-
-                    SnapshotParameters params = new SnapshotParameters();
-                    params.setViewport(partRect);
-
-                    // Chuyển phần của VBox sang hình ảnh và chụp vào tài liệu PDF
-                    WritableImage partImage = quizListContainer.snapshot(params, null);
-                    Image partPdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(partImage, null), null));
-                    document.add(partPdfImage);
-                    startY += 1700;
-                }
-                document.close();
-
-                // Sau khi tạo file PDF thành công
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thành công");
-                alert.setHeaderText("Tài liệu PDF đã được tạo thành công");
-                alert.setContentText("Thông báo thành công.");
-
-                alert.setOnCloseRequest(event -> {
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
-                        Node node = fxmlLoader.load();
-                        CourseListController courseListController = fxmlLoader.getController();
-                        courseListController.setHeaderListener(this.headerListener);
-                        courseListController.setScreenListener(this.screenListener);
-                        this.headerListener.showMenuButton();
-                        this.headerListener.showEditingBtn();
-                        this.headerListener.removeAddress(5);
-                        this.screenListener.removeTopScreen();
-                        this.screenListener.changeScreen(node);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-                alert.showAndWait();
+        if (file != null) {
+            PdfWriter writer = new PdfWriter(new FileOutputStream(file.getPath()));
+            if (isEncrypted()) {
+                writer = new PdfWriter(new FileOutputStream(file.getPath()),
+                        new WriterProperties().setStandardEncryption(passwordPdf.getBytes(),
+                                passwordPdf.getBytes(),
+                                EncryptionConstants.ALLOW_PRINTING,
+                                EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            PdfDocument pdfDocument = new PdfDocument(writer);
+
+            Document document = new Document(pdfDocument, PageSize.A4);
+            document.setMargins(50, 50, 50, 50);
+
+            double vboxHeight = quizListContainer.getHeight();
+            double partWidth = quizListContainer.getWidth();
+            double startY = 0; // Vị trí bắt đầu chụp của VBox ở mỗi lần chụp
+            while (vboxHeight > startY) {
+                double partHeight = vboxHeight - startY; // Phần VBox còn cần phải chụp
+
+                // Tạo một đối tượng Rectangle để chỉ định phần của VBox bạn muốn chụp
+                Rectangle2D partRect = new Rectangle2D(0, startY, partWidth, partHeight);
+
+                SnapshotParameters params = new SnapshotParameters();
+                params.setViewport(partRect);
+
+                // Chuyển phần của VBox sang hình ảnh và chụp vào tài liệu PDF
+                WritableImage partImage = quizListContainer.snapshot(params, null);
+                Image partPdfImage = new Image(ImageDataFactory.create(SwingFXUtils.fromFXImage(partImage, null), null));
+                document.add(partPdfImage);
+                startY += 1700;
+            }
+            document.close();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successfully");
+            alert.setHeaderText(null);
+            alert.setContentText("PDF document has been successfully created!");
+
+            alert.setOnCloseRequest(event -> {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
+                    Node node = fxmlLoader.load();
+                    CourseListController courseListController = fxmlLoader.getController();
+                    courseListController.setMainScreen(this.headerListener, this.screenListener);
+                    this.headerListener.showMenuButton();
+                    this.headerListener.showEditingBtn();
+                    this.headerListener.removeAddress(5);
+                    this.screenListener.removeTopScreen();
+                    this.screenListener.changeScreen(node);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            alert.showAndWait();
         }
+    }
+
+    public boolean isEncrypted() throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to encrypt your PDF with a password?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            Stage thisStage = (Stage) quizListContainer.getScene().getWindow();
+            Scene thisScene = thisStage.getScene();
+            StackPane overlayStackPane = new StackPane(thisScene.getRoot());
+            overlayStackPane.setPrefSize(thisStage.getWidth() - 15, thisStage.getHeight() - 38);
+            Pane overlay = new Pane();
+            overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-opacity: 1;");
+            overlayStackPane.getChildren().add(overlay);
+            thisScene.setRoot(overlayStackPane);
+            thisStage.setScene(thisScene);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Kien_FXML/GUI9.fxml"));
+            Parent confirmPane = loader.load();
+            Scene scene = new Scene(confirmPane);
+            Stage confirmStage = new Stage();
+            confirmStage.initStyle(StageStyle.UNDECORATED);
+            confirmStage.initModality(Modality.WINDOW_MODAL);
+            confirmStage.initOwner(thisStage);
+
+            confirmStage.setScene(scene);
+            confirmStage.showAndWait();
+
+            GUI9Controller gui9Controller = loader.getController();
+            passwordPdf = gui9Controller.getPassword();
+            if (gui9Controller.isCancelled) {
+                overlayStackPane.getChildren().remove(overlay);
+            }
+            return passwordPdf != null;
+        }
+        return false;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i
-        addQuestionList();
-        renderNavigation();
-        setTimer();
+        userAnswer = new HashMap<>(); // userAnswer map một cặp (i,j) với j là đáp án của câu hỏi thứ i, i>=0
+        correctAnswers = new HashMap<>();
+        numberOfRightAnswers = 0;
+        passwordPdf = "";
     }
 }

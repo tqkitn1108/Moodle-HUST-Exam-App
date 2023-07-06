@@ -68,7 +68,7 @@
             </Separator>
             <HBox minHeight="33.0" prefWidth="568.0">
                <children>
-                  <MFXButton fx:id="startAttemptBtn" onAction="#startAttempt" onMouseClicked="#closeThisWindow" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #c70d0d;" text="START ATTEMPT" textFill="WHITE">
+                  <MFXButton onAction="#startAttempt" onMouseClicked="#closeThisWindow" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #c70d0d;" text="START ATTEMPT" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>

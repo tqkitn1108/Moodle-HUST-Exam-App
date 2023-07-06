@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefWidth="867.0" style="-fx-background-color: #ffffff; -fx-border-width: 0px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuestionLayoutController">
@@ -63,53 +62,29 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </AnchorPane>
-            <VBox prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <VBox fx:id="questionBox" style="-fx-background-color: #e7f3f5;">
+                  <VBox style="-fx-background-color: #e7f3f5;">
                      <children>
-                        <Label fx:id="questionContent" contentDisplay="RIGHT" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" prefWidth="594.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label fx:id="questionContent" alignment="TOP_LEFT" contentDisplay="BOTTOM" graphicTextGap="8.0" maxWidth="880.0" prefWidth="880.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
-                              <Insets bottom="15.0" left="15.0" right="10.0" top="10.0" />
+                              <Insets bottom="5.0" left="15.0" right="10.0" top="10.0" />
                            </VBox.margin>
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <JFXRadioButton fx:id="op1" contentDisplay="RIGHT" graphicTextGap="8.0" style="-fx-pref-height: -1;" text="Option 1" wrapText="true" VBox.vgrow="ALWAYS">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="choice" />
-                           </toggleGroup>
+                        <ImageView fx:id="questionImg" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
-                              <Insets left="20.0" right="10.0" top="6.0" />
+                              <Insets bottom="5.0" left="15.0" />
                            </VBox.margin>
-                           <unSelectedColor>
-                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
-                           </unSelectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="op2" contentDisplay="RIGHT" graphicTextGap="8.0" style="-fx-pref-height: -1;" text="Option 2" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
+                        </ImageView>
+                        <MediaView fx:id="mediaView" onMouseClicked="#playVideo">
                            <VBox.margin>
-                              <Insets left="20.0" right="10.0" top="6.0" />
+                              <Insets bottom="15.0" left="15.0" />
                            </VBox.margin>
-                           <unSelectedColor>
-                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
-                           </unSelectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="op3" contentDisplay="RIGHT" graphicTextGap="8.0" style="-fx-pref-height: -1;" text="Option 3" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets left="20.0" right="10.0" top="6.0" />
-                           </VBox.margin>
-                           <unSelectedColor>
-                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
-                           </unSelectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="op4" contentDisplay="RIGHT" graphicTextGap="8.0" style="-fx-pref-height: -1;" text="Option 4" toggleGroup="$choice" wrapText="true" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets left="20.0" right="10.0" top="6.0" />
-                           </VBox.margin>
-                           <unSelectedColor>
-                              <Color red="0.3499999940395355" green="0.3499999940395355" blue="0.3499999940395355" opacity="0.4893617331981659" />
-                           </unSelectedColor>
-                        </JFXRadioButton>
+                        </MediaView>
+                        <VBox fx:id="questionBox" />
                      </children>
                      <padding>
                         <Insets bottom="40.0" />
@@ -118,7 +93,7 @@
                         <Insets />
                      </VBox.margin>
                   </VBox>
-                  <AnchorPane fx:id="correctAnswer" prefWidth="200.0" />
+                  <AnchorPane fx:id="correctAnswerPane" prefWidth="200.0" />
                </children>
                <HBox.margin>
                   <Insets bottom="25.0" />

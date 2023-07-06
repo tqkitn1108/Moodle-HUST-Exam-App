@@ -1,8 +1,6 @@
 package controller.Ha_Controller;
 
-import controller.Hung_Controller.GUI61Controller;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,8 +16,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.DBInteract;
+import model2.DataModel;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,7 +42,7 @@ public class GUI11Controller implements Initializable {
             Node node = fxmlLoader.load();
             HeaderController headerController = fxmlLoader.getController();
             headerController2 = headerController;
-            headerController.setHeaderListener(new HeaderListener() {
+            headerController.setMainScreen(new HeaderListener() {
                 @Override
                 public void handle(Event event) {
 
@@ -71,7 +66,7 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void removeAddress(Integer number) {
-                    HBox breadcrumbs = (HBox) headerController.getBreadcrumbs();
+                    HBox breadcrumbs = headerController.getBreadcrumbs();
                     if (breadcrumbs.getChildren().size() - number >= 3) {
                         while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
@@ -103,8 +98,7 @@ public class GUI11Controller implements Initializable {
                 public void hideMenuButton() {
                     headerController.getMenuBtn().setVisible(false);
                 }
-            });
-            headerController.setScreenListener(new NewScreenListener() {
+            }, new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
@@ -131,7 +125,7 @@ public class GUI11Controller implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
-            courseListController.setHeaderListener(new HeaderListener() {
+            courseListController.setMainScreen(new HeaderListener() {
                 @Override
                 public void handle(Event event) {
 
@@ -155,7 +149,7 @@ public class GUI11Controller implements Initializable {
 
                 @Override
                 public void removeAddress(Integer number) {
-                    HBox breadcrumbs = (HBox) headerController2.getBreadcrumbs();
+                    HBox breadcrumbs = headerController2.getBreadcrumbs();
                     if (breadcrumbs.getChildren().size() - number >= 3) {
                         while (number > 0) {
                             breadcrumbs.getChildren().remove(breadcrumbs.getChildren().size() - 1);
@@ -187,8 +181,7 @@ public class GUI11Controller implements Initializable {
                 public void hideMenuButton() {
                     headerController2.getMenuBtn().setVisible(false);
                 }
-            });
-            courseListController.setScreenListener(new NewScreenListener() {
+            }, new NewScreenListener() {
                 @Override
                 public void changeScreen(Node node) {
                     addScreenToStackPane(node);
@@ -212,6 +205,8 @@ public class GUI11Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DBInteract dbInteract = new DBInteract();
+        DataModel.getInstance().setDbInteract(dbInteract);
         setHeader();
         addQuizList();
     }

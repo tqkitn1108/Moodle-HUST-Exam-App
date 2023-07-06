@@ -2,6 +2,10 @@
     -fx-background-color: #c34d53;
 }
 
+.menu-btn:hover {
+    -fx-underline: true;
+}
+
 .checkBox .box {
     -fx-background-color: white;
     -fx-border-color: #2196F3;
@@ -91,11 +95,19 @@
     -fx-faint-focus-color: -fx-control-inner-background;
 }
 
-.close-img-icon:hover {
+.close-img-icon:hover{
     -fx-fill: #c22e35;
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.0, 0, 5);
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0.0, 0, 5);*/
+}
+
+.question-delete:hover,
+.question-edit:hover {
+    -fx-fill: #c22e35;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-underline: true;
 }
 /******** CSS GUI62a *********/
 
@@ -126,5 +138,30 @@
 /******** CSS GUI7 *********/
 
 .finish-btn:hover {
+    -fx-underline: true;
+}
+
+.choice .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #5a5a5a;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+}
+
+.choice:selected .box {
+    -fx-background-color: #0f9d58;
+    -fx-border-color: #0f9d58;
+}
+
+.choice:selected .mark {
+    -fx-background-color: white;
+}
+
+.selected-choice:selected .box {
+    -fx-background-color: gray;
+    -fx-border-color: gray;
+}
+/******** CSS Text-Btn *********/
+.text-underline: hover {
     -fx-underline: true;
 }

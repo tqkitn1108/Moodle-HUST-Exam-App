@@ -111,7 +111,7 @@
                                     <Font size="13.0" />
                                  </font>
                                         </Label>
-                                        <TextArea maxWidth="600.0" prefHeight="95.0" prefWidth="420.0" HBox.hgrow="ALWAYS" />
+                                        <TextArea fx:id="description" maxWidth="600.0" prefHeight="95.0" prefWidth="420.0" HBox.hgrow="ALWAYS" />
                                     </children>
                                     <padding>
                                         <Insets top="5.0" />
@@ -123,7 +123,7 @@
                                     </padding>
                                     <children>
                                         <Pane maxWidth="1500.0" prefHeight="22.0" prefWidth="291.0" />
-                              <JFXCheckBox checkedColor="#009fe5" text="Display description on course page" />
+                              <JFXCheckBox fx:id="showDescBox" checkedColor="#009fe5" text="Display description on course page" />
                                         <Label alignment="CENTER">
                                             <graphic>
                                                 <FontAwesomeIconView fill="#009fe5" glyphName="QUESTION_CIRCLE" />

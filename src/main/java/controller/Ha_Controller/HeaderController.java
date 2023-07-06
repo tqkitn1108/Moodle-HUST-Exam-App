@@ -2,19 +2,17 @@ package controller.Ha_Controller;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model2.DataModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +21,6 @@ import java.util.ResourceBundle;
 
 
 public class HeaderController implements Initializable {
-
     @FXML
     private MenuButton menuBtn;
     @FXML
@@ -46,14 +43,9 @@ public class HeaderController implements Initializable {
     }
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
-
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener){
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
@@ -62,16 +54,16 @@ public class HeaderController implements Initializable {
         if (lastBtn.getText().equals("Preview")) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
-            alert.setHeaderText("You are in the test, are you sure you want to exit?");
-            alert.setContentText("When you get rid of the test, it means that you accept the test score not to be recorded.");
+            alert.setHeaderText(null);
+            alert.setContentText("When you get rid of the test, it means that you accept the test score not to be recorded. Are you sure you want to exit?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
+                    DataModel.getInstance().getTimer().cancel();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
                     Node node = fxmlLoader.load();
                     CourseListController courseListController = fxmlLoader.getController();
-                    courseListController.setHeaderListener(this.headerListener);
-                    courseListController.setScreenListener(this.screenListener);
+                    courseListController.setMainScreen(this.headerListener, this.screenListener);
                     this.headerListener.showMenuButton();
                     this.headerListener.showEditingBtn();
                     this.headerListener.removeAddress(5);
@@ -86,8 +78,7 @@ public class HeaderController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
                 Node node = fxmlLoader.load();
                 CourseListController courseListController = fxmlLoader.getController();
-                courseListController.setHeaderListener(this.headerListener);
-                courseListController.setScreenListener(this.screenListener);
+                courseListController.setMainScreen(this.headerListener, this.screenListener);
                 this.headerListener.showMenuButton();
                 this.headerListener.showEditingBtn();
                 this.headerListener.removeAddress(5);
@@ -104,14 +95,13 @@ public class HeaderController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI21.fxml"));
             Node node = fxmlLoader.load();
             GUI21Controller gui21Controller = fxmlLoader.getController();
+            DataModel.getInstance().setGui21Controller(gui21Controller);
             for (int i = 0; i < listBtn.getChildren().size(); ++i) {
-                if (listBtn.getChildren().get(i) instanceof Button) {
-                    Button button = (Button) listBtn.getChildren().get(i);
+                if (listBtn.getChildren().get(i) instanceof Button button) {
                     int finalI = i;
                     button.setOnAction(event -> {
                         menuBtn.hide();
-                        gui21Controller.setHeaderListener(this.headerListener);
-                        gui21Controller.setScreenListener(this.screenListener);
+                        gui21Controller.setMainScreen(this.headerListener, this.screenListener);
                         gui21Controller.getTabPane().getSelectionModel().select(finalI);
                         gui21Controller.getTabPane().getSelectionModel().getSelectedItem().getContent().toFront();
                         this.screenListener.removeTopScreen();
@@ -130,8 +120,7 @@ public class HeaderController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/GUI51.fxml"));
             Node node = fxmlLoader.load();
             GUI51Controller gui51Controller = fxmlLoader.getController();
-            gui51Controller.setHeaderListener(this.headerListener);
-            gui51Controller.setScreenListener(this.screenListener);
+            gui51Controller.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.addAddressToBreadcrumbs("Adding a new Quiz");
             this.headerListener.hideMenuButton();
             this.headerListener.hideEditingBtn();

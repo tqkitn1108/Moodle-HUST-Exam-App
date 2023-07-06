@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class StartApp extends Application {
 
     public static void main(String[] args) {
@@ -14,11 +16,10 @@ public class StartApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/HA_FXML/GUI11.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Kien_FXML/OpeningGUI.fxml")));
         Stage stage = new Stage();
-        stage.setTitle("Hệ thống ôn thi trắc nghiệm");
+        stage.setTitle("PHẦN MỀM TẠO NGÂN HÀNG ĐỀ VÀ TỔ CHỨC THI TRẮC NGHIỆM");
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();

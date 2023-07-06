@@ -1,24 +1,24 @@
 package model;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import org.apache.poi.xwpf.usermodel.*;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import java.util.Scanner;
 
 public class test {
-    public static void main(String arg[]) throws SQLException, IOException {
-        List<Question> questions = DataInteract.getQuestionsFromDocFile("src/Doc1.docx");
+    public static void main(String[] args) throws Exception {
+        DBInteract dbi = new DBInteract();
+
+//        dbi.deleteCategory("testCat");
+//        dbi.deleteCategory("CNXH");
+//        dbi.deleteQuiz("CNXH_GK_1");
+//        dbi.deleteQuiz("CNXH_GK_2");
+//        List<Question> questions = dbi.getQuestionBelongToQuiz("CNXH_GK_1");
+//        for (Question q : questions) {
+//            q.showQ();
+//        }
+
+//        List<Question> questions = DataInteract.getQuestionsFromTxtFile("C:/Users/ACER/Downloads/test.txt");
+//        dbi.setShuffle("CNXH_GK_1",true);
+        dbi.deleteQuiz("abcahcusdh");
     }
 }

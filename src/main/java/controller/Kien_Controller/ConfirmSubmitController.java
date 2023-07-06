@@ -14,19 +14,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ConfirmSubmitController implements Initializable {
-
     @FXML
     private FontAwesomeIconView closeIcon;
     @FXML
     private Label closeSection;
     @FXML
-    private Label quizName;
-
-    @FXML
     private MFXButton returnBtn;
-
-    @FXML
-    private MFXButton submitBtn;
 
     public boolean isSubmitted = false;
     public boolean isCancelled = false;

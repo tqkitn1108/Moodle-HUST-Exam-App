@@ -22,7 +22,7 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="40.0" prefWidth="679.0" style="-fx-font-family: Italy;" text="Adding a Multiple choice question" textFill="#c22e35">
+            <Label fx:id="pageLabel" prefHeight="40.0" prefWidth="679.0" style="-fx-font-family: Italy;" text="Adding a Multiple choice question" textFill="#c22e35">
                <font>
                   <Font size="20.0" />
                </font>
@@ -64,7 +64,7 @@
                                             <Insets left="30.0" right="250.0" />
                                         </HBox.margin>
                                     </Label>
-                                    <ComboBox minHeight="26.0" prefHeight="26.0" prefWidth="192.0" promptText="Sinh học kỳ 2 L7 (67)" style="-fx-background-color: #ffffff; -fx-border-color: #777;" />
+                                    <ComboBox fx:id="cateBox" minHeight="26.0" onAction="#setCateNameDisplay" prefHeight="26.0" prefWidth="192.0" style="-fx-background-color: #ffffff; -fx-border-color: #777;" />
                                 </children>
                             </HBox>
                             <HBox layoutX="10.0" layoutY="118.0">
@@ -79,7 +79,10 @@
                                             <Insets right="9.0" top="8.0" />
                                         </HBox.margin>
                                     </FontAwesomeIconView>
-                                    <TextField fx:id="quesName" minHeight="30.0" prefHeight="30.0" prefWidth="240.0" style="-fx-background-radius: 0; -fx-border-color: #bfbfbf;" />
+                                    <TextField fx:id="quesName" minHeight="30.0" prefHeight="30.0" prefWidth="240.0" style="-fx-background-radius: 0; -fx-border-color: #bfbfbf;">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font></TextField>
                                 </children>
                             </HBox>
                             <HBox layoutX="10.0" layoutY="157.0">
@@ -100,6 +103,9 @@
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
                                     </TextArea>
                                     <VBox alignment="BOTTOM_LEFT" spacing="5.0">
                                        <children>
@@ -119,8 +125,16 @@
                                                    </cursor>
                                                 </FontAwesomeIconView>
                                              </children>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
                                           </HBox>
-                                          <MFXButton alignment="CENTER" onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image" textFill="WHITE">
+                                          <Label fx:id="mediaPathLabel">
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <MFXButton alignment="CENTER" onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image/Video" textFill="WHITE">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
@@ -187,7 +201,7 @@
                                                             </FontAwesomeIconView>
                                                          </children>
                                                       </HBox>
-                                                      <TextArea fx:id="choiceText1" minHeight="40.0" prefHeight="40.0" prefWidth="269.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                      <TextArea fx:id="choiceText1" minHeight="40.0" prefHeight="40.0" prefWidth="269.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="5.0" />
@@ -216,7 +230,7 @@
                                                       <Insets left="20.0" right="10.0" top="5.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="gradeComboBox1" minHeight="30.0" prefHeight="30.0" prefWidth="120.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                                                <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
@@ -273,7 +287,7 @@
                                                             </FontAwesomeIconView>
                                                          </children>
                                                       </HBox>
-                                                      <TextArea fx:id="choiceText2" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                      <TextArea fx:id="choiceText2" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="5.0" />
@@ -302,7 +316,7 @@
                                                       <Insets left="20.0" right="10.0" top="5.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="gradeComboBox2" minHeight="30.0" prefHeight="30.0" prefWidth="120.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                                                <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
@@ -326,7 +340,7 @@
                         </HBox>
                             <Pane fx:id="pane">
                                 <children>
-                                    <VBox fx:id="addChoiceVBox" spacing="15.0">
+                                    <VBox spacing="15.0">
                                  <children>
                                     <HBox>
                                        <children>
@@ -360,7 +374,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea fx:id="choiceText3" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText3" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -389,7 +403,7 @@
                                                                   <Insets left="20.0" right="10.0" top="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <ComboBox fx:id="gradeComboBox3" minHeight="30.0" prefHeight="30.0" prefWidth="120.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
                                                                <opaqueInsets>
                                                                   <Insets />
                                                                </opaqueInsets>
@@ -433,7 +447,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>
@@ -443,7 +457,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea fx:id="choiceText4" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText4" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -472,7 +486,7 @@
                                                                   <Insets left="20.0" right="10.0" top="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <ComboBox fx:id="gradeComboBox4" minHeight="30.0" prefHeight="30.0" prefWidth="120.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
                                                                <opaqueInsets>
                                                                   <Insets />
                                                                </opaqueInsets>
@@ -516,7 +530,7 @@
                                                                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                                            </HBox.margin>
                                                                         </ImageView>
-                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" size="15" styleClass="close-img-icon" visible="false">
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
                                                                            <HBox.margin>
                                                                               <Insets left="5.0" top="5.0" />
                                                                            </HBox.margin>
@@ -526,7 +540,7 @@
                                                                         </FontAwesomeIconView>
                                                                      </children>
                                                                   </HBox>
-                                                                  <TextArea fx:id="choiceText5" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" wrapText="true" />
+                                                                  <TextArea fx:id="choiceText5" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
                                                                </children>
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
@@ -555,7 +569,7 @@
                                                                   <Insets left="20.0" right="10.0" top="5.0" />
                                                                </HBox.margin>
                                                             </Label>
-                                                            <ComboBox fx:id="gradeComboBox5" minHeight="30.0" prefHeight="30.0" prefWidth="120.0" promptText="None" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" stylesheets="@/style.css" visibleRowCount="20">
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
                                                                <opaqueInsets>
                                                                   <Insets />
                                                                </opaqueInsets>
@@ -581,7 +595,264 @@
                               </VBox>
                                 </children>
                             </Pane>
-                            <Button fx:id="addChoiceButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="205.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="BLANK FOR 3 MORE CHOICES" textFill="WHITE">
+                        <Pane fx:id="pane2" layoutX="10.0" layoutY="1014.0">
+                           <children>
+                              <VBox spacing="15.0">
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <AnchorPane prefHeight="280.0" prefWidth="500.0" style="-fx-background-color: #f0ecec;">
+                                             <children>
+                                                <VBox layoutX="61.0" layoutY="14.0" spacing="10.0" style="-fx-border-color: #bfbfbf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_LEFT" prefHeight="70.0" prefWidth="319.0">
+                                                         <children>
+                                                            <Label alignment="CENTER" prefHeight="20.0" prefWidth="60.0" text="Choice 6">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <VBox maxWidth="350.0" prefHeight="105.0" prefWidth="270.0" style="-fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS">
+                                                               <children>
+                                                                  <HBox>
+                                                                     <children>
+                                                                        <ImageView fitHeight="75.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <HBox.margin>
+                                                                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                        </ImageView>
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                           <cursor>
+                                                                              <Cursor fx:constant="HAND" />
+                                                                           </cursor>
+                                                                        </FontAwesomeIconView>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <TextArea fx:id="choiceText6" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets right="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <MFXButton onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image" textFill="WHITE">
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                                               </padding>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="10.0" />
+                                                               </HBox.margin>
+                                                            </MFXButton>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox>
+                                                         <children>
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="39.0" text="Grade">
+                                                               <HBox.margin>
+                                                                  <Insets left="20.0" right="10.0" top="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
+                                                               <opaqueInsets>
+                                                                  <Insets />
+                                                               </opaqueInsets>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </ComboBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="5.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets left="370.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <AnchorPane prefHeight="280.0" prefWidth="500.0" style="-fx-background-color: #f0ecec;">
+                                             <children>
+                                                <VBox layoutX="61.0" layoutY="14.0" spacing="10.0" style="-fx-border-color: #bfbfbf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_LEFT" prefHeight="70.0" prefWidth="319.0">
+                                                         <children>
+                                                            <Label alignment="CENTER" prefHeight="20.0" prefWidth="60.0" text="Choice 7">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <VBox maxWidth="350.0" prefHeight="105.0" prefWidth="270.0" style="-fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS">
+                                                               <children>
+                                                                  <HBox>
+                                                                     <children>
+                                                                        <ImageView fitHeight="75.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <HBox.margin>
+                                                                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                        </ImageView>
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                           <cursor>
+                                                                              <Cursor fx:constant="HAND" />
+                                                                           </cursor>
+                                                                        </FontAwesomeIconView>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <TextArea fx:id="choiceText7" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets right="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <MFXButton onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image" textFill="WHITE">
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                                               </padding>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="10.0" />
+                                                               </HBox.margin>
+                                                            </MFXButton>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox>
+                                                         <children>
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="39.0" text="Grade">
+                                                               <HBox.margin>
+                                                                  <Insets left="20.0" right="10.0" top="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
+                                                               <opaqueInsets>
+                                                                  <Insets />
+                                                               </opaqueInsets>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </ComboBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="5.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets left="370.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <AnchorPane prefHeight="280.0" prefWidth="500.0" style="-fx-background-color: #f0ecec;">
+                                             <children>
+                                                <VBox layoutX="61.0" layoutY="14.0" spacing="10.0" style="-fx-border-color: #bfbfbf;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_LEFT" prefHeight="70.0" prefWidth="319.0">
+                                                         <children>
+                                                            <Label alignment="CENTER" prefHeight="20.0" prefWidth="60.0" text="Choice 8">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <VBox maxWidth="350.0" prefHeight="105.0" prefWidth="270.0" style="-fx-border-color: #bfbfbf;" HBox.hgrow="ALWAYS">
+                                                               <children>
+                                                                  <HBox>
+                                                                     <children>
+                                                                        <ImageView fitHeight="75.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true">
+                                                                           <HBox.margin>
+                                                                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                        </ImageView>
+                                                                        <FontAwesomeIconView fill="RED" glyphName="CLOSE" onMouseClicked="#removeImg" size="15" styleClass="close-img-icon" visible="false">
+                                                                           <HBox.margin>
+                                                                              <Insets left="5.0" top="5.0" />
+                                                                           </HBox.margin>
+                                                                           <cursor>
+                                                                              <Cursor fx:constant="HAND" />
+                                                                           </cursor>
+                                                                        </FontAwesomeIconView>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <TextArea fx:id="choiceText8" minHeight="40.0" prefHeight="40.0" prefWidth="1105.0" style="-fx-background-radius: 0px;" styleClass="choice-text" wrapText="true" />
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets right="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <MFXButton onAction="#openFileChooser" style="-fx-background-color: #179ee5;" text="Insert Image" textFill="WHITE">
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
+                                                               <padding>
+                                                                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                                               </padding>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" right="10.0" />
+                                                               </HBox.margin>
+                                                            </MFXButton>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </HBox>
+                                                      <HBox>
+                                                         <children>
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="39.0" text="Grade">
+                                                               <HBox.margin>
+                                                                  <Insets left="20.0" right="10.0" top="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <ComboBox minHeight="30.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #bfbfbf;" styleClass="grade-box" stylesheets="@/style.css" visibleRowCount="20">
+                                                               <opaqueInsets>
+                                                                  <Insets />
+                                                               </opaqueInsets>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </ComboBox>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="5.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets left="370.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                            <Button fx:id="addChoiceButton" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="205.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="BLANK FOR 3 MORE CHOICES" textFill="WHITE">
                                 <VBox.margin>
                                     <Insets bottom="50.0" left="300.0" />
                                 </VBox.margin>
@@ -592,7 +863,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                             </Button>
-                            <Button layoutX="310.0" layoutY="984.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES AND CONTINUE EDITING" textFill="WHITE">
+                            <Button layoutX="310.0" layoutY="984.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#saveAndContinueEditing" prefHeight="40.0" prefWidth="262.0" style="-fx-background-color: #009fe5; -fx-background-radius: 0px; -fx-text-fill: #ffffff;" text="SAVE CHANGES AND CONTINUE EDITING" textFill="WHITE">
                                 <font>
                                     <Font name="Times New Roman" size="12.0" />
                                 </font>

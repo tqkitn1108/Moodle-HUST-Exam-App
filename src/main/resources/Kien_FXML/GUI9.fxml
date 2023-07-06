@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.GUI9Controller">
+   <children>
+      <VBox alignment="TOP_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="closeLabel" alignment="CENTER" onMouseClicked="#closeThisWindow" onMouseEntered="#coloring" onMouseExited="#uncoloring">
+               <graphic>
+                  <FontAwesomeIconView fx:id="closeIcon" fill="#818181" glyphName="TIMES" size="20.0" />
+               </graphic>
+               <padding>
+                  <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <VBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Label text="Encrypt your PDF with a password so it can't be removed" textFill="#d71010">
+                     <font>
+                        <Font name="Georgia Bold" size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="47.0" prefWidth="600.0" text="We protect your file with strong 128-bit AES encryption. This will make it impossible to open or remove the protection without the correct password. So, don't forget it!" textAlignment="CENTER" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <MFXPasswordField fx:id="passField1" floatingText="Choose your password" prefWidth="300.0" />
+                  <MFXPasswordField fx:id="passField2" allowPaste="true" floatingText="Repeat your password" prefHeight="18.0" prefWidth="300.0" />
+                  <MFXButton fx:id="encryptBtn" contentDisplay="RIGHT" disable="true" onAction="#encryptPdf" onMouseClicked="#closeThisWindow" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #777;" text="ENCRYPT PDF" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="ARROW_RIGHT" size="20" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </MFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <effect>
+      <DropShadow blurType="ONE_PASS_BOX" height="44.4" radius="21.112499999999997" spread="0.45" width="42.05">
+         <color>
+            <Color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" />
+         </color>
+      </DropShadow>
+   </effect>
+</AnchorPane>

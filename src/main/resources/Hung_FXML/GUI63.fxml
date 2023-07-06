@@ -60,19 +60,22 @@
                      <center>
                         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="600.0">
+                              <HBox alignment="CENTER_LEFT" minHeight="28.0" prefHeight="28.0" prefWidth="600.0">
                                  <children>
                                     <Label text="Select a category:">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <ComboBox minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #777;">
+                                    <ComboBox fx:id="categoryBox" minHeight="30.0" onAction="#selectCateBoxItem" prefHeight="30.0" prefWidth="225.0" promptText="Default" style="-fx-background-color: #fff; -fx-border-color: #777;" visibleRowCount="20">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </ComboBox>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </HBox>
                               <VBox spacing="10.0">
                                  <children>
@@ -81,109 +84,52 @@
                                           <FontAwesomeIconView fill="#009fe5" glyphName="CARET_DOWN" />
                                        </graphic>
                                     </Label>
-                                    <JFXCheckBox checkedColor="#009fe5" selected="true" text="Also show questions from subcategories" />
+                                    <JFXCheckBox fx:id="showMoreQuestionCheckBox" checkedColor="#009fe5" onAction="#showQuesFromSubCate" selected="true" text="Also show questions from subcategories" />
                                     <JFXCheckBox checkedColor="#009fe5" text="Also show old questions" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="15.0" left="15.0" top="15.0" />
                                  </VBox.margin>
                               </VBox>
-                              <VBox fx:id="questionList" prefHeight="234.0" prefWidth="600.0">
+                              <VBox prefHeight="234.0" prefWidth="600.0">
                                  <children>
-                                    <JFXCheckBox checkedColor="#009fe5" text="Question">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="40.0" />
-                                       </VBox.margin>
-                                    </JFXCheckBox>
-                                    <VBox prefHeight="218.0" prefWidth="599.0">
+                                    <HBox fx:id="columnTittle" prefHeight="42.0" visible="false">
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="1.0" prefWidth="584.0">
+                                          <JFXCheckBox fx:id="checkBox" checkedColor="#009fe5" onAction="#selectionAll" prefHeight="2.0" prefWidth="29.0" text="." textFill="WHITE">
+                                             <HBox.margin>
+                                                <Insets right="-10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </JFXCheckBox>
+                                          <Label style="-fx-text-fill: #16a6e6;" text="T" />
+                                          <FontAwesomeIconView fill="#179ee5" glyphName="PLAY" rotate="-90.0" scaleY="2.0" scaleZ="0.0" selectionFill="#f2f2f2" size="6">
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="10.0" top="2.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <VBox prefHeight="39.0" prefWidth="500.0" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <Label alignment="CENTER">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" size="15" />
-                                                   </graphic>
+                                                <Label prefHeight="17.0" text="Question">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
                                                 </Label>
-                                                <JFXCheckBox checkedColor="#009fe5" graphicTextGap="0.0" prefHeight="18.0" prefWidth="13.0" text="." textFill="WHITE">
-                                                   <HBox.margin>
-                                                      <Insets left="15.0" />
-                                                   </HBox.margin>
-                                                </JFXCheckBox>
-                                                <Label layoutX="38.0" layoutY="10.0">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#767676" glyphName="LIST_UL">
-                                                         <font>
-                                                            <Font size="6.0" />
-                                                         </font>
-                                                      </FontAwesomeIconView>
-                                                   </graphic>
-                                                   <padding>
-                                                      <Insets left="3.0" />
-                                                   </padding>
-                                                   <HBox.margin>
-                                                      <Insets left="-10.0" top="10.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label layoutX="66.0" layoutY="10.0" maxWidth="1500.0" prefHeight="20.0" prefWidth="462.0" text="Label" HBox.hgrow="ALWAYS">
-                                                   <padding>
-                                                      <Insets left="15.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label layoutX="94.0" layoutY="10.0">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="15" />
-                                                   </graphic>
+                                                <Label prefHeight="17.0" text="Question name / ID number" textFill="#16a6e6">
+                                                   <font>
+                                                      <Font size="10.0" />
+                                                   </font>
                                                 </Label>
                                              </children>
-                                             <VBox.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                          <HBox alignment="CENTER_LEFT" prefHeight="16.0" prefWidth="584.0" style="-fx-background-color: #f2f2f2;">
-                                             <children>
-                                                <Label alignment="CENTER">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#009fe5" glyphName="PLUS" size="15" wrappingWidth="11.785714149475098" />
-                                                   </graphic>
-                                                </Label>
-                                                <JFXCheckBox checkedColor="#009fe5" graphicTextGap="0.0" prefHeight="18.0" prefWidth="13.0" text="." textFill="WHITE">
-                                                   <HBox.margin>
-                                                      <Insets left="15.0" />
-                                                   </HBox.margin>
-                                                </JFXCheckBox>
-                                                <Label layoutX="38.0" layoutY="10.0">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#767676" glyphName="LIST_UL" wrappingWidth="12.0">
-                                                         <font>
-                                                            <Font size="6.0" />
-                                                         </font>
-                                                      </FontAwesomeIconView>
-                                                   </graphic>
-                                                   <padding>
-                                                      <Insets left="3.0" />
-                                                   </padding>
-                                                   <HBox.margin>
-                                                      <Insets left="-10.0" top="10.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label layoutX="66.0" layoutY="10.0" maxWidth="1500.0" prefHeight="22.0" prefWidth="478.0" text="Label" HBox.hgrow="ALWAYS">
-                                                   <padding>
-                                                      <Insets left="15.0" />
-                                                   </padding>
-                                                </Label>
-                                                <Label layoutX="94.0" layoutY="10.0">
-                                                   <graphic>
-                                                      <FontAwesomeIconView fill="#009fe5" glyphName="SEARCH_PLUS" size="15" />
-                                                   </graphic>
-                                                </Label>
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </VBox.margin>
-                                          </HBox>
+                                          </VBox>
                                        </children>
-                                    </VBox>
+                                       <VBox.margin>
+                                          <Insets left="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <VBox fx:id="questionList" prefHeight="218.0" prefWidth="599.0" />
                                  </children>
+                                 <VBox.margin>
+                                    <Insets left="15.0" right="15.0" />
+                                 </VBox.margin>
                               </VBox>
                            </children>
                         </VBox>
@@ -205,7 +151,7 @@
                               </MFXButton>
                            </children>
                            <BorderPane.margin>
-                              <Insets left="15.0" right="15.0" />
+                              <Insets left="15.0" right="15.0" top="10.0" />
                            </BorderPane.margin>
                         </VBox>
                      </bottom>
@@ -214,6 +160,9 @@
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </BorderPane.margin>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
             </MFXScrollPane>
          </center>
       </BorderPane>

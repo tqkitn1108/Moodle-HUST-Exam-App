@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #ccc;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI62aController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #ccc;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Hung_Controller.GUI62Controller">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -37,11 +37,16 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="286.0" spacing="10.0">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="282.0" text="Question: 0 | This quiz is open">
+                              <HBox prefHeight="18.0">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
-                              </Label>
+                                 <children>
+                                    <Label text="Question: " />
+                                    <Label fx:id="quantity" text="0" />
+                                    <Label text=" | This quiz is open" />
+                                 </children>
+                              </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="279.0" spacing="10.0">
                                  <children>
                                     <MFXButton style="-fx-background-color: #009fe5;" text="REPAGINATE" textFill="WHITE">
@@ -98,7 +103,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total of marks: 0.00" textAlignment="RIGHT" wrappingWidth="156.63244104385376">
+                              <Text fx:id="totalOfMark" strokeType="OUTSIDE" strokeWidth="0.0" text="Total of marks: 0.00" textAlignment="RIGHT" wrappingWidth="156.63244104385376">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -118,7 +123,7 @@
                <children>
                   <HBox fillHeight="false" prefHeight="50.0" prefWidth="598.0" style="-fx-background-color: #fafafa;">
                      <children>
-                        <Label fx:id="pencilLabel">
+                        <Label fx:id="pencilLabel" alignment="TOP_LEFT" contentDisplay="TOP">
                            <graphic>
                               <FontAwesomeIconView fill="#009fe5" glyphName="PENCIL" size="16" textAlignment="CENTER" wrappingWidth="21.80001735687256" />
                            </graphic>
@@ -131,7 +136,7 @@
                            <children>
                               <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <JFXCheckBox checkedColor="#009fe5" selected="true" text="Shuffle">
+                                    <JFXCheckBox fx:id="shuffleBtn" checkedColor="#009fe5" text="Shuffle">
                                        <HBox.margin>
                                           <Insets right="5.0" />
                                        </HBox.margin>
@@ -146,7 +151,7 @@
                                     <Insets right="25.0" />
                                  </VBox.margin>
                               </HBox>
-                              <MenuButton fx:id="menuBtn" mnemonicParsing="false" style="-fx-background-color: #fafafa;" styleClass="menu-gui62a" text="Add" textFill="#009fe5">
+                              <MenuButton mnemonicParsing="false" style="-fx-background-color: #fafafa;" styleClass="menu-gui62a" text="Add" textFill="#009fe5">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="a new question">
                                        <graphic>
@@ -175,9 +180,9 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <MFXScrollPane fitToHeight="true" fitToWidth="true">
+                  <MFXScrollPane fitToHeight="true" fitToWidth="true" prefHeight="400.0">
                      <content>
-                        <VBox fx:id="questionList" spacing="2.0" />
+                        <VBox fx:id="questionList" spacing="2.0" styleClass="question-list" />
                      </content></MFXScrollPane>
                </children>
                <BorderPane.margin>
@@ -186,7 +191,7 @@
             </VBox>
          </center>
          <bottom>
-            <ComboBox maxWidth="200.0" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;" BorderPane.alignment="CENTER">
+            <ComboBox fx:id="jumpBox" maxWidth="200.0" onAction="#jumpToAnotherPage" prefHeight="30.0" prefWidth="150.0" promptText="Jump to..." style="-fx-background-color: #fff; -fx-border-color: #777;" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="40.0" />
                </BorderPane.margin>

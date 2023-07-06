@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.OpeningGUIController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <right>
+            <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="30.0" />
+               </BorderPane.margin>
+            </ImageView>
+         </right>
+         <center>
+            <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MFXTextField fx:id="nameField" floatingText="Enter your name" prefWidth="300.0" />
+                  <MFXButton fx:id="openAppBtn" contentDisplay="RIGHT" onAction="#openApp" onMouseEntered="#coloring" onMouseExited="#uncoloring" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #aaa;" text="OPEN APP" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="ARROW_RIGHT" size="20" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </MFXButton>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="30.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <top>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="PHẦN MỀM TẠO NGÂN HÀNG ĐỀ VÀ TỔ CHỨC THI TRẮC NGHIỆM" textFill="#d71010">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Giảng viên: Nguyễn Tiến Thành" textFill="#d71010">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+         <bottom>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Thành viên nhóm:">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="1. Tạ Quang Kiên    2. Đậu Danh Thái    3. Nguyễn Thu Hà    4. Nguyễn Thọ Hùng    5. Mạch Quang Thiên">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="40.0" />
+               </BorderPane.margin>
+            </VBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

@@ -7,77 +7,42 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
+import model2.DataModel;
+import model2.GeneralFunctions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GUI51Controller implements Initializable {
-
     @FXML
     private JFXCheckBox checkBox;
     @FXML
     private TextField quizName;
     @FXML
-    private ComboBox<Integer> daybox1;
-
+    private TextArea description;
     @FXML
-    private ComboBox<Integer> daybox2;
-
+    private JFXCheckBox showDescBox;
     @FXML
-    private ComboBox<Integer> hourbox1;
-
+    private ComboBox<Integer> daybox1, daybox2, hourbox1, hourbox2, minbox1, minbox2, minbox3, yearbox1, yearbox2;
     @FXML
-    private ComboBox<Integer> hourbox2;
-
-    @FXML
-    private ComboBox<Integer> minbox1;
-
-    @FXML
-    private ComboBox<Integer> minbox2;
-
-    @FXML
-    private ComboBox<Integer> minbox3;
-
-    @FXML
-    private ComboBox<String> monthbox1;
-
-    @FXML
-    private ComboBox<String> monthbox2;
-
-    @FXML
-    private ComboBox<String> textbox1;
-
-    @FXML
-    private ComboBox<String> textbox2;
-
-    @FXML
-    private ComboBox<Integer> yearbox1;
-
-    @FXML
-    private ComboBox<Integer> yearbox2;
+    private ComboBox<String> monthbox1, monthbox2, textbox1, textbox2;
 
     private HeaderListener headerListener;
-
-    public void setHeaderListener(HeaderListener headerListener) {
-        this.headerListener = headerListener;
-    }
-
     private NewScreenListener screenListener;
 
-    public void setScreenListener(NewScreenListener screenListener) {
+    public void setMainScreen(HeaderListener headerListener, NewScreenListener screenListener) {
+        this.headerListener = headerListener;
         this.screenListener = screenListener;
     }
 
     private void setupMinBox(ComboBox<Integer> comboBox) {
         // Populate the ComboBox with values from 1 to 60.
-        for (int i = 0; i <= 59; i++) {
+        for (int i = 0; i <= 90; i++) {
             comboBox.getItems().add(i);
         }
         // Set the default value of the ComboBox to 1.
@@ -132,25 +97,34 @@ public class GUI51Controller implements Initializable {
     @FXML
     private void createNewQuiz(ActionEvent event) {
         try {
+            if (quizName.getText().length() == 0) {
+                throw new Exception("Please fill the question name field");
+            }
+            String unit = textbox1.getValue();
+            int quizTime = minbox3.getValue();
+            if (unit.equals("hours")) {
+                quizTime *= 60;
+            }
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HA_FXML/CourseList.fxml"));
             Node node = fxmlLoader.load();
             CourseListController courseListController = fxmlLoader.getController();
-            courseListController.createNewQuiz(quizName.getText());
 
-            // Tạo một quiz mới lưu vào database
-//            Quiz newQuiz = new Quiz();
-//            newQuiz.setQuizName(quizName.getText());
-//            DBInteract dbInteract = new DBInteract();
-//            dbInteract.createNewQuiz(newQuiz);
-            courseListController.setHeaderListener(this.headerListener);
-            courseListController.setScreenListener(this.screenListener);
+            DBInteract dbInteract = DataModel.getInstance().getDbInteract();
+            Quiz newQuiz = new Quiz();
+            newQuiz.setQuizName(quizName.getText());
+            newQuiz.setTimeLimit(quizTime);
+            newQuiz.setQuizDescription(description.getText());
+            newQuiz.setShowDescription(showDescBox.isSelected());
+            dbInteract.createNewQuiz(newQuiz);
+
+            courseListController.setMainScreen(this.headerListener, this.screenListener);
             this.headerListener.showMenuButton();
             this.headerListener.showEditingBtn();
             this.headerListener.removeAddress(5);
             this.screenListener.removeTopScreen();
             this.screenListener.changeScreen(node);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
     }
 

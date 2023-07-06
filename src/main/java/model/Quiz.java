@@ -6,9 +6,16 @@ public class Quiz {
     private String quizName;
     private String quizDescription;
     private int timeLimit;
-    private Category category;
-    private List<String> questionsID;
+    private boolean shuffle;
+    private boolean showDescription;
 
+    public boolean isShowDescription() {
+        return showDescription;
+    }
+
+    public boolean isShuffle() {
+        return shuffle;
+    }
 
     public String getQuizName() {
         return quizName;
@@ -18,24 +25,12 @@ public class Quiz {
         return timeLimit;
     }
 
-    public List<String> getQuestionsID() {
-        return questionsID;
-    }
-
     public String getQuizDescription() {
         return quizDescription;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setQuestionsID(List<String> questionsID) {
-        this.questionsID = questionsID;
+    public void setShowDescription(boolean showDescription) {
+        this.showDescription = showDescription;
     }
 
     public void setQuizDescription(String quizDescription) {
@@ -48,5 +43,14 @@ public class Quiz {
 
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
+    }
+
+    public List<Question> getQuestions() {
+        DBInteract dbi = new DBInteract();
+        return dbi.getQuestionBelongToQuiz(quizName);
     }
 }

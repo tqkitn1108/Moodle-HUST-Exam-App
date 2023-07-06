@@ -36,7 +36,7 @@
                      </padding>
                   </Label>
                   <Pane prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tạ Quang Kiên">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user-name" text="Tạ Quang Kiên">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -94,7 +94,7 @@
                                           </Label>
                                           <VBox fx:id="listBtn" prefHeight="142.0" prefWidth="116.0">
                                              <children>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Questions" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" styleClass="menu-btn" text="Questions" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -108,7 +108,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Categories" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" styleClass="menu-btn" text="Categories" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -119,7 +119,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Import" textFill="#009fe5">
+                                                <Button mnemonicParsing="false" style="-fx-background-color: #ffffff;" styleClass="menu-btn" text="Import" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -130,7 +130,7 @@
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
                                                 </Button>
-                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" text="Export" textFill="#009fe5">
+                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ffffff;" styleClass="menu-btn" text="Export" textFill="#009fe5">
                                                    <font>
                                                       <Font size="17.0" />
                                                    </font>
@@ -174,7 +174,7 @@
                   </HBox>
                   <HBox fx:id="breadcrumbs" prefHeight="31.0">
                      <children>
-                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="Home" textFill="#c53624">
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" styleClass="text-underline" text="Home" textFill="#c53624">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -202,8 +202,11 @@
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
                         </MFXButton>
-                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" text="THI CUỐI KỲ" textFill="#c53624">
+                        <MFXButton alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#backHomePage" rippleColor="WHITE" styleClass="text-underline" text="THI CUỐI KỲ" textFill="#c53624">
                            <graphic>
                               <Text strokeType="OUTSIDE" text="/">
                                  <font>
