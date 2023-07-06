@@ -135,8 +135,8 @@ public class QuizScreenController implements Initializable {
     public void addQuestionList() {
         startTime = LocalDateTime.now();
         toggleGroups = new ToggleGroup[questionList.size()];
-        List<Node> questionNodes = new ArrayList<Node>();
-        questionLayoutControllers = new ArrayList<QuestionLayoutController>();
+        List<Node> questionNodes = new ArrayList<>();
+        questionLayoutControllers = new ArrayList<>();
         for (int i = 0; i < questionList.size(); i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Kien_FXML/QuestionLayout.fxml"));
             try {
@@ -162,7 +162,7 @@ public class QuizScreenController implements Initializable {
                                         RadioButton radioButton = new RadioButton();
                                         radioButton.setSelected(true);
                                         radioButton.setToggleGroup(toggleGroups[finalI1]);
-                                        List<Integer> answerList = new ArrayList<Integer>();
+                                        List<Integer> answerList = new ArrayList<>();
                                         for (int j = 0; j < size; ++j) {
                                             CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
                                             if (selectedCheckBox.isSelected()) {
@@ -180,7 +180,7 @@ public class QuizScreenController implements Initializable {
                                             radioButton.setSelected(false); //chuyển selected từ true -> false để thực hiện questionRectangleController.setDefault();
                                             userAnswer.put(finalI1, List.of(-1));
                                         } else {
-                                            List<Integer> answerList = new ArrayList<Integer>();
+                                            List<Integer> answerList = new ArrayList<>();
                                             for (int j = 0; j < size; ++j) {
                                                 CheckBox selectedCheckBox = (CheckBox) questionLayoutController.questionBox.getChildren().get(j);
                                                 if (selectedCheckBox.isSelected()) {
@@ -199,7 +199,7 @@ public class QuizScreenController implements Initializable {
                             (ov, oldToggle, newToggle) -> {
                                 if (newToggle != null) {
                                     questionLayoutController.setStateQues("Answered");
-                                    List<Integer> answerList = new ArrayList<Integer>();
+                                    List<Integer> answerList = new ArrayList<>();
                                     for (int j = 0; j < size; ++j) {
                                         RadioButton selectedRadio = (RadioButton) questionLayoutController.questionBox.getChildren().get(j);
                                         if (selectedRadio.isSelected()) {

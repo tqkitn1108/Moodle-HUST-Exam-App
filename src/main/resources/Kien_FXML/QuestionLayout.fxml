@@ -11,9 +11,9 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="867.0" style="-fx-background-color: #ffffff; -fx-border-width: 0px;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuestionLayoutController">
+<AnchorPane prefWidth="867.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Kien_Controller.QuestionLayoutController">
    <children>
-      <HBox prefWidth="867.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefWidth="867.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane minWidth="109.0" prefWidth="109.0">
                <children>
@@ -62,43 +62,49 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </AnchorPane>
-            <VBox HBox.hgrow="ALWAYS">
+            <AnchorPane prefWidth="1200.0">
                <children>
-                  <VBox style="-fx-background-color: #e7f3f5;">
+                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="questionContent" alignment="TOP_LEFT" contentDisplay="BOTTOM" graphicTextGap="8.0" maxWidth="880.0" prefWidth="880.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
+                        <VBox style="-fx-background-color: #e7f3f5;">
+                           <children>
+                              <Label fx:id="questionContent" alignment="TOP_LEFT" contentDisplay="BOTTOM" graphicTextGap="8.0" maxWidth="880.0" prefWidth="880.0" style="-fx-pref-height: -1;" text="Question" wrapText="true" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="questionImg" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <MediaView fx:id="mediaView" onMouseClicked="#playVideo">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" />
+                                 </VBox.margin>
+                              </MediaView>
+                              <VBox fx:id="questionBox">
+                                 <padding>
+                                    <Insets bottom="40.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="15.0" right="10.0" top="10.0" />
+                              <Insets />
                            </VBox.margin>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="questionImg" pickOnBounds="true" preserveRatio="true">
+                        </VBox>
+                        <AnchorPane fx:id="correctAnswerPane">
                            <VBox.margin>
-                              <Insets bottom="5.0" left="15.0" />
+                              <Insets />
                            </VBox.margin>
-                        </ImageView>
-                        <MediaView fx:id="mediaView" onMouseClicked="#playVideo">
-                           <VBox.margin>
-                              <Insets bottom="15.0" left="15.0" />
-                           </VBox.margin>
-                        </MediaView>
-                        <VBox fx:id="questionBox" />
+                        </AnchorPane>
                      </children>
-                     <padding>
-                        <Insets bottom="40.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
                   </VBox>
-                  <AnchorPane fx:id="correctAnswerPane" prefWidth="200.0" />
                </children>
-               <HBox.margin>
-                  <Insets bottom="25.0" />
-               </HBox.margin>
-            </VBox>
+            </AnchorPane>
          </children>
       </HBox>
    </children>
