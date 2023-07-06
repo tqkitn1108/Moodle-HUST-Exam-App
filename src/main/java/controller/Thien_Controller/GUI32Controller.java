@@ -55,7 +55,7 @@ public class GUI32Controller implements Initializable {
     @FXML
     private FontAwesomeIconView closeIcon;
     @FXML
-    private Label videoPathLabel;
+    private Label mediaPathLabel;
 
     private Map<String, Integer> categoryLevel;
 
@@ -186,7 +186,11 @@ public class GUI32Controller implements Initializable {
             newQuestion.setQuestionName(quesName.getText());
             newQuestion.setQuestionText(quesText.getText());
             newQuestion.setQuestionImage(quesImg.getImage());
-            newQuestion.setMediaPath(videoPathLabel.getText());
+            newQuestion.setMediaPath(mediaPathLabel.getText());
+            if (quesImg.getImage() != null && quesImg.getImage().getUrl() != null && quesImg.getImage().getUrl().endsWith(".gif")) {
+                newQuestion.setMediaPath(quesImg.getImage().getUrl());
+                newQuestion.setQuestionImage(null);
+            }
             newQuestion.setOptionLabels(labels);
             newQuestion.setChoices(choices);
             if (question == null || !quesName.getText().equals(question.getQuestionName())) {
@@ -194,13 +198,11 @@ public class GUI32Controller implements Initializable {
                 if (question == null) {
                     DataModel.getInstance().getGui21Controller().loadCategoryBox();
                     DataModel.getInstance().getGui21Controller().setValueInCategoryBox1(GeneralFunctions.getCateName(cateBox.getValue()));
-                    question = newQuestion;
                 } else {
                     dbInteract.deleteQuestion(question.getQuestionName(), null);
                     questionInGUI31Controller.setQuestion(newQuestion);
-                    question = newQuestion;
                 }
-                flag = true;
+                question = newQuestion;
             } else {
                 if (cateBox.getValue().equals(firstCategoryName)) {
                     dbInteract.editQuestion(quesName.getText(), newQuestion);
@@ -212,8 +214,8 @@ public class GUI32Controller implements Initializable {
                 }
                 if (questionInGUI31Controller != null)
                     questionInGUI31Controller.setQuestion(newQuestion);
-                flag = true;
             }
+            flag = true;
         } catch (Exception e) {
             GeneralFunctions.showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
@@ -236,6 +238,7 @@ public class GUI32Controller implements Initializable {
                 quesImg.setFitHeight(300);
                 quesImg.setFitWidth(300);
                 closeIcon.setVisible(true);
+                mediaPathLabel.setVisible(false);
                 event.consume();
             }
         }
@@ -254,16 +257,36 @@ public class GUI32Controller implements Initializable {
                 if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".gif") && !fileName.endsWith(".mp4")) {
                     throw new Exception("Wrong Format! Please choose a image/video file");
                 }
-                if (button.getText().equals("Insert Image/Video") && fileName.endsWith(".mp4")) {
-                    videoPathLabel.setText(file.getPath());
-                    ImageView imageView = new ImageView(new Image("/img/video-play-icon.png"));
-                    imageView.setFitHeight(20);
-                    imageView.setFitWidth(20);
-                    videoPathLabel.setGraphic(imageView);
-                    videoPathLabel.setVisible(true);
-                } else {
+                if (button.getText().equals("Insert Image/Video")) {
                     if (fileName.endsWith(".mp4")) {
-                        throw new Exception("Wrong Format! Please choose a image file");
+                        if (quesImg.getImage() != null) {
+                            quesImg.setImage(null);
+                            quesImg.setFitHeight(75);
+                            quesImg.setFitWidth(250);
+                            closeIcon.setVisible(false);
+                        }
+                        mediaPathLabel.setText(file.getPath());
+                        ImageView imageView = new ImageView(new Image("/img/video-play-icon.png"));
+                        imageView.setFitHeight(20);
+                        imageView.setFitWidth(20);
+                        mediaPathLabel.setGraphic(imageView);
+                        mediaPathLabel.setVisible(true);
+                    } else {
+                        mediaPathLabel.setVisible(false);
+                        if (fileName.endsWith(".gif")) {
+                            mediaPathLabel.setText(file.getPath());
+                        }
+                        Image image = new Image(file.toURI().toString());
+                        Node parent = button.getParent();
+                        Node closeIcon = parent.lookup(".close-img-icon");
+                        closeIcon.setVisible(true);
+                        quesImg.setImage(image);
+                        quesImg.setFitHeight(300);
+                        quesImg.setFitWidth(300);
+                    }
+                } else {
+                    if (fileName.endsWith(".mp4") || fileName.endsWith(".gif")) {
+                        throw new Exception("Wrong Format! Please choose a file with jpg or png format");
                     }
                     Image image = new Image(file.toURI().toString());
                     Node parent = button.getParent();
@@ -302,12 +325,19 @@ public class GUI32Controller implements Initializable {
             this.closeIcon.setVisible(true);
         }
         if (question.getMediaPath() != null && question.getMediaPath().length() > 0) {
-            videoPathLabel.setText(question.getMediaPath());
-            ImageView imageView = new ImageView(new Image("/img/video-play-icon.png"));
-            imageView.setFitHeight(20);
-            imageView.setFitWidth(20);
-            videoPathLabel.setGraphic(imageView);
-            videoPathLabel.setVisible(true);
+            if (question.getMediaPath().endsWith(".gif")) {
+                quesImg.setImage(new Image(question.getMediaPath()));
+                this.quesImg.setFitWidth(300);
+                this.quesImg.setFitHeight(300);
+                this.closeIcon.setVisible(true);
+            } else {
+                mediaPathLabel.setText(question.getMediaPath());
+                ImageView imageView = new ImageView(new Image("/img/video-play-icon.png"));
+                imageView.setFitHeight(20);
+                imageView.setFitWidth(20);
+                mediaPathLabel.setGraphic(imageView);
+                mediaPathLabel.setVisible(true);
+            }
         }
         Set<Node> nodes = myVBox.lookupAll(".choice-text");
         List<Choice> choices = question.getChoices();
@@ -317,8 +347,8 @@ public class GUI32Controller implements Initializable {
             if (choices.size() > 5) {
                 pane2.setPrefHeight(Region.USE_COMPUTED_SIZE);
                 pane2.setVisible(true);
+                addChoiceButton.setVisible(false);
             }
-            addChoiceButton.setVisible(false);
         }
         int index = 0;
         for (Node node : nodes) {
@@ -390,8 +420,8 @@ public class GUI32Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dbInteract = DataModel.getInstance().getDbInteract();
         setUpGradeBox();
-        videoPathLabel.setPrefHeight(0);
-        videoPathLabel.setVisible(false);
+        mediaPathLabel.setPrefHeight(0);
+        mediaPathLabel.setVisible(false);
         pane.setPrefHeight(0);
         pane.setVisible(false);
         pane2.setPrefHeight(0);

@@ -36,7 +36,7 @@
                      </padding>
                   </Label>
                   <Pane prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
-                  <Text fx:id="userName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tạ Quang Kiên">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user-name" text="Tạ Quang Kiên">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

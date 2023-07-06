@@ -24,12 +24,12 @@ public class TEST5 extends Application {
 //        }
         List<Category> categories = dbInteract.getAllCategories();
         for(Category category : categories){
+            if(category.getCategoryTitle().equals("Sub Category "))dbInteract.deleteCategory(category.getCategoryTitle(), null);
             for(Question question : category.getQuestions()){
-//                question.showQ();
-                if(question.getQuestionName().length() == 0) {
-                    dbInteract.deleteQuestion(question.getQuestionName(), null);
-                    System.out.println("hha");
-                }
+//                if(question.getChoices().size() == 0) {
+//                    dbInteract.deleteQuestion(question.getQuestionName(), null);
+//                    System.out.println("haha");
+//                }
             }
         }
     }
