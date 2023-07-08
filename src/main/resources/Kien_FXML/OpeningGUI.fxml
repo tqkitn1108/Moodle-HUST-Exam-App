@@ -26,7 +26,7 @@
             <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
                   <MFXTextField fx:id="nameField" floatingText="Enter your name" prefWidth="300.0" />
-                  <MFXButton fx:id="openAppBtn" contentDisplay="RIGHT" onAction="#openApp" onMouseEntered="#coloring" onMouseExited="#uncoloring" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #aaa;" text="OPEN APP" textFill="WHITE">
+                  <MFXButton fx:id="openAppBtn" contentDisplay="RIGHT" onAction="#openApp" onMouseEntered="#coloring" onMouseExited="#uncoloring" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #1177d1;" text="OPEN APP" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="ARROW_RIGHT" size="20" />
                      </graphic>

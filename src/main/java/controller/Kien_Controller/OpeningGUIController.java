@@ -32,12 +32,12 @@ public class OpeningGUIController implements Initializable {
 
     @FXML
     void coloring(MouseEvent event) {
-        openAppBtn.setStyle("-fx-background-color: #009fe5");
+        openAppBtn.setStyle("-fx-background-color: #0e63ae");
     }
 
     @FXML
     void uncoloring(MouseEvent event) {
-        openAppBtn.setStyle("-fx-background-color: #aaaaaa");
+        openAppBtn.setStyle("-fx-background-color: #1177d1");
     }
 
     @FXML
