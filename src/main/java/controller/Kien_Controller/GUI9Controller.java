@@ -59,7 +59,7 @@ public class GUI9Controller implements Initializable {
 
     public void checkPassword(MFXPasswordField passwordField1, MFXPasswordField passwordField2) {
         passwordField1.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (passwordField2.getText().equals(newValue)) {
+            if (passwordField2.getText().length() > 0 && passwordField2.getText().equals(newValue)) {
                 encryptBtn.setDisable(false);
                 encryptBtn.setStyle("-fx-background-color: #ff5975;");
             } else {

@@ -119,7 +119,7 @@ public class QuestionLayoutController implements Initializable {
         if (!question.isMultipleAnswer()) {
             for (int i = 0; i < choices.size(); ++i) {
                 JFXRadioButton choice = new JFXRadioButton();
-                choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
+                choice.setText(labels.get(i) + ". " + choices.get(i).getOption() + "             "); // Khoảng trắng để fix trường hợp từ cuối cùng của text ngắn và độ dài của text vừa khớp với độ dài của node cha, khiến từ cuối bị ẩn đi
                 Image image = choices.get(i).getOptionImage();
                 ImageView imageView = new ImageView(image);
                 if (image != null && image.getHeight() > 300) {
@@ -139,7 +139,7 @@ public class QuestionLayoutController implements Initializable {
             checkBoxGroup = new LinkedHashSet<>();
             for (int i = 0; i < choices.size(); ++i) {
                 CheckBox choice = new CheckBox();
-                choice.setText(labels.get(i) + ". " + choices.get(i).getOption());
+                choice.setText(labels.get(i) + ". " + choices.get(i).getOption() + "             ");
                 Image image = choices.get(i).getOptionImage();
                 ImageView imageView = new ImageView(image);
                 if (image != null && image.getHeight() > 300) {
