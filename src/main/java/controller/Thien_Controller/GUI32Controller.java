@@ -24,9 +24,9 @@ import listeners.NewScreenListener;
 import model.Category;
 import model.DBInteract;
 import model.Question;
-import model2.Choice;
-import model2.DataModel;
-import model2.GeneralFunctions;
+import model.Choice;
+import model.DataModel;
+import model.GeneralFunctions;
 
 import java.io.File;
 import java.net.URL;

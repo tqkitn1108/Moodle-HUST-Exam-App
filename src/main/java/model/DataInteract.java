@@ -2,7 +2,6 @@ package model;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import model2.Choice;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFPicture;

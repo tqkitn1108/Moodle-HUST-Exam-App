@@ -21,7 +21,7 @@ import javafx.stage.StageStyle;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
-import model2.DataModel;
+import model.DataModel;
 
 import java.io.IOException;
 import java.net.URL;

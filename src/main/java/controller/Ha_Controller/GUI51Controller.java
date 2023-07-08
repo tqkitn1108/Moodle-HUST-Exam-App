@@ -1,7 +1,6 @@
 package controller.Ha_Controller;
 
 import com.jfoenix.controls.JFXCheckBox;
-import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +11,8 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
-import model2.DataModel;
-import model2.GeneralFunctions;
+import model.DataModel;
+import model.GeneralFunctions;
 
 import java.net.URL;
 import java.util.ResourceBundle;

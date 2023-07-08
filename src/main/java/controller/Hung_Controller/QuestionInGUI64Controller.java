@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Question;
-import model2.DataModel;
+import model.DataModel;
 
 import java.net.URL;
 import java.util.List;

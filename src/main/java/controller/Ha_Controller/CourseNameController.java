@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Quiz;
-import model2.DataModel;
+import model.DataModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;

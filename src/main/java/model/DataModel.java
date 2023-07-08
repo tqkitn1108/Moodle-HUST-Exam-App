@@ -1,15 +1,10 @@
-package model2;
+package model;
 
 import controller.Ha_Controller.GUI21Controller;
 import controller.Kien_Controller.QuestionLayoutController;
-import controller.Thien_Controller.QuestionInGUI31Controller;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import model.DBInteract;
-import model.Question;
-import model.Quiz;
 
 import java.util.List;
 import java.util.Map;

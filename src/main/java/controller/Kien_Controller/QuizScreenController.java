@@ -30,7 +30,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.Question;
 import model.Quiz;
-import model2.DataModel;
+import model.DataModel;
 
 import java.io.File;
 import java.io.FileOutputStream;

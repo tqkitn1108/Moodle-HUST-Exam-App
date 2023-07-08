@@ -18,7 +18,7 @@ import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Question;
 import model.Quiz;
-import model2.DataModel;
+import model.DataModel;
 
 import java.io.IOException;
 import java.net.URL;

@@ -10,7 +10,7 @@ import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
 import model.Quiz;
-import model2.DataModel;
+import model.DataModel;
 
 import java.net.URL;
 import java.util.List;

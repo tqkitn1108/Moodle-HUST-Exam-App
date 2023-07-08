@@ -23,8 +23,8 @@ import javafx.stage.Stage;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.*;
-import model2.DataModel;
-import model2.GeneralFunctions;
+import model.DataModel;
+import model.GeneralFunctions;
 
 import java.io.File;
 import java.net.URL;

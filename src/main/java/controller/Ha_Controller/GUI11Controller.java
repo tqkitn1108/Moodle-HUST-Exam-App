@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
 import model.DBInteract;
-import model2.DataModel;
+import model.DataModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;

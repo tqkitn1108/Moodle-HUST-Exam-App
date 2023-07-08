@@ -9,10 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
-import model2.DataModel;
+import model.DataModel;
 
 import java.io.IOException;
 import java.net.URL;

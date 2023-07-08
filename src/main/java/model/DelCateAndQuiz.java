@@ -1,4 +1,4 @@
-package start;
+package model;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,27 +9,21 @@ import model.Quiz;
 
 import java.util.List;
 
-public class TEST5 extends Application {
+public class DelCateAndQuiz extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         DBInteract dbInteract = new DBInteract();
         List<Quiz> quizzes = dbInteract.getAllQuizzes();
-//        dbInteract.deleteQuiz("Đây là quiz test nhé");
 //        for(Quiz quiz : quizzes){
-////            for(Question question: quiz.getQuestions()){
-////                question.showQ();
-////            }
-//            System.out.println(quiz.getQuizName());
-//        }
+//////            for(Question question: quiz.getQuestions()){
+//////                question.showQ();
+//////            }
+////        }
         List<Category> categories = dbInteract.getAllCategories();
         for(Category category : categories){
-            if(category.getCategoryTitle().equals("Sub Category "))dbInteract.deleteCategory(category.getCategoryTitle(), null);
             for(Question question : category.getQuestions()){
-//                if(question.getChoices().size() == 0) {
-//                    dbInteract.deleteQuestion(question.getQuestionName(), null);
-//                    System.out.println("haha");
-//                }
+
             }
         }
     }

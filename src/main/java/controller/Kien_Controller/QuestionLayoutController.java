@@ -21,7 +21,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import model.Question;
 import model.Quiz;
-import model2.Choice;
+import model.Choice;
 
 import java.io.File;
 import java.net.URL;

@@ -17,8 +17,8 @@ import listeners.NewScreenListener;
 import model.Category;
 import model.DBInteract;
 import model.Question;
-import model2.DataModel;
-import model2.GeneralFunctions;
+import model.DataModel;
+import model.GeneralFunctions;
 
 import java.io.IOException;
 import java.net.URL;

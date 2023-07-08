@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.image.Image;
-import model2.Choice;
 
 import java.sql.*;
 import java.util.ArrayList;
