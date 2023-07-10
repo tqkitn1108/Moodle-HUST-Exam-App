@@ -14,7 +14,7 @@ public class DelCateAndQuiz extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         DBInteract dbInteract = new DBInteract();
-        List<Quiz> quizzes = dbInteract.getAllQuizzes();
+//        List<Quiz> quizzes = dbInteract.getAllQuizzes();
 //        for(Quiz quiz : quizzes){
 //////            for(Question question: quiz.getQuestions()){
 //////                question.showQ();
@@ -22,8 +22,9 @@ public class DelCateAndQuiz extends Application {
 ////        }
         List<Category> categories = dbInteract.getAllCategories();
         for(Category category : categories){
-            for(Question question : category.getQuestions()){
-
+            if(category.getCategoryTitle().equals("Test SubCategory")){
+                System.out.println(category.getCategoryTitle());
+                dbInteract.deleteCategory(category.getCategoryTitle(),null);
             }
         }
     }

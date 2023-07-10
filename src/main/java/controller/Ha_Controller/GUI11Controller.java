@@ -16,10 +16,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import listeners.HeaderListener;
 import listeners.NewScreenListener;
+import model.Category;
 import model.DBInteract;
 import model.DataModel;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GUI11Controller implements Initializable {
